@@ -1,7 +1,10 @@
-# What Is a Software Factory?
+# Lean Software Production slides
 
-Slides for Matt Wynne and Aldric Giacomoni’s lightning lesson.
+Presentation decks from our live sessions. [Browse them on the slides site](https://lean-software-production.github.io/slides/).
 
-[View the presentation](https://lean-software-production.github.io/what-is-a-software-factory/)
+| Session | Slides |
+| --- | --- |
+| What is a software factory? · September 2026 lightning lesson | [Open the deck](https://lean-software-production.github.io/slides/what-is-a-software-factory/) |
+| Build a Software Factory · Day 1, September 2026 cohort | [Open the deck](https://lean-software-production.github.io/slides/2026-09/day-1/) |
 
-This public repository is automatically mirrored from the workshop source. Changes made directly here will be overwritten.
+The decks are published from [the workshops repository](https://github.com/lean-software-production/workshops) by its [Publish slides workflow](https://github.com/lean-software-production/workshops/blob/main/.github/workflows/publish-slides.yml). Edit the source there; changes made directly in this repository will be overwritten by the next publish.
