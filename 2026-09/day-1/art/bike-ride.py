@@ -2,14 +2,18 @@
 street on a bike. The rider and bike use the brand's chunky character renderer; the
 street, the bush, the lamp post and the speed lines use the thin-ink icon renderer.
 
-Reads (never writes) the brand repo at ~/brand. Writes art/bike-ride.svg.
+Reads (never writes) the brand repo at ../brand. Writes art/bike-ride.svg.
 """
 import json
 import os
+import subprocess
 import re
 import sys
 
-BRAND = os.path.expanduser("~/brand")
+# The brand repo sits next to this one (../brand from the main checkout); find it from a worktree too.
+_common = subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
+                         cwd=os.path.dirname(os.path.abspath(__file__)), capture_output=True, text=True).stdout.strip()
+BRAND = os.environ.get("BRAND") or os.path.join(os.path.dirname(os.path.dirname(_common)), "brand")
 sys.path.insert(0, os.path.join(BRAND, "src"))
 sys.dont_write_bytecode = True
 import characters  # noqa: E402  chunky outline + wash

@@ -1,13 +1,17 @@
 """A one-off bicycle doodle for the "Two tracks" slide, drawn with the brand's icon renderer.
 
-Reads (never writes) the brand repo at ~/brand. Writes art/bike.svg.
+Reads (never writes) the brand repo at ../brand. Writes art/bike.svg.
 """
 import json
 import os
+import subprocess
 import re
 import sys
 
-BRAND = os.path.expanduser("~/brand")
+# The brand repo sits next to this one (../brand from the main checkout); find it from a worktree too.
+_common = subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
+                         cwd=os.path.dirname(os.path.abspath(__file__)), capture_output=True, text=True).stdout.strip()
+BRAND = os.environ.get("BRAND") or os.path.join(os.path.dirname(os.path.dirname(_common)), "brand")
 sys.path.insert(0, os.path.join(BRAND, "src"))
 import icons  # noqa: E402
 

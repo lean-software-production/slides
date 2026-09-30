@@ -3,14 +3,18 @@ child on the floor on Christmas morning, each with a spanner, putting a bike tog
 
 People use the brand's character renderer (chunky outline + wash); the bike and the bits
 on the floor (and the tree) use the icon renderer (thin wobbly ink). Reads (never writes) the brand repo
-at ~/brand. Writes art/bike-build.svg.
+at ../brand. Writes art/bike-build.svg.
 """
 import json
 import os
+import subprocess
 import re
 import sys
 
-BRAND = os.path.expanduser("~/brand")
+# The brand repo sits next to this one (../brand from the main checkout); find it from a worktree too.
+_common = subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
+                         cwd=os.path.dirname(os.path.abspath(__file__)), capture_output=True, text=True).stdout.strip()
+BRAND = os.environ.get("BRAND") or os.path.join(os.path.dirname(os.path.dirname(_common)), "brand")
 sys.path.insert(0, os.path.join(BRAND, "src"))
 sys.dont_write_bytecode = True
 import characters as gc  # noqa: E402

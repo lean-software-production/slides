@@ -4,13 +4,17 @@ Each instructor has a script next to this one (e.g. matt-wynne.py) that builds a
 list of parts and calls write(). The parts are rendered by the brand repo's own
 renderer, so the drawings match the kit's characters.
 
-Reads (never writes) the brand repo at ~/brand.
+Reads (never writes) the brand repo at ../brand.
 """
 import os
+import subprocess
 import re
 import sys
 
-BRAND = os.path.expanduser("~/brand")
+# The brand repo sits next to this one (../brand from the main checkout); find it from a worktree too.
+_common = subprocess.run(["git", "rev-parse", "--path-format=absolute", "--git-common-dir"],
+                         cwd=os.path.dirname(os.path.abspath(__file__)), capture_output=True, text=True).stdout.strip()
+BRAND = os.environ.get("BRAND") or os.path.join(os.path.dirname(os.path.dirname(_common)), "brand")
 sys.path.insert(0, os.path.join(BRAND, "src"))
 import characters as gc  # noqa: E402  person(), render(), and the stock people
 
