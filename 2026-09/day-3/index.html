@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 3 Validation, and your capstone</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="kit/sketchbook.css">
+<script src="kit/sketchbook.js" defer></script>
+<style>
+  /* Kit pieces on paper, same set-up as the brand guidelines deck. Slides are 1600×900. */
+  html, body, .reveal-viewport { background: var(--sk-paper); }
+  .reveal-viewport { background-image: none; }
+  .reveal { font-family: var(--sk-font-body); color: var(--sk-ink); }
+  .reveal .slides section { font-size: 26px; text-align: left; height: 100%; box-sizing: border-box; padding: 30px 10px 20px; display: flex !important; flex-direction: column; }
+  .reveal .slides section.mid { justify-content: center; }
+  .reveal .slides section.center { justify-content: center; align-items: center; text-align: center; }
+  .reveal .sk-bubble::before { border-width: 5px; }
+  .reveal .sk-bubble::after { border-right-width: 5px; border-bottom-width: 5px; }
+  .reveal .sk-panel::before { border-width: 4px; }
+  .reveal .progress { color: var(--sk-mustard); height: 5px; }
+  .reveal .controls { color: var(--sk-deep-teal); }
+  .reveal .slide-number { background: transparent; color: var(--sk-deep-teal); font-family: var(--sk-font-label); font-size: 20px; }
+
+  .lede { font-size: 1.7em; line-height: 1.3; color: var(--sk-body-text); max-width: 30em; margin: .4em 0; }
+  .center .lede { margin-left: auto; margin-right: auto; }
+  .big { font-size: 4.2em; }
+  .split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2.5em; align-items: center; flex: 1; min-height: 0; }
+  .split > img { max-height: 560px; justify-self: center; }
+  ul.sk-list { list-style: none; padding: 0; margin: .6em 0 0; }
+  ul.sk-list li { font-size: 1.5em; line-height: 1.3; margin: .5em 0; padding-left: 1.4em; position: relative; color: var(--sk-body-text); }
+  ul.sk-list li::before { content: ""; position: absolute; left: 0; top: .45em; width: .55em; height: .55em; border-radius: 50%; background: var(--sk-accent, var(--sk-teal)); }
+  ul.sk-list li small { display: block; font-size: .75em; color: #6b665c; }
+  .sk-row { margin-top: 1em; }
+  .sk-row .sk-panel p { font-size: 1.15em; }
+  .agenda .sk-row { font-size: 1.05em; }
+  .agenda .sk-label { font-size: .8em; }
+  .agenda .sk-panel img { height: 100px; width: auto; margin: .6em auto 0; }
+  .mid .split { flex: 0 0 auto; }
+  ul.sk-list.narrow { max-width: 1000px; margin: .6em auto 0; }
+  .agenda .sk-panel:not(.sk-dashed) { opacity: .45; }
+  .agenda.all .sk-panel { opacity: 1; }
+  .question { font-size: 2.3em; max-width: 24em; margin: .6em auto 0; text-align: left; }
+  .round { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; margin-top: 1em; }
+  .round .sk-panel p { font-size: 1.5em; line-height: 1.3; }
+  .timer { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.5em; margin-top: 1em; text-align: center; }
+  .todo { background: var(--sk-highlighter); font-family: var(--sk-font-label); padding: 0 .3em; }
+  .people { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.4em; margin-top: 1.2em; }
+  .people .sk-panel p { font-size: 1.2em; }
+  .people img.face { height: 220px; width: auto; margin: .3em auto .2em; display: block; }
+  .tracks { display: grid; grid-template-columns: 15em repeat(4, 1fr); gap: .7em 1em; align-items: stretch; margin-top: 1.2em; }
+  .tracks .wk { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.4em; text-align: center; }
+  .tracks .cell p { font-size: 1.35em; line-height: 1.25; margin: 0; }
+  .track-label { display: flex; align-items: center; gap: .6em; font-family: var(--sk-font-label); font-size: 1.5em; color: var(--sk-deep-teal); line-height: 1.1; }
+  .track-label img { width: 90px; flex: none; }
+  .builds { text-align: center; font-family: var(--sk-font-label); color: var(--sk-slate); font-size: 1.3em; }
+  .flip { display: grid; grid-template-columns: 1fr 22em 1fr; align-items: stretch; gap: 1em; margin-top: 1.2em; }
+  .flip .sk-panel p { font-size: 1.4em; }
+  .flip .sk-panel img { height: 150px; width: auto; margin: .4em auto; display: block; }
+  .cycle { display: flex; flex-direction: column; align-items: center; align-self: center; }
+  .cycle svg { width: 100%; height: auto; overflow: visible; }
+  .cycle-label { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.35em; margin: .2em 0; text-align: center; }
+  .convo { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; margin-top: .6em; align-items: end; }
+  .speaker { display: flex; flex-direction: column; gap: .3em; }
+  .speaker.left { align-items: flex-end; }
+  .speaker.right { align-items: flex-start; }
+  .speaker .sk-bubble { font-size: 1.7em; max-width: 12em; }
+  .speaker img { height: 320px; }
+  .convo + .timer { margin-top: .6em; }
+  .speaker img.mirror { transform: scaleX(-1); }
+  .two-tracks .sk-panel p { font-size: 1.4em; }
+  .two-tracks .sk-panel img { height: 150px; width: auto; display: block; margin: .4em auto; }
+  .lanes { display: flex; flex-direction: column; gap: .6em; margin-top: 1.4em; }
+  .lane { position: relative; display: flex; align-items: center; gap: .7em; padding: .5em 3.2em .5em 1em; border: 4px solid var(--sk-ink); border-radius: 2em 0 0 2em; clip-path: polygon(0 0, calc(100% - 2.4em) 0, 100% 50%, calc(100% - 2.4em) 100%, 0 100%); filter: url(#sk-wobble); font-family: var(--sk-font-label); font-size: 1.7em; color: var(--sk-deep-teal); }
+  .lane img { height: 2.6em; }
+  .lane small { font-family: var(--sk-font-body); font-size: .75em; color: var(--sk-body-text); margin-left: .6em; }
+  .sk-teal-lane { background: color-mix(in srgb, var(--sk-teal) 28%, var(--sk-paper)); }
+  .sk-coral-lane { background: color-mix(in srgb, var(--sk-coral) 28%, var(--sk-paper)); }
+  .lane-link { text-align: center; font-family: var(--sk-font-label); color: var(--sk-slate); font-size: 1.3em; }
+  .weeks { display: grid; grid-template-columns: 6em 1fr 4em 1fr 9em; gap: .9em .6em; align-items: center; margin-top: 1em; }
+  .weeks .day { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.45em; text-align: center; }
+  .weeks .hw { font-family: var(--sk-font-label); color: var(--sk-rust); font-size: 1.15em; text-align: center; line-height: 1.1; }
+  .weeks .wk { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.45em; }
+  .weeks .cell { background: var(--sk-bubble); border: 3px solid var(--sk-ink); border-radius: .7em; padding: .45em .8em; font-size: 1.35em; filter: url(#sk-wobble); }
+  .weeks .cell b { font-weight: 400; color: var(--sk-deep-teal); }
+  .weeks .flow { text-align: center; font-size: 1.8em; color: var(--sk-slate); }
+  .weeks .flow.big { font-size: 3.2em; line-height: 1; }
+  .weeks .cell { position: relative; }
+  .weeks .sticky { position: absolute; right: -.6em; top: -.9em; background: var(--sk-highlighter); color: var(--sk-ink); font-family: var(--sk-font-label); font-size: .72em; padding: .25em .6em; transform: rotate(4deg); box-shadow: 2px 3px 0 rgba(42,39,36,.25); }
+  .scenes { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5em; margin-top: .8em; }
+  .scene { margin: 0; text-align: center; }
+  .scene img { height: 470px; max-width: 100%; }
+  .scene figcaption { font-size: 1.35em; color: var(--sk-body-text); }
+  .scene figcaption span { display: block; font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.35em; }
+  .footer-chars { position: absolute; right: 110px; bottom: 30px; height: 190px; }
+
+  .todo-line { font-size: 1.4em; margin-top: 1em; }
+  .prompts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4em; margin-top: 1.2em; }
+  .prompts .sk-panel { text-align: center; }
+  .prompts .sk-panel img { height: 200px; width: auto; display: block; margin: .4em auto; }
+  .prompts .sk-panel p { font-size: 1.6em; line-height: 1.25; }
+  .sk-list a { color: var(--sk-deep-teal); }
+  .todo-line a { color: var(--sk-deep-teal); }
+  .tree { font-family: var(--sk-font-body); color: var(--sk-deep-teal); font-size: 1.6em; line-height: 1.5; margin: 0; white-space: pre; }
+  .tree b { font-weight: 400; color: var(--sk-rust); }
+  .areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4em; margin-top: 1.2em; }
+  .areas .sk-panel { text-align: center; }
+  .areas .sk-panel p { font-size: 1.8em; }
+  .placeholder { font-family: var(--sk-font-label); background: var(--sk-highlighter); padding: .1em .4em; }
+  .apis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4em; margin-top: 1em; }
+  .apis .sk-panel { text-align: center; }
+  .apis .sk-panel p { font-size: 1.8em; margin: .2em 0; }
+  .apis .sk-panel img { height: 150px; width: auto; display: block; margin: .3em auto; }
+  .steps { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.5em; text-align: center; margin-top: 1em; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+  <!-- 1 · Title -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.4em"><span class="sk-burst"><span class="sk-hl">Welcome back</span></span></h1>
+    <p class="lede">Day 3 of 8 · Tuesday 6 October</p>
+    <img src="kit/characters/group.svg" alt="A group of four friendly people and a dog" style="height:260px;margin-top:.4em">
+    <aside class="notes"><strong class="when">⏱ 09:30–09:31 · 1 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Recording on; check the BB transcript is connected</li><li>Confirm who operates the breakout rooms, and the backup: two rounds today</li><li>Miro link ready to paste in chat</li></ul></aside>
+  </section>
+
+  <!-- 2 · Agenda (all) -->
+  <section class="mid agenda all" data-step="0">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:31–09:33 · 2 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Straight in, no bureaucracy</li><li>The objective in a line: look back at what the validator did, then start riding the bike on your capstone</li><li>What? So what? Now what?: what happened and how it felt, what validation did and what we know, then a good vision and the homework</li><li>Assembly lines are Thursday</li></ul></aside>
+  </section>
+
+  <!-- 3 · Agenda: What happened? -->
+  <section class="mid agenda" data-step="1">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:33 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br></aside>
+  </section>
+
+  <!-- 4 · What happened? -->
+  <section class="center">
+    <h2 class="sk-title big"><span class="sk-hl">What happened?</span></h2>
+    <div class="sk-bubble" style="font-size:2em;margin-top:.6em">“What did you do? What did you watch?”</div>
+    <img src="art/whiteboard.svg" alt="A whiteboard with sticky notes and a marker" style="height:220px;margin-top:.5em">
+    <aside class="notes"><strong class="when">⏱ 09:33–09:39 · 6 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Paste the Miro link in chat</li><li>A sticky each: which parts of 001 and 002 you did; which videos you watched, especially Justin McCarthy's</li><li>Facts only. Ask which parts they did, never whether they did well: “just what happened”</li></ul></aside>
+  </section>
+
+  <!-- 5 · Agenda: How did it feel? -->
+  <section class="mid agenda" data-step="2">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:39 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br></aside>
+  </section>
+
+  <!-- 6 · How did it feel? -->
+  <section class="mid">
+    <h2 class="sk-section">How did the tutorial feel?</h2>
+    <div class="apis">
+      <div class="sk-panel sk-forest"><img src="kit/icons/mug.svg" alt="A mug"><p>Appreciations</p></div>
+      <div class="sk-panel sk-coral"><img src="kit/icons/puzzle.svg" alt="Puzzle pieces"><p>Puzzles</p></div>
+      <div class="sk-panel sk-blue"><img src="kit/icons/lightbulb.svg" alt="A lightbulb"><p>Insights</p></div>
+    </div>
+    <p class="steps">1 min alone · pairs · fours · then all of us</p>
+    <aside class="notes"><strong class="when">⏱ 09:39–09:56 · 17 min</strong><br><strong class="who">🎤 Jeremy; co-host runs the rooms</strong><br><ul><li>1-2-4-All on Miro. How the tutorial was, and what you learned from doing it. Only the second time we've run it; we want to know</li><li>1 min alone, pairs in breakouts (about 4 min), fours (about 5 min, a minute to shuffle each time), then the whole room (about 5 min)</li><li>Invite everyone to speak, early: these are the warm-up voices for the rest of the session</li><li>Prompting questions for the room: “What difference did your lens make between your two Tetrises?” Did you get it to coach you through the steps, or let it implement and ask questions after?</li><li>If they found it frustrating or didn't finish, follow that; the rest can shrink</li></ul></aside>
+  </section>
+
+  <!-- 7 · Agenda: What we know -->
+  <section class="mid agenda" data-step="3">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:56 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br></aside>
+  </section>
+
+  <!-- 8 · What we know about validation -->
+  <section class="center">
+    <h2 class="sk-section">Teach back</h2>
+    <div class="sk-bubble" style="font-size:2.2em">“What do you know about validation?”</div>
+    <img src="kit/characters/explainer.svg" alt="A person explaining an idea" style="height:280px;margin-top:.5em">
+    <aside class="notes"><strong class="when">⏱ 09:56–10:18 · 22 min</strong><br><strong class="who">🎤 Matt; co-host runs the rooms</strong><br><ul><li>One topic, no options. People organise themselves into groups; each preps a short presentation on its Miro space, about 10 min. Instructors on call, not in the rooms</li><li>Each group presents, about 3 min, questions after. Add and correct as questions first, so other students get to answer</li><li>Hope it comes out (ours to add if not): the agent saying “done” proves nothing; you only have what you can validate; slop cannon vs the mold; a fresh context for the validator; the lens decides what it finds; know what good looks like up front</li></ul></aside>
+  </section>
+
+  <!-- 9 · Agenda: A good vision -->
+  <section class="mid agenda" data-step="4">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:18 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br></aside>
+  </section>
+
+  <!-- 10 · Ride the bike -->
+  <section class="mid">
+    <h2 class="sk-section">Ride the bike</h2>
+    <div class="split">
+      <p class="tree">my-capstone/
+  docs/
+    <b>vision.md</b>
+    iterations/
+      <b>001-&lt;goal&gt;.md</b></p>
+      <div class="sk-bubble" style="font-size:1.7em">“What should you be able to demonstrate at the end of iteration one?”</div>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 10:18–10:38 · 20 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Demo from a prepared session: the EnsembleWorks mobile app. Fallback: the Saturday clip “Writing a vision and planning the first iteration” (4:43)</li><li>The capstone gets its own folder in the tutorial repo, apart from Tetris</li><li>The agent interviews us to get words on the page; then we edit by hand</li><li>Then “interview me” for plan 001: the first user story or two, not the whole thing. It refers to the vision</li><li>Then run the factory on it</li></ul></aside>
+  </section>
+
+  <!-- 11 · Agenda: Homework -->
+  <section class="mid agenda" data-step="5">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:38 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br></aside>
+  </section>
+
+  <!-- 12 · Homework -->
+  <section class="mid">
+    <h2 class="sk-section">Homework</h2>
+    <div class="split">
+      <ul class="sk-list" style="--sk-accent:var(--sk-blue)">
+        <li>Your capstone: write the vision, plan iteration 1, run your factory on it</li>
+        <li>When the factory breaks, fix the factory</li>
+        <li>Context engineering: sign up for one reading, and teach it to us on Thursday</li>
+      </ul>
+      <img src="kit/icons/laptop.svg" alt="A laptop" style="height:300px">
+    </div>
+    <aside class="notes"><strong class="when">⏱ 10:38–10:48 · 10 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Vision: have your agent interview you, then edit it by hand</li><li>Two backlogs: one for the product, one for the machinery. Saturday clip “Fixing your factory when you discover a bug” (2:17)</li><li>Context engineering: what files are you leaving lying around for your agents to find? Pick one reading and sign up on Miro, at least two people per reading. Watch the short “how to learn anything” clip first: get your agent to teach you the reading</li><li><span class="todo">Open:</span> the reading list (Matt's, in Slack) and the clip (David to cut)</li><li>Thursday we ask: how did your factory do? What's missing?</li><li>Bonus: the Load Human Context video; deep research and a knowledge base for your capstone</li></ul></aside>
+  </section>
+
+  <!-- 13 · Quick retro -->
+  <section class="center">
+    <h2 class="sk-title big"><span class="sk-hl">Quick retro</span></h2>
+    <img src="art/whiteboard.svg" alt="A whiteboard with stickies on it" style="height:300px;margin-top:.6em">
+    <aside class="notes"><strong class="when">⏱ 10:48–10:51 · 3 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>One sticky each on Miro, about a minute</li><li>We don't talk through them; we read them afterwards</li></ul></aside>
+  </section>
+
+  <!-- 14 · Check out -->
+  <section class="center">
+    <h2 class="sk-section">Check out</h2>
+    <div class="sk-bubble" style="font-size:2.2em">“One thing you're taking away.”</div>
+    <aside class="notes"><strong class="when">⏱ 10:51–10:55 · 4 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Everyone with video on; a few words, even “pass”</li><li>Stuck on setup? Stay behind</li></ul></aside>
+  </section>
+
+  <!-- 15 · See you Thursday -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.6em"><span class="sk-burst"><span class="sk-hl">See you Thursday!</span></span></h1>
+    <img src="kit/characters/waver.svg" alt="A person waving" style="height:320px;margin-top:.6em">
+    <aside class="notes"><strong class="when">⏱ 10:55–11:00 · 5 min</strong><br><strong class="who">🎤 Everyone</strong><br><ul><li>Buffer: 5 min</li></ul></aside>
+  </section>
+
+</div></div>
+
+<template id="agenda-row">
+  <div class="sk-row">
+    <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">What happened?</span></div><img src="kit/icons/checklist.svg" alt=""></div>
+    <div class="sk-panel sk-forest"><div class="sk-step"><span class="sk-label">How did it feel?</span></div><img src="kit/icons/chat.svg" alt=""></div>
+    <div class="sk-panel sk-coral"><div class="sk-step"><span class="sk-label">What we know</span></div><img src="kit/icons/magnifier.svg" alt=""></div>
+    <div class="sk-panel sk-blue"><div class="sk-step"><span class="sk-label">A good vision</span></div><img src="kit/icons/kite.svg" alt=""></div>
+    <div class="sk-panel sk-rust"><div class="sk-step"><span class="sk-label">Homework</span></div><img src="kit/icons/laptop.svg" alt=""></div>
+  </div>
+</template>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  // The agenda slides share one row; the current step gets the dashed outline.
+  document.querySelectorAll('section.agenda').forEach(function (s) {
+    var row = document.getElementById('agenda-row').content.cloneNode(true);
+    var step = +s.dataset.step;
+    if (step) row.querySelectorAll('.sk-panel')[step - 1].classList.add('sk-dashed');
+    s.appendChild(row);
+  });
+  Reveal.initialize({ width: 1600, height: 900, margin: 0.04, hash: true, slideNumber: 'c/t', transition: 'fade', center: false, plugins: [RevealNotes] });
+  // Viewers on the canvas can load while hidden or tiny, and don't always fire a window resize
+  // when they grow. Re-fit the slide whenever its box changes size, and once fonts have loaded.
+  new ResizeObserver(function () { Reveal.layout(); }).observe(document.documentElement);
+  if (document.fonts) document.fonts.ready.then(function () { Reveal.layout(); });
+  document.addEventListener('visibilitychange', function () { Reveal.layout(); });
+</script>
+</body>
+</html>
