@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session Storyboard</title>
+<style>
+:root {
+  --bg: #f6f5f1; --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6a64; --line: #e3e1da;
+  --present: #4f6d8f; --pairs: #c0673a; --demo: #3f8a5c; --talk: #8a6fb0; --buffer: #b9b6ac;
+  --quote-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --paper: #1f1f1c; --ink: #ecebe6; --muted: #a09e96; --line: #33322e;
+    --present: #7fa0c4; --pairs: #e08a5c; --demo: #6cbf8a; --talk: #b39ad6; --buffer: #5d5b55;
+    --quote-bg: #2a2925;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { font: 600 30px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 6px; }
+.intro p { margin: 2px 0; color: var(--muted); }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; }
+.transformation { margin: 16px 0 0; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; font-size: 16px; }
+.transformation p { margin: 0; }
+.framing-wrap { margin-top: 24px; }
+.framing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 22px 0; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card p { margin: 0; }
+.timeline { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 10px 0; margin: 12px 0 8px; }
+.bar { display: flex; gap: 2px; height: 58px; }
+.seg { min-width: 0; border-radius: 5px; padding: 4px 6px; color: #fff; text-decoration: none;
+  display: flex; flex-direction: column; overflow: hidden; font-size: 11px; line-height: 1.2; }
+.seg-t { opacity: .85; font-variant-numeric: tabular-nums; }
+.seg-n { font-weight: 600; overflow: hidden; }
+.seg.present { background: var(--present); } .seg.pairs { background: var(--pairs); }
+.seg.demo { background: var(--demo); } .seg.talk { background: var(--talk); }
+.seg.buffer { background: var(--buffer); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.sum { font-size: 13px; color: var(--muted); }
+.warn { color: #c0392b; font-weight: 600; margin-left: 8px; }
+.block { display: grid; grid-template-columns: 76px 1fr; gap: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-left: 5px solid var(--present); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0; scroll-margin-top: 110px; }
+.block.pairs { border-left-color: var(--pairs); } .block.demo { border-left-color: var(--demo); }
+.block.talk { border-left-color: var(--talk); } .block.buffer { border-left-color: var(--buffer); }
+.clock { font: 600 20px/1 Georgia, serif; font-variant-numeric: tabular-nums; }
+.mins { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.what h3 { margin: 0 0 4px; font-size: 18px; }
+.purpose { margin: 0 0 4px; font-weight: 500; }
+.structure { margin: 0; color: var(--muted); }
+blockquote { margin: 10px 0 0; padding: 8px 12px; background: var(--quote-bg); border-radius: 6px; font-style: italic; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+details ul { margin: 6px 0 0; padding-left: 18px; }
+details ol { margin: 2px 0 4px; }
+li.cont { list-style: none; }
+.notes { margin-top: 22px; color: var(--muted); }
+footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .seg-n { display: none; }
+  .block { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Day 3: Validation, and your capstone (Tue 6 Oct)</h1>
+<div class="intro"><p>Third live session of cohort 2. 09:30 to 11:00 PT, 90 minutes, on Zoom. Led by Matt and Jeremy. Syllabus source of truth: the "Cohort 2 (Sept/Oct 2026) Syllabus Draft" Google Doc. This file is the facilitator's plan for the session, not student-facing.</p><p>Objective: over the weekend, students got their hands on a validation loop: tutorial iterations 001 and 002, the same Tetris seed built twice, the second time with a validator looking through a lens. We lay out what happened and how the tutorial felt, make sense of what validation did, then turn to riding the bicycle: they watch us write a capstone's vision and plan its first iteration, and their homework is to do the same for their own capstone and run their factory on it. Assembly lines move to Thursday.</p></div>
+
+<div class="transformation"><p>They arrive having built a factory that checks its own work, mostly alone. They leave having said how it felt, pooled what they know about validation and heard what we think is true, and having watched a vision and a first plan get written, ready to do their own.</p></div>
+
+<div class="timeline">
+  <div class="bar">
+<a class='seg present' href='#welcome' style='flex:3' title='Welcome · 3 min'><span class='seg-t'>09:30</span><span class='seg-n'>Welcome</span></a>
+<a class='seg talk' href='#check-in' style='flex:5' title='Check in · 5 min'><span class='seg-t'>09:33</span><span class='seg-n'>Check in</span></a>
+<a class='seg present' href='#agenda' style='flex:2' title='Agenda · 2 min'><span class='seg-t'>09:38</span><span class='seg-n'>Agenda</span></a>
+<a class='seg talk' href='#what-happened' style='flex:4' title='What happened? · 4 min'><span class='seg-t'>09:40</span><span class='seg-n'>What happened?</span></a>
+<a class='seg talk' href='#how-was-the-homework' style='flex:14' title='How was the homework? · 14 min'><span class='seg-t'>09:44</span><span class='seg-n'>How was the homework?</span></a>
+<a class='seg present' href='#what-we-know-about-validation' style='flex:35' title='What we know about validation · 35 min'><span class='seg-t'>09:58</span><span class='seg-n'>What we know about validation</span></a>
+<a class='seg demo' href='#capstone' style='flex:12' title='Capstone · 12 min'><span class='seg-t'>10:33</span><span class='seg-n'>Capstone</span></a>
+<a class='seg present' href='#next-homework' style='flex:5' title='Next homework · 5 min'><span class='seg-t'>10:45</span><span class='seg-n'>Next homework</span></a>
+<a class='seg talk' href='#retro-and-takeaways' style='flex:5' title='Retro and takeaways · 5 min'><span class='seg-t'>10:50</span><span class='seg-n'>Retro and takeaways</span></a>
+<a class='seg buffer' href='#buffer' style='flex:5' title='Buffer · 5 min'><span class='seg-t'>10:55</span><span class='seg-n'>Buffer</span></a>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--present)"></i>presenting</span>
+    <span><i style="background:var(--talk)"></i>whole group</span>
+    <span><i style="background:var(--pairs)"></i>breakouts</span>
+    <span><i style="background:var(--demo)"></i>factory demo</span>
+    <span><i style="background:var(--buffer)"></i>buffer</span>
+    <span class="sum">09:30 to 11:00 · 90 min</span>
+  </div>
+</div>
+
+
+<section class="block present" id="welcome">
+  <div class="when"><div class="clock">09:30</div><div class="mins">3 min</div></div>
+  <div class="what">
+    <h3>Welcome</h3>
+    <p class="purpose">Arrive while people file in</p>
+    <p class="structure">Small talk: how are people doing?</p>
+    
+    <details open><summary>Notes</summary><ul>
+<li>wait for people to file in; we don't start at one minute past</li>
+<li>paste the Miro link in chat, and pin it</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="check-in">
+  <div class="when"><div class="clock">09:33</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Check in</h3>
+    <p class="purpose">Everyone says where they are, without a word</p>
+    <p class="structure">A radar on Miro: building factories, or building with them? Place yourself; little discussion</p>
+    <blockquote>Where are you?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>a slide straight after the welcome, before the agenda</li>
+<li>building factories, or building with them: when are we going to do that? Today we start</li>
+<li>think, then place yourself on the radar on Miro; little or no discussion</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="agenda">
+  <div class="when"><div class="clock">09:38</div><div class="mins">2 min</div></div>
+  <div class="what">
+    <h3>Agenda</h3>
+    <p class="purpose">Hear why we're here today, see the agenda</p>
+    <p class="structure">Talk: the objective in a line, then the visual agenda</p>
+    
+    <details open><summary>Notes</summary><ul>
+<li>straight in: the objective in a line, then the agenda once; no bureaucracy</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="what-happened">
+  <div class="when"><div class="clock">09:40</div><div class="mins">4 min</div></div>
+  <div class="what">
+    <h3>What happened?</h3>
+    <p class="purpose">Get the facts on the table, without judgement</p>
+    <p class="structure">What? of W³: a sticky each in a Miro frame: which parts of 001 and 002 you did, which videos you watched</p>
+    <blockquote>What did you do? What did you watch?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>a Miro frame, facts only: which parts of 001 and 002 did you do; did you watch the videos, especially Justin McCarthy's</li>
+<li>ask which parts they did, never whether they did well: "just what happened"</li>
+<li>side quests count; things that stood out in the videos too (we talk about the videos later)</li>
+<li>Miro to Miro from here: no slides again until the teach-back</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="how-was-the-homework">
+  <div class="when"><div class="clock">09:44</div><div class="mins">14 min</div></div>
+  <div class="what">
+    <h3>How was the homework?</h3>
+    <p class="purpose">Get everyone speaking early, and hear how the tutorial went for them and what they learned from it</p>
+    <p class="structure">Still the What?: a retro on the tutorial, 1-3-All, on Miro; popcorn in the whole room</p>
+    <blockquote>Appreciations, puzzles, insights.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>a retro on the tutorial, appreciations · puzzles · insights: how the tutorial was, and what they learned from doing it. It's only the second time we've run it; we want to know</li>
+<li>1-3-All on Miro: 1 min alone (stickies, or notes on paper; video off if you like), then pairs or threes in random breakouts that people join when ready (about 6 min, plus a minute to move), then the whole room (about 6 min)</li>
+<li>whole room: popcorn. Matt picks names; pull up your own sticky or one that looks interesting. We won't get to everyone</li>
+<li>invite everyone to speak, early; these are the warm-up voices for the rest of the session</li>
+<li>prompting questions for the whole-room part: "What difference did your lens make between your two Tetrises?" Did you get it to coach you through the steps, or let it implement and ask questions after?</li>
+<li>if they found the tutorial frustrating or didn't finish, follow that; the rest can shrink</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="what-we-know-about-validation">
+  <div class="when"><div class="clock">09:58</div><div class="mins">35 min</div></div>
+  <div class="what">
+    <h3>What we know about validation</h3>
+    <p class="purpose">Make sense of validation by teaching it to each other</p>
+    <p class="structure">So what?: teach-back. Three random groups prep a presentation on Miro, then present to the room; we add and correct</p>
+    <blockquote>What do you know about validation?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>one topic, no options: "What do you know about validation?"</li>
+<li>three random groups made by Zoom; each prepares a short presentation on its Miro space (about 10 min, no more); instructors on call, not in the rooms</li>
+<li>two labelled sticky stacks: what you know, and red for what you don't know yet; encourage pictures, not just stickies</li>
+<li>then each group presents, about 5 min each, then questions and a little discussion, about 3 min; no separate integration step, we add and correct as each group goes, as questions first so other students get to answer</li>
+<li>Aldric suggested 45 min, as it's the core of the session and processing takes time; 35 is what fits with a 5 min buffer</li>
+<li>things we hope come out (ours to add if they don't): the agent saying "done" proves nothing; you only have what you can validate; without validation the agent is a slop cannon, validation is the mold; a fresh context or separate machine for the validator; the lens decides what it finds; you need to know what good looks like up front</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block demo" id="capstone">
+  <div class="when"><div class="clock">10:33</div><div class="mins">12 min</div></div>
+  <div class="what">
+    <h3>Capstone</h3>
+    <p class="purpose">Show how we ride the bike: write a vision and plan iteration 1</p>
+    <p class="structure">Now what?: Matt frames it, then Matt and David pair on a demo from a prepared session: vision, plan 001, run the factory</p>
+    <blockquote>Watch us ride the bike.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Matt frames it (2 or 3 min): building bikes and riding them; this homework includes some riding</li>
+<li>Matt and David pair on the demo (about 10 min)</li>
+<li>a capstone gets its own folder in the tutorial repo, apart from Tetris: <code>docs/vision.md</code> and <code>docs/iterations/001-&lt;goal&gt;.md</code></li>
+<li>the agent interviews us to get words on the page, then we edit by hand</li>
+<li>then plan 001 with "interview me": start from "What should you be able to demonstrate at the end of iteration one?"; the first user story or two, not the whole thing</li>
+<li>then run the factory on it</li>
+<li>example: the EnsembleWorks mobile app; fallback is the Saturday clip</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="next-homework">
+  <div class="when"><div class="clock">10:45</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Next homework</h3>
+    <p class="purpose">Everyone knows what to do by Thursday, and has signed up for a reading</p>
+    <p class="structure">Talk, one slide; sign-up on Miro</p>
+    
+    <details open><summary>Notes</summary><ul>
+<li>the capstone bullet was the demo; one line is enough</li>
+<li>David: our factory blew up when we ran it for real (a large prompt passed as a command-line argument on Linux). Run it, it blows up, fix it with an agent, repeat</li>
+<li>capstone: write your <code>vision.md</code>, with your agent interviewing you; plan iteration 1; run your factory on it. When your factory breaks, fix the factory: two backlogs, one for the product and one for the machinery</li>
+<li>context engineering: what files are you leaving lying around for your agents to find? Switch to Miro and put your picture by at least a couple of the articles; come back Thursday ready to teach it to everyone else</li>
+<li>watch the short "how to learn anything" clip first: use your agent to teach you the reading</li>
+<li><strong>Open:</strong> the reading list (Matt's, in Slack) and the clip (Jeremy asks David to cut about five minutes from the lightning lesson)</li>
+<li>Thursday we ask: how did your factory do? What's missing?</li>
+<li>bonus: the Load Human Context video; deep research and a knowledge base for your capstone</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="retro-and-takeaways">
+  <div class="when"><div class="clock">10:50</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Retro and takeaways</h3>
+    <p class="purpose">Hear how week 2 is going, and close as a cohort</p>
+    <p class="structure">Miro: a takeaway and a keep or change each; share takeaways out loud</p>
+    <blockquote>One thing you're taking away.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>one slide for both: at least one takeaway and at least one keep or change each on Miro; the takeaways are the big stickies</li>
+<li>we read the keeps and changes afterwards; takeaways out loud if people like, video on</li>
+<li>anyone stuck on setup stays behind</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block buffer" id="buffer">
+  <div class="when"><div class="clock">10:55</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Buffer</h3>
+    <p class="purpose">Live timings run long</p>
+    <p class="structure">-</p>
+    
+    
+  </div>
+</section>
+
+<div class="notes"><p><em>Shape: What? So What? Now What? (W³). What happened and how it felt are the What?; the validation teach-back is the So what?; the vision demo and homework are the Now what?</em> <em>Energy: everyone speaks early, in pairs and fours, before the whole room. A peak in the teach-back, then the demo, with questions, to send them off to try it.</em></p></div>
+
+<details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
+<div class="framing">
+<div class='card'><h2>Audience</h2><ul>
+<li>12 working developers and tech leads, in their second week; each has picked a capstone in the shared sheet (Robinson hadn't yet; Jeremy is chasing him).</li>
+<li>Before today they could: do tutorial iterations 001 and 002, read the HTML comparison of <code>tetris-001</code> and <code>tetris-002</code> their agent built for them, watch the Doer vs Validator and Justin McCarthy videos.</li>
+<li>Some will have done all of it and some none of it: plan the class for both.</li>
+<li>At stake: Thursday. They leave with a vision for their capstone, or they stay stuck building bikes and never ride one.</li>
+</ul></div>
+<div class='card'><h2>Learning outcomes</h2><ul>
+<li>Have said what they did, how the tutorial felt and what they learned from it, and heard everyone else's.</li>
+<li>Can say what difference validation made in their own build, and why "none" is a fine answer.</li>
+<li>Have pooled what the cohort knows about validation, and taught some of it back.</li>
+<li>Have seen how an agent helps write a vision and plan iteration 1 from it, and know their homework, including which context engineering reading they signed up for.</li>
+</ul></div>
+<div class='card'><h2>Key concepts</h2><ul>
+<li><strong>Validation is the mold</strong>: without it the agent is a slop cannon spraying molten plastic (McCarthy); with it, every copy comes out alike.</li>
+<li><strong>Lens</strong>: what the validator looks for. Same seed, different lens, different code.</li>
+<li><strong>Vision</strong>: a short document of what the capstone is for and who it serves; each iteration's plan refers to it.</li>
+<li>Not today: machines, assembly lines, routing; deep research and knowledge bases (a bonus). Context engineering is Thursday's teach-back.</li>
+</ul></div>
+<div class='card'><h2>Format &amp; logistics</h2><ul>
+<li>Zoom for talking and breakouts; the working happens on the cohort's Miro board ("Building Software Factories, September cohort"). Day 1's hopes and fears go on it as a picture.</li>
+<li>Two breakout rounds, both random rooms made by Zoom and run by Aldric: pairs or threes for the tutorial retro (1-3-All, one round instead of two); three groups for the teach-back. Rooms open and people join when they're ready.</li>
+<li>Jeremy does all the screen sharing, so the windows don't jump about when the presenter changes.</li>
+<li>Feedback as questions, so other students get to answer first.</li>
+<li><strong>Before the session:</strong> Matt runs the capstone demo once (vision, "interview me" for plan 001, run the factory), so there's a prepared session; the Saturday clip "Writing a vision and planning the first iteration" (4:43) is the fallback. Miro frames ready: What happened?, the retro (appreciations · puzzles · insights), a space per teach-back group, the context engineering sign-up.</li>
+</ul></div>
+</div>
+</details>
+<footer>Generated from runbook.md · Tue 06 Oct, 16:02</footer>
+</main>
+</body>
+</html>

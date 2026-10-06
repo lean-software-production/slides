@@ -13,44 +13,48 @@
     .intro { max-width: 38rem; font-size: 1.7rem; line-height: 1.3; color: var(--sk-body-text); }
     h2 { font: 2rem var(--sk-font-label); color: var(--sk-deep-teal); margin: 2.5rem 0 1.2rem; }
     .decks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 24px; }
-    .deck { display: flex; flex-direction: column; gap: 12px; min-height: 230px; padding: 24px; text-decoration: none; color: var(--sk-ink); }
-    .deck:focus-visible { outline: 4px solid var(--sk-deep-teal); outline-offset: 5px; }
+    .deck { display: flex; flex-direction: column; gap: 12px; min-height: 230px; padding: 24px; color: var(--sk-ink); }
+    .deck a:focus-visible { outline: 4px solid var(--sk-deep-teal); outline-offset: 5px; }
     .deck img { width: 72px; height: 72px; }
     .deck strong { font: 2rem var(--sk-font-label); color: var(--sk-deep-teal); line-height: 1.1; }
     .deck span { font-size: 1.35rem; line-height: 1.25; }
-    .deck .open { margin-top: auto; font: 1.35rem var(--sk-font-label); color: var(--sk-deep-teal); text-decoration: underline; }
+    .deck .links { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: auto; }
+    .deck a { font: 1.35rem var(--sk-font-label); color: var(--sk-deep-teal); text-decoration: underline; }
   </style>
 </head>
 <body>
 <main>
   <h1 class="sk-title"><span class="sk-burst"><span class="sk-hl">Slides</span></span></h1>
-  <p class="intro">Presentation decks from our live sessions. Choose one to open it in your browser.</p>
-  <h2>Browse the decks</h2>
+  <p class="intro">Slides from our lightning lessons and live sessions. Live sessions also have a storyboard for instructors.</p>
+  <h2>Lightning lessons</h2>
   <div class="decks">
-    <a class="deck sk-panel sk-mustard" href="what-is-a-software-factory/">
+    <article class="deck sk-panel sk-mustard">
       <img src="https://lean-software-production.github.io/brand/kit/icons/gear.svg" alt="">
       <strong>What is a software factory?</strong>
       <span>Lightning lesson · September 2026</span>
-      <span class="open">Open slides →</span>
-    </a>
-    <a class="deck sk-panel sk-teal" href="2026-09/day-1/">
+      <div class="links"><a href="what-is-a-software-factory/">Open slides →</a></div>
+    </article>
+  </div>
+  <h2>Live sessions</h2>
+  <div class="decks">
+    <article class="deck sk-panel sk-teal">
       <img src="https://lean-software-production.github.io/brand/kit/icons/chat.svg" alt="">
       <strong>Build a Software Factory: Welcome</strong>
       <span>September cohort · Day 1</span>
-      <span class="open">Open slides →</span>
-    </a>
-    <a class="deck sk-panel sk-coral" href="2026-09/day-2/">
+      <div class="links"><a href="2026-09/day-1/">Open slides →</a><a href="2026-09/day-1/storyboard.html">Open storyboard →</a></div>
+    </article>
+    <article class="deck sk-panel sk-coral">
       <img src="https://lean-software-production.github.io/brand/kit/icons/sticky-note.svg" alt="">
       <strong>Build a Software Factory: Looping</strong>
       <span>September cohort · Day 2</span>
-      <span class="open">Open slides →</span>
-    </a>
-    <a class="deck sk-panel sk-blue" href="2026-09/day-3/">
+      <div class="links"><a href="2026-09/day-2/">Open slides →</a><a href="2026-09/day-2/storyboard.html">Open storyboard →</a></div>
+    </article>
+    <article class="deck sk-panel sk-blue">
       <img src="https://lean-software-production.github.io/brand/kit/icons/magnifier.svg" alt="">
       <strong>Build a Software Factory: Validation, and your capstone</strong>
       <span>September cohort · Day 3</span>
-      <span class="open">Open slides →</span>
-    </a>
+      <div class="links"><a href="2026-09/day-3/">Open slides →</a><a href="2026-09/day-3/storyboard.html">Open storyboard →</a></div>
+    </article>
   </div>
 </main>
 </body>

@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session Storyboard</title>
+<style>
+:root {
+  --bg: #f6f5f1; --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6a64; --line: #e3e1da;
+  --present: #4f6d8f; --pairs: #c0673a; --demo: #3f8a5c; --talk: #8a6fb0; --buffer: #b9b6ac;
+  --quote-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --paper: #1f1f1c; --ink: #ecebe6; --muted: #a09e96; --line: #33322e;
+    --present: #7fa0c4; --pairs: #e08a5c; --demo: #6cbf8a; --talk: #b39ad6; --buffer: #5d5b55;
+    --quote-bg: #2a2925;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { font: 600 30px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 6px; }
+.intro p { margin: 2px 0; color: var(--muted); }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; }
+.transformation { margin: 16px 0 0; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; font-size: 16px; }
+.transformation p { margin: 0; }
+.framing-wrap { margin-top: 24px; }
+.framing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 22px 0; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card p { margin: 0; }
+.timeline { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 10px 0; margin: 12px 0 8px; }
+.bar { display: flex; gap: 2px; height: 58px; }
+.seg { min-width: 0; border-radius: 5px; padding: 4px 6px; color: #fff; text-decoration: none;
+  display: flex; flex-direction: column; overflow: hidden; font-size: 11px; line-height: 1.2; }
+.seg-t { opacity: .85; font-variant-numeric: tabular-nums; }
+.seg-n { font-weight: 600; overflow: hidden; }
+.seg.present { background: var(--present); } .seg.pairs { background: var(--pairs); }
+.seg.demo { background: var(--demo); } .seg.talk { background: var(--talk); }
+.seg.buffer { background: var(--buffer); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.sum { font-size: 13px; color: var(--muted); }
+.warn { color: #c0392b; font-weight: 600; margin-left: 8px; }
+.block { display: grid; grid-template-columns: 76px 1fr; gap: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-left: 5px solid var(--present); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0; scroll-margin-top: 110px; }
+.block.pairs { border-left-color: var(--pairs); } .block.demo { border-left-color: var(--demo); }
+.block.talk { border-left-color: var(--talk); } .block.buffer { border-left-color: var(--buffer); }
+.clock { font: 600 20px/1 Georgia, serif; font-variant-numeric: tabular-nums; }
+.mins { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.what h3 { margin: 0 0 4px; font-size: 18px; }
+.purpose { margin: 0 0 4px; font-weight: 500; }
+.structure { margin: 0; color: var(--muted); }
+blockquote { margin: 10px 0 0; padding: 8px 12px; background: var(--quote-bg); border-radius: 6px; font-style: italic; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+details ul { margin: 6px 0 0; padding-left: 18px; }
+details ol { margin: 2px 0 4px; }
+li.cont { list-style: none; }
+.notes { margin-top: 22px; color: var(--muted); }
+footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .seg-n { display: none; }
+  .block { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Day 2: Looping (Thu 1 Oct)</h1>
+<div class="intro"><p>Second live session of cohort 2. 09:30 to 11:00 PT, 90 minutes, on Zoom. Syllabus source of truth: the "Cohort 2 (Sept/Oct 2026) Syllabus Draft" Google Doc. This file is the facilitator's plan for the session, not student-facing.</p><p>Objective (from the Doc): now we get started! The students should have got their hands on and run a Ralph loop, and built their own coding agent. We will discuss the insights from that homework, dig more into our definition of a factory, and learn about feedback loops. Students will commit to their capstone project, just in time to get started with it over the weekend.</p><p>Validation and feedback loops move to Day 3 (Tue 6 Oct), after they've built one in the tutorial.</p></div>
+
+<div class="transformation"><p>They arrive having each done some of the homework alone. They leave having made sense of it together (what they did, what it means, what's next), taught a piece of it to the cohort, and committed to a capstone.</p></div>
+
+<div class="timeline">
+  <div class="bar">
+<a class='seg talk' href='#check-in' style='flex:6' title='Check in · 6 min'><span class='seg-t'>09:30</span><span class='seg-n'>Check in</span></a>
+<a class='seg talk' href='#the-homework' style='flex:4' title='The homework · 4 min'><span class='seg-t'>09:36</span><span class='seg-n'>The homework</span></a>
+<a class='seg pairs' href='#teach-back-prep' style='flex:15' title='Teach-back prep · 15 min'><span class='seg-t'>09:40</span><span class='seg-n'>Teach-back prep</span></a>
+<a class='seg present' href='#teach-back' style='flex:20' title='Teach back · 20 min'><span class='seg-t'>09:55</span><span class='seg-n'>Teach back</span></a>
+<a class='seg present' href='#reflections' style='flex:14' title='Reflections · 14 min'><span class='seg-t'>10:15</span><span class='seg-n'>Reflections</span></a>
+<a class='seg pairs' href='#capstone' style='flex:10' title='Capstone · 10 min'><span class='seg-t'>10:29</span><span class='seg-n'>Capstone</span></a>
+<a class='seg present' href='#next-time' style='flex:13' title='Next time · 13 min'><span class='seg-t'>10:39</span><span class='seg-n'>Next time</span></a>
+<a class='seg present' href='#quick-retro' style='flex:3' title='Quick retro · 3 min'><span class='seg-t'>10:52</span><span class='seg-n'>Quick retro</span></a>
+<a class='seg talk' href='#check-out' style='flex:4' title='Check out · 4 min'><span class='seg-t'>10:55</span><span class='seg-n'>Check out</span></a>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--present)"></i>presenting</span>
+    <span><i style="background:var(--talk)"></i>whole group</span>
+    <span><i style="background:var(--pairs)"></i>breakouts</span>
+    <span><i style="background:var(--demo)"></i>factory demo</span>
+    <span><i style="background:var(--buffer)"></i>buffer</span>
+    <span class="sum">09:30 to 10:59 · 89 min<span class='warn'>adds up to 89 min, not 90</span></span>
+  </div>
+</div>
+
+
+<section class="block talk" id="check-in">
+  <div class="when"><div class="clock">09:30</div><div class="mins">6 min</div></div>
+  <div class="what">
+    <h3>Check in</h3>
+    <p class="purpose">Arrive, and remember why they came</p>
+    <p class="structure">One sentence each, out loud; then the visual agenda</p>
+    <blockquote>Why this course, and why now?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>title, check in (about 20 seconds each), then the whole agenda once</li>
+<li>no "why we're here" talk: straight into the check in</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="the-homework">
+  <div class="when"><div class="clock">09:36</div><div class="mins">4 min</div></div>
+  <div class="what">
+    <h3>The homework</h3>
+    <p class="purpose">Get what everyone actually did on the table, without judgement</p>
+    <p class="structure">What? of W³: whole group on the Zoom whiteboard, everyone adds what they did, we glance over it together</p>
+    <blockquote>What happened?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Zoom whiteboard, one question: "What happened?" (not "What did you do?": that sounds accusatory)</li>
+<li>facts, not opinions yet; the meaning comes in the teach back</li>
+<li>the homework line (don't say "it's fine if you didn't"): "It matters that we do the homework together. If a couple of you don't, the rest will carry you; don't beat yourself up, but do try. Otherwise the class doesn't work."</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block pairs" id="teach-back-prep">
+  <div class="when"><div class="clock">09:40</div><div class="mins">15 min</div></div>
+  <div class="what">
+    <h3>Teach-back prep</h3>
+    <p class="purpose">Make sense of the homework by preparing to teach it; people who didn't do it still take part</p>
+    <p class="structure">So what? of W³: three prompts, one per group; groups prep a poster in breakouts; instructors on call</p>
+    <blockquote>Prep a presentation to teach your topic.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>slide: the three prompts, each with a drawing, to talk to; instructions spoken</li>
+<li>the three prompts: How coding agents work under the hood · Pros and cons of Ralph loops · What is a software factory?</li>
+<li>about 3 min to choose a subject and enter a room, 12 min prep in breakouts. David creates three rooms named <strong>Coding agents</strong>, <strong>Ralph loops</strong>, and <strong>Software factory</strong>, enables <strong>Allow participants to choose room</strong>, and opens them. Students self-select. If one room is empty or much larger than the others, ask for volunteers to move; David can manually place anyone who cannot self-select. David closes the rooms after 12 min.</li>
+<li>instructors stay out of the rooms; groups come out and ask if they're stuck</li>
+<li>Sharpie, not pencil: a poster is something to point at while you talk, not a finished thing</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="teach-back">
+  <div class="when"><div class="clock">09:55</div><div class="mins">20 min</div></div>
+  <div class="what">
+    <h3>Teach back</h3>
+    <p class="purpose">Everyone hears every topic; we correct and fill in</p>
+    <p class="structure">Each group presents to the whole group, questions after each; instructors add and correct</p>
+    <blockquote>Teach the rest of us.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>slide: title only</li>
+<li>one group per prompt, about 4 min each plus questions after each</li>
+<li>this is where we step in: "that's not quite what we mean by …"</li>
+<li>coding agents: a message goes in, a response comes back; next time two messages go in; tools let it act</li>
+<li>Ralph loop: "if you can't say what's awesome and what sucks about it, you don't know it yet"</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="reflections">
+  <div class="when"><div class="clock">10:15</div><div class="mins">14 min</div></div>
+  <div class="what">
+    <h3>Reflections</h3>
+    <p class="purpose">Hear what the homework and the teach-back left them with</p>
+    <p class="structure">Now what? of W³: retro grid on the whiteboard: four quadrants, everyone writes stickies first, then we talk through them</p>
+    <blockquote>Surprises, insights, puzzles, I wish.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>slide: just "Reflections", no instructions; open the whiteboard</li>
+<li>a 2×2 grid, but not axes: four quadrants, Surprises · Insights · Puzzles · I wish</li>
+<li>about 5 min writing stickies, then 9 min talking about them</li>
+<li>writing first: on Day 1 people wrote far more easily than they spoke</li>
+<li>puzzles and wishes feed Day 3 and later</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block pairs" id="capstone">
+  <div class="when"><div class="clock">10:29</div><div class="mins">10 min</div></div>
+  <div class="what">
+    <h3>Capstone</h3>
+    <p class="purpose">Commit to one idea before the weekend</p>
+    <p class="structure">Three breakout groups, an instructor in each: everyone picks one of their three ideas and writes it in the shared capstone sheet</p>
+    <blockquote>Which one are you building?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>slide: three groups, one instructor each · pick your capstone · write it in the [capstone sheet](https://docs.google.com/spreadsheets/d/1F5jQ1R-ZPyQUw-SX7tUC0qquGswMb6d807n0mQTesmo/edit?usp=sharing)</li>
+<li>they wrote three ideas for homework; the instructor helps each pick one; push for big</li>
+<li>Reopen the same three rooms. Ask students to return to the room they chose for teach-back where possible; rebalance only if a group is much larger or smaller, and put late arrivals in the smallest group. Matt joins Coding agents, Jeremy joins Ralph loops, and David joins Software factory.</li>
+<li>David pastes the sheet in chat, opens the rooms, then joins his group. David watches the 10-minute round and closes the rooms; Matt takes over only if his backup controls have been confirmed. If neither can operate rooms, stay in the main room: each student names a capstone choice and adds it to the sheet, with brief instructor feedback.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="next-time">
+  <div class="when"><div class="clock">10:39</div><div class="mins">13 min</div></div>
+  <div class="what">
+    <h3>Next time</h3>
+    <p class="purpose">Everyone knows what's coming and the homework</p>
+    <p class="structure">Talk: an intro to the next topics, then the homework</p>
+    
+    <details open><summary>Notes</summary><ul>
+<li>coming up first (Tuesday validation, Thursday assembly lines), then the homework</li>
+<li>homework: iterations 001 and 002 of the factory tutorial (clone https://github.com/lean-software-production/tutorial, open your coding agent, say "coach me"); watch the Doer vs Validator video; watch the Justin McCarthy video</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="quick-retro">
+  <div class="when"><div class="clock">10:52</div><div class="mins">3 min</div></div>
+  <div class="what">
+    <h3>Quick retro</h3>
+    <p class="purpose">Hear how the course is going for them, so next week is a little better</p>
+    <p class="structure">Whiteboard: a couple of buckets, about a minute to write one thing each; we don't talk through the cards</p>
+    <blockquote>Let us know how we're doing.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>slide: just "Quick retro" and a whiteboard; open the whiteboard</li>
+<li>a couple of buckets; about a minute to write one thing each</li>
+<li>"Let us know how we're doing so we can make next week a little better." Let them know we're listening</li>
+<li>format still open: keep / change, or start / stop / continue</li>
+<li>we don't talk through the cards: we read them afterwards</li>
+<li>1 min of buffer left at the end</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="check-out">
+  <div class="when"><div class="clock">10:55</div><div class="mins">4 min</div></div>
+  <div class="what">
+    <h3>Check out</h3>
+    <p class="purpose">Close as a cohort</p>
+    <p class="structure">Take-aways, a few words each, round everyone with video on</p>
+    <blockquote>One thing you're taking away.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>takeaways: a few words, not a story; go round everyone with video on, and everyone says something, even "pass"</li>
+<li>we read the transcript afterwards for feedback on the course</li>
+<li>anyone stuck on setup: stay behind</li>
+</ul></details>
+  </div>
+</section>
+
+<div class="notes"><p><em>Shape: the homework, teach back and reflections are What? So What? Now What? (Liberating Structures W³); they face backward and make sense of the homework. The capstone and next time face forward and set up the weekend.</em> <em>Energy: a gentle start (check in, the homework), then the teach-back is the peak: small groups making something, then presenting it. The retro brings it down to reflection, written before spoken. The capstone commit and the homework land the weekend.</em></p></div>
+
+<details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
+<div class="framing">
+<div class='card'><h2>Audience</h2><ul>
+<li>12 working developers and tech leads; they met each other on Tuesday.</li>
+<li>Before today they could: build their own coding agent, run the Tetris Ralph loop (or the Fabro one), watch "Software Factory: a working definition", write three capstone ideas. Some did all of it, some none.</li>
+<li>Some are advanced and worried the course won't go deep enough.</li>
+<li>At stake: the weekend. They leave with a capstone and know how to start the tutorial, or they drift.</li>
+</ul></div>
+<div class='card'><h2>Learning outcomes</h2><ul>
+<li>Can explain, with a drawing, one of: how a coding agent works under the hood, the pros and cons of a Ralph loop, what a software factory is.</li>
+<li>Have named what surprised them, what clicked, what still puzzles them and what they wish for, and heard the others'.</li>
+<li>Have committed to one capstone idea, written in the shared Google Doc.</li>
+<li>Know what to do for homework and what's coming next.</li>
+</ul></div>
+<div class='card'><h2>Key concepts</h2><ul>
+<li><strong>Coding agent</strong>: a loop around a stateless model: the conversation grows each turn, and tools let it act.</li>
+<li><strong>Ralph loop</strong>: a shell loop running an agent against a plan. What's awesome about it, what sucks.</li>
+<li><strong>Software factory</strong>: our working definition from the video: a loop, made of parts.</li>
+<li>Not today: validation, machines, assembly lines (Day 3).</li>
+</ul></div>
+<div class='card'><h2>Format &amp; logistics</h2><ul>
+<li>Zoom for talking and breakouts; the Zoom whiteboard for all the working (More → Whiteboards; people in breakouts open it themselves). Not changing tools this week.</li>
+<li>The backward-facing half is a W³ (the homework, teach back, reflections): the instructions are spoken and the work happens on the whiteboard. Those slides are just a title, no instructions.</li>
+<li>Drawings are Sharpie, not pencil: rough on purpose, something to point at while you talk.</li>
+<li>Instructors aren't in the prep rooms; they're on call, and correct during the teach-back.</li>
+<li>David is the planned Zoom co-host and operates both breakout rounds. Confirm his co-host access in the Day 2 meeting before starting. Plan for three rooms. With 12 students, that is roughly four per room; actual teach-back groups depend on students' choice of subject.</li>
+<li>Run-of-show assignments for instructor confirmation: Matt keeps overall session time; David watches the breakout timer and closes each round; Jeremy watches chat and leads the Zoom whiteboard segments. David posts the capstone sheet in chat before the second round. The presenter notes name the speakers for each handoff.</li>
+<li>Backup for breakout controls: confirm Matt has host or co-host controls before the session. If David cannot operate the rooms, Matt takes over while Jeremy gives the spoken instructions. If neither has controls, keep everyone in the main room and prepare the three topics together; do not wait for breakouts to work.</li>
+</ul></div>
+</div>
+</details>
+<footer>Generated from runbook.md · Thu 01 Oct, 16:07</footer>
+</main>
+</body>
+</html>

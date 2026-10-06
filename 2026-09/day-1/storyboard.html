@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 1 Storyboard</title>
+<style>
+:root {
+  --bg: #f6f5f1; --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6a64; --line: #e3e1da;
+  --present: #4f6d8f; --pairs: #c0673a; --demo: #3f8a5c; --talk: #8a6fb0; --buffer: #b9b6ac;
+  --quote-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --paper: #1f1f1c; --ink: #ecebe6; --muted: #a09e96; --line: #33322e;
+    --present: #7fa0c4; --pairs: #e08a5c; --demo: #6cbf8a; --talk: #b39ad6; --buffer: #5d5b55;
+    --quote-bg: #2a2925;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { font: 600 30px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 6px; }
+.intro p { margin: 2px 0; color: var(--muted); }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; }
+.transformation { margin: 16px 0 0; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; font-size: 16px; }
+.transformation p { margin: 0; }
+.framing-wrap { margin-top: 24px; }
+.framing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 22px 0; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card p { margin: 0; }
+.timeline { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 10px 0; margin: 12px 0 8px; }
+.bar { display: flex; gap: 2px; height: 58px; }
+.seg { min-width: 0; border-radius: 5px; padding: 4px 6px; color: #fff; text-decoration: none;
+  display: flex; flex-direction: column; overflow: hidden; font-size: 11px; line-height: 1.2; }
+.seg-t { opacity: .85; font-variant-numeric: tabular-nums; }
+.seg-n { font-weight: 600; overflow: hidden; }
+.seg.present { background: var(--present); } .seg.pairs { background: var(--pairs); }
+.seg.demo { background: var(--demo); } .seg.talk { background: var(--talk); }
+.seg.buffer { background: var(--buffer); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.sum { font-size: 13px; color: var(--muted); }
+.warn { color: #c0392b; font-weight: 600; margin-left: 8px; }
+.block { display: grid; grid-template-columns: 76px 1fr; gap: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-left: 5px solid var(--present); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0; scroll-margin-top: 110px; }
+.block.pairs { border-left-color: var(--pairs); } .block.demo { border-left-color: var(--demo); }
+.block.talk { border-left-color: var(--talk); } .block.buffer { border-left-color: var(--buffer); }
+.clock { font: 600 20px/1 Georgia, serif; font-variant-numeric: tabular-nums; }
+.mins { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.what h3 { margin: 0 0 4px; font-size: 18px; }
+.purpose { margin: 0 0 4px; font-weight: 500; }
+.structure { margin: 0; color: var(--muted); }
+blockquote { margin: 10px 0 0; padding: 8px 12px; background: var(--quote-bg); border-radius: 6px; font-style: italic; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+details ul { margin: 6px 0 0; padding-left: 18px; }
+details ol { margin: 2px 0 4px; }
+li.cont { list-style: none; }
+.notes { margin-top: 22px; color: var(--muted); }
+footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .seg-n { display: none; }
+  .block { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Day 1: Welcome (Tue 29 Sept)</h1>
+<div class="intro"><p>First live session of cohort 2. 09:30 to 11:00 PT, 90 minutes, on Zoom. Syllabus source of truth: the "Cohort 2 (October 2026) Syllabus Draft" Google Doc. This file is the facilitator's plan for the session, not student-facing.</p><p>Objective (from the Doc): connect learners with us as instructors, with each other, and with the content of the course. A chance to start getting to know their classmates, an orientation for how to succeed in the course, and an inspiring vision of where we're going. As it's a Tuesday, also a little time on Thursday's homework and checking for anyone who is stuck.</p></div>
+
+<div class="transformation"><p>They arrive as individuals with a vague hunch about "software factories". They leave as a cohort who have seen one run, know the four-week path, and know exactly what to do before Thursday.</p></div>
+
+<div class="timeline">
+  <div class="bar">
+<a class='seg present' href='#welcome' style='flex:5' title='Welcome · 5 min'><span class='seg-t'>09:30</span><span class='seg-n'>Welcome</span></a>
+<a class='seg present' href='#why-this-course' style='flex:9' title='Why this course · 9 min'><span class='seg-t'>09:35</span><span class='seg-n'>Why this course</span></a>
+<a class='seg pairs' href='#let-s-connect' style='flex:16' title='Let&#x27;s connect · 16 min'><span class='seg-t'>09:44</span><span class='seg-n'>Let's connect</span></a>
+<a class='seg talk' href='#share-back' style='flex:9' title='Share back · 9 min'><span class='seg-t'>10:00</span><span class='seg-n'>Share back</span></a>
+<a class='seg pairs' href='#let-s-connect-capstone' style='flex:15' title='Let&#x27;s connect, capstone · 15 min'><span class='seg-t'>10:09</span><span class='seg-n'>Let's connect, capstone</span></a>
+<a class='seg demo' href='#watch-a-real-factory' style='flex:15' title='Watch a real factory · 15 min'><span class='seg-t'>10:24</span><span class='seg-n'>Watch a real factory</span></a>
+<a class='seg talk' href='#what-else' style='flex:8' title='What else? · 8 min'><span class='seg-t'>10:39</span><span class='seg-n'>What else?</span></a>
+<a class='seg talk' href='#check-out' style='flex:9' title='Check out · 9 min'><span class='seg-t'>10:47</span><span class='seg-n'>Check out</span></a>
+<a class='seg buffer' href='#buffer' style='flex:4' title='Buffer · 4 min'><span class='seg-t'>10:56</span><span class='seg-n'>Buffer</span></a>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--present)"></i>presenting</span>
+    <span><i style="background:var(--talk)"></i>whole group</span>
+    <span><i style="background:var(--pairs)"></i>breakouts</span>
+    <span><i style="background:var(--demo)"></i>factory demo</span>
+    <span><i style="background:var(--buffer)"></i>buffer</span>
+    <span class="sum">09:30 to 11:00 PT · 90 min</span>
+  </div>
+</div>
+
+
+<section class="block present" id="welcome">
+  <div class="when"><div class="clock">09:30</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Welcome</h3>
+    <p class="purpose">Say why we're here, and show the shape of today</p>
+    <p class="structure">Short talk: the session objective, then the visual agenda</p>
+    
+    <details open><summary>Notes</summary><ul>
+<li>say the objective in your own words, not word for word</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="why-this-course">
+  <div class="when"><div class="clock">09:35</div><div class="mins">9 min</div></div>
+  <div class="what">
+    <h3>Why this course</h3>
+    <p class="purpose">Set expectations: the work happens at home, the live sessions make sense of it, two tracks run through it all, and the shape of the four weeks</p>
+    <p class="structure">Short talk, few slides: who we are, the flipped classroom, two tracks, the four weeks, "the more you talk, the more you will learn"</p>
+    
+    
+  </div>
+</section>
+
+<section class="block pairs" id="let-s-connect">
+  <div class="when"><div class="clock">09:44</div><div class="mins">16 min</div></div>
+  <div class="what">
+    <h3>Let's connect</h3>
+    <p class="purpose">Connect people to each other and to what the course teaches; everyone says their hopes and fears for the course three times</p>
+    <p class="structure">Mad Tea: rounds 1 to 3 in random pairs, introductions then their hopes and fears for the course (2 min each way)</p>
+    <blockquote>Introduce yourselves, then both answer the question.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>the structure is Mad Tea; students just see "Let's connect"</li>
+<li>every round opens with: "Who are you and where do you come from?"</li>
+<li>then:</li>
+<ol>
+<li>rounds 1 to 3, same question, new partner: "What are your hopes and fears for the course?"</li>
+<li>rounds 4 and 5, same question, new partner: "If you were ten times more bold, what's one thing you'd make exist in the world?"</li>
+</ol>
+<li>capstone criteria on screen before round 4: you'd like it to exist; ambitious; daunting even</li>
+<li>"You won't be building it by hand; your factory will."</li>
+<li>timing: 2 min set up; rounds 1 to 3 of 4 min (2 each), 2 × 1 min shuffle; after the share back, rounds 4 and 5 of 6 min (3 each), 2 × 1 min shuffle</li>
+<li>rounds 4 and 5: partners push it bigger; by the second telling it gets tighter</li>
+<li>Zoom: 6 rooms of 2, "Recreate → automatically" between rounds, auto-move on, short countdown</li>
+<li>a co-host drives the breakouts so Matt can keep time</li>
+<li>rounds 1 to 3 feed the share back, which comes before the capstone rounds</li>
+<li>broadcast at half time: "Swap: the other person's turn."</li>
+<li>cut if long: drop round 3, then round 2</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="share-back">
+  <div class="when"><div class="clock">10:00</div><div class="mins">9 min</div></div>
+  <div class="what">
+    <h3>Share back</h3>
+    <p class="purpose">Make the cohort's hopes and fears heard by everyone; they're what we'll be judged on</p>
+    <p class="structure">Out loud, hands up, no order; Matt names the patterns</p>
+    <blockquote>What are your hopes and fears for the course?</blockquote>
+    
+  </div>
+</section>
+
+<section class="block pairs" id="let-s-connect-capstone">
+  <div class="when"><div class="clock">10:09</div><div class="mins">15 min</div></div>
+  <div class="what">
+    <h3>Let's connect, capstone</h3>
+    <p class="purpose">Everyone leaves with a bold capstone idea they've said out loud twice</p>
+    <p class="structure">Capstone criteria on screen, then Mad Tea rounds 4 and 5: the capstone question (3 min each way)</p>
+    <blockquote>If you were ten times more bold, what's one thing you'd make exist in the world?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>1 min on the capstone criteria slide, 1 min to open rooms, rounds 4 and 5 (6 min each), 1 min shuffle between</li>
+<li>same breakout set-up as before</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block demo" id="watch-a-real-factory">
+  <div class="when"><div class="clock">10:24</div><div class="mins">15 min</div></div>
+  <div class="what">
+    <h3>Watch a real factory</h3>
+    <p class="purpose">Show where the course is going: a factory running, and what it built</p>
+    <p class="structure">Live demo from two Fabro sessions: one running, one finished; play the Tetris, open the plan and history</p>
+    <blockquote>What is the factory doing that you'd normally do yourself?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>ready: two Fabro sessions, one running and one finished with a Tetris; a terminal big enough to read on Zoom</li>
+<li>name machine / line only lightly; the video does the taxonomy</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="what-else">
+  <div class="when"><div class="clock">10:39</div><div class="mins">8 min</div></div>
+  <div class="what">
+    <h3>What else?</h3>
+    <p class="purpose">Open floor: what we haven't covered, what seems important, questions about where we're headed</p>
+    <p class="structure">Whole group, anyone speaks, no order (said out loud, not on the slide)</p>
+    <blockquote>What else?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>let silences sit before filling them</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="check-out">
+  <div class="when"><div class="clock">10:47</div><div class="mins">9 min</div></div>
+  <div class="what">
+    <h3>Check out</h3>
+    <p class="purpose">Everyone knows what to do before Thursday; close as a cohort with a signal on the session</p>
+    <p class="structure">Homework slide, then one word in chat</p>
+    <blockquote>One word for how you're leaving today.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>first, before Thursday: 3 capstone ideas; run the Ralph loop (or the Fabro one); watch "Software Factory: a working definition" (about 10 min)</li>
+<li>then one word each in chat</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block buffer" id="buffer">
+  <div class="when"><div class="clock">10:56</div><div class="mins">4 min</div></div>
+  <div class="what">
+    <h3>Buffer</h3>
+    <p class="purpose">Slack for overruns</p>
+    <p class="structure">-</p>
+    
+    
+  </div>
+</section>
+
+<div class="notes"><p><em>Energy: a warm, clear opening and a short talk that ends on "the more you talk, the more you will learn", then straight into Let's connect, the first peak: lots of voices, five new faces each. The share back sits between the curiosity and capstone rounds; the factory demo is the second peak and the vision of where we're going. What else and check out close calmly.</em> <em>4Cs: Connections come early (the objective names them, then Let's connect). Its questions move from who they are, to what they want to learn, to their ambition, so Concepts land on ground they've just talked about. Concepts are kept to the arc and the factory gist; the homework video carries the taxonomy. Concrete practice is Let's connect. Conclusions are the reveal question and the check out.</em></p></div>
+
+<details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
+<div class="framing">
+<div class='card'><h2>Audience</h2><ul>
+<li>12 working developers and tech leads who already use a coding agent every day.</li>
+<li>Walk in excited and a bit sceptical: "agents are powerful but they run amok, can this be tamed?"</li>
+<li>Some did the pre-work (coding agent harness, Tetris Ralph loop). Some got stuck on setup. Some haven't started.</li>
+<li>At stake: whether the next four weeks feel worth the evenings of homework.</li>
+</ul></div>
+<div class='card'><h2>Learning outcomes</h2><ul>
+<li>Can say, in a sentence, what they want to be able to do by 22 Oct.</li>
+<li>Can describe what they saw the Fabro factory do, in their own words.</li>
+<li>Can name the rhythm of the course: short homework Tue to Thu, big homework Thu to Tue, talk about it live.</li>
+<li>Leave with a first candidate idea for their capstone.</li>
+</ul></div>
+<div class='card'><h2>Key concepts</h2><ul>
+<li><strong>Software factory</strong>: a system that turns a seed into working software with little human help. Just the gist today; the video in the homework does the rest.</li>
+<li><strong>Ralph loop</strong>: the simplest factory. A shell loop running an agent against a plan.</li>
+<li><strong>Capstone</strong>: the factory you build over the course, and the thing it builds. Something you'd like to exist in the world, ambitious enough to be daunting.</li>
+<li><strong>Inverted classroom</strong>: you do the work at home, we make sense of it together live.</li>
+</ul></div>
+<div class='card'><h2>Format &amp; logistics</h2><ul>
+<li>Zoom for presenting, talking and breakouts. No EnsembleWorks for students today.</li>
+<li>12 students, breakout rooms of 2.</li>
+<li>Speakers: Matt, Jeremy, Aldric and David; who speaks each slide is in the speaker notes.</li>
+<li>A pre-recorded Fabro run in case the live one fails.</li>
+</ul></div>
+</div>
+</details>
+<footer>Generated from runbook.md · Tue 29 Sep, 15:47</footer>
+</main>
+</body>
+</html>
