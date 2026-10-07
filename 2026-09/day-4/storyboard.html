@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session Storyboard</title>
+<style>
+:root {
+  --bg: #f6f5f1; --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6a64; --line: #e3e1da;
+  --present: #4f6d8f; --pairs: #c0673a; --demo: #3f8a5c; --talk: #8a6fb0; --buffer: #b9b6ac;
+  --quote-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --paper: #1f1f1c; --ink: #ecebe6; --muted: #a09e96; --line: #33322e;
+    --present: #7fa0c4; --pairs: #e08a5c; --demo: #6cbf8a; --talk: #b39ad6; --buffer: #5d5b55;
+    --quote-bg: #2a2925;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { font: 600 30px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 6px; }
+.intro p { margin: 2px 0; color: var(--muted); }
+.slides-link { display: inline-block; margin-top: 10px; padding: 7px 12px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 6px;
+  color: var(--ink); font-weight: 600; text-decoration: none; }
+.slides-link:hover, .slides-link:focus-visible { text-decoration: underline; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; }
+.transformation { margin: 16px 0 0; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; font-size: 16px; }
+.transformation p { margin: 0; }
+.framing-wrap { margin-top: 24px; }
+.framing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 22px 0; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card p { margin: 0; }
+.timeline { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 10px 0; margin: 12px 0 8px; }
+.bar { display: flex; gap: 2px; height: 58px; }
+.phase-bar { display: flex; gap: 2px; margin-bottom: 4px; }
+.phase-bar a { min-width: 0; padding: 3px 6px; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--line); border-radius: 5px; font-size: 12px; font-weight: 700;
+  text-decoration: none; overflow: hidden; white-space: nowrap; }
+.phase-heading { margin: 22px 0 8px; padding: 8px 4px 4px; border-bottom: 2px solid var(--ink);
+  color: var(--ink); font: 600 22px/1.2 Georgia, serif; text-transform: none; letter-spacing: 0;
+  scroll-margin-top: 115px; }
+.phase-heading span { float: right; color: var(--muted); font: 12px/2 Helvetica, Arial, sans-serif; }
+.seg { min-width: 0; border-radius: 5px; padding: 4px 6px; color: #fff; text-decoration: none;
+  display: flex; flex-direction: column; overflow: hidden; font-size: 11px; line-height: 1.2; }
+.seg-t { opacity: .85; font-variant-numeric: tabular-nums; }
+.seg-n { font-weight: 600; overflow: hidden; }
+.seg.present { background: var(--present); } .seg.pairs { background: var(--pairs); }
+.seg.demo { background: var(--demo); } .seg.talk { background: var(--talk); }
+.seg.buffer { background: var(--buffer); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.sum { font-size: 13px; color: var(--muted); }
+.warn { color: #c0392b; font-weight: 600; margin-left: 8px; }
+.block { display: grid; grid-template-columns: 76px 1fr; gap: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-left: 5px solid var(--present); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0; scroll-margin-top: 110px; }
+.block.pairs { border-left-color: var(--pairs); } .block.demo { border-left-color: var(--demo); }
+.block.talk { border-left-color: var(--talk); } .block.buffer { border-left-color: var(--buffer); }
+.clock { font: 600 20px/1 Georgia, serif; font-variant-numeric: tabular-nums; }
+.mins { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.what h3 { margin: 0 0 4px; font-size: 18px; }
+.purpose { margin: 0 0 4px; font-weight: 500; }
+ul.purpose { padding-left: 20px; }
+.structure { margin: 0; color: var(--muted); }
+blockquote { margin: 10px 0 0; padding: 8px 12px; background: var(--quote-bg); border-radius: 6px; font-style: italic; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+details ul { margin: 6px 0 0; padding-left: 18px; }
+details ol { margin: 2px 0 4px; }
+li.cont { list-style: none; }
+.notes { margin-top: 22px; color: var(--muted); }
+footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .seg-n { display: none; }
+  .block { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Day 4: Assembly lines (Thu 8 Oct)</h1>
+<div class="intro"><p>Fourth live session of cohort 2. Thursday, 09:30 to 11:00 PT, on Zoom. This is a draft for instructors. Check it against the <a href="https://docs.google.com/document/d/1BaFQNOLfRDk1crjXVwlclpE8N_0qNxrwORuiRMkTA_o/edit?tab=t.0">cohort 2 syllabus</a> and confirm any remaining operational roles.</p></div>
+<a class="slides-link" href="index.html?v=daa07239ae07">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=daa07239ae07">Open with notes</a>
+
+<div class="transformation"><p>Students bring facts from their context-engineering research and examples from trying their factories on their capstones.</p><p>They leave able to say what information their factory used, where it helped or got stuck, and one change to try once they can edit and choose its routes.</p></div>
+
+<div class="timeline">
+  <div class="phase-bar"><a href="#phase-check-in" style="flex:7">Check-in · 7 min</a><a href="#phase-what" style="flex:40">What · 40 min</a><a href="#phase-so-what" style="flex:21">So what · 21 min</a><a href="#phase-now-what" style="flex:22">Now what · 22 min</a></div>
+  <div class="bar">
+<a class='seg talk' href='#check-in-and-today' style='flex:7' title='Check-in · Check-in and today · 7 min'><span class='seg-t'>09:30</span><span class='seg-n'>Check-in and today</span></a>
+<a class='seg pairs' href='#capstone-facts' style='flex:10' title='What · Capstone facts · 10 min'><span class='seg-t'>09:37</span><span class='seg-n'>Capstone facts</span></a>
+<a class='seg present' href='#context-engineering-teach-back' style='flex:30' title='What · Context engineering teach-back · 30 min'><span class='seg-t'>09:47</span><span class='seg-n'>Context engineering teach-back</span></a>
+<a class='seg pairs' href='#help-with-a-factory-problem' style='flex:14' title='So what · Help with a factory problem · 14 min'><span class='seg-t'>10:17</span><span class='seg-n'>Help with a factory problem</span></a>
+<a class='seg talk' href='#gallery-walk' style='flex:7' title='So what · Gallery walk · 7 min'><span class='seg-t'>10:31</span><span class='seg-n'>Gallery walk</span></a>
+<a class='seg demo' href='#homework-preview-iterations-003-and-004' style='flex:14' title='Now what · Homework preview: iterations 003 and 004 · 14 min'><span class='seg-t'>10:38</span><span class='seg-n'>Homework preview: iterations 003 and 004</span></a>
+<a class='seg talk' href='#weekend-homework' style='flex:3' title='Now what · Weekend homework · 3 min'><span class='seg-t'>10:52</span><span class='seg-n'>Weekend homework</span></a>
+<a class='seg talk' href='#retro-and-takeaways' style='flex:5' title='Now what · Retro and takeaways · 5 min'><span class='seg-t'>10:55</span><span class='seg-n'>Retro and takeaways</span></a>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--present)"></i>presenting</span>
+    <span><i style="background:var(--talk)"></i>whole group</span>
+    <span><i style="background:var(--pairs)"></i>breakouts</span>
+    <span><i style="background:var(--demo)"></i>factory demo</span>
+    <span><i style="background:var(--buffer)"></i>buffer</span>
+    <span class="sum">09:30 to 11:00 · 90 min</span>
+  </div>
+</div>
+
+<h2 class="phase-heading" id="phase-check-in">Check-in <span>7 min</span></h2>
+
+<section class="block talk" id="check-in-and-today">
+  <div class="when"><div class="clock">09:30</div><div class="mins">7 min</div></div>
+  <div class="what">
+    <h3>Check-in and today</h3>
+    <p class="purpose">Give everyone who wants to speak a turn</p>
+    <p class="structure">Introduce the right to pass at check-in; ask the question in a whole-room popcorn round; show the student-facing agenda</p>
+    <blockquote>What new idea has the course sparked for you so far?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Say that everyone has the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/right-to-pass.md">right to pass</a>. They can pass without explaining why and join later.</li>
+<li>Open Miro and preview what students will do: share capstone experience, teach back reading facts, help each other with factory problems, then preview editable assembly lines and weekend homework. Keep What / So what / Now what as the instructor's design structure.</li>
+<li>Follow the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/camera-participation.md">camera participation protocol</a>. Someone can turn their camera off to pass. If they want to speak with it off, they can raise a hand or say so in chat. Give everyone who opts in a turn.</li>
+<li>Ask, "What new idea has the course sparked for you so far?" Give each person time to finish their thought.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-what">What <span>40 min</span></h2>
+
+<section class="block pairs" id="capstone-facts">
+  <div class="when"><div class="clock">09:37</div><div class="mins">10 min</div></div>
+  <div class="what">
+    <h3>Capstone facts</h3>
+    <ul class="purpose"><li>Connect students with each other</li><li>Learn what happened when students used their factories</li></ul>
+    <p class="structure">Pairs compare what happened in their runs and post one example in each Miro column</p>
+    <blockquote>What useful work did your factory produce? What surprised or frustrated you?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>In pairs, ask students to tell each other what happened when they used their factories. Ask what useful work was produced, what excited them, and what surprised or frustrated them.</li>
+<li>Each pair adds one result to <strong>Value added</strong> and one difficulty to <strong>Waste or friction noticed</strong>. Ask what happened before calling something waste.</li>
+<li>If someone could not complete a run, ask what they tried, where they stopped, or what they expected their factory to do. Keep these observations for the problem-solving round.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="context-engineering-teach-back">
+  <div class="when"><div class="clock">09:47</div><div class="mins">30 min</div></div>
+  <div class="what">
+    <h3>Context engineering teach-back</h3>
+    <p class="purpose">Process and share knowledge gained from the context-engineering research homework</p>
+    <p class="structure">Working groups get 10 minutes to prepare three Miro slides, one per big idea with a picture or diagram; use the remaining time to teach the room</p>
+    <blockquote>What three big ideas should the rest of us know from your research?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Put students in working groups. Give them 10 minutes to prepare. Each person can recall what they learned from their research before the group chooses three big ideas for the room.</li>
+<li>Give each group three Miro slides, one per idea. Ask them to put something other than words on each slide: a picture or diagram they draw, bring in, or generate with AI. Words are allowed too. Use the slides to prepare a short presentation rather than collect unrelated sticky notes.</li>
+<li>Use the remaining time for each group's teach-back and a question or addition after each presentation.</li>
+<li>A machine's responsibility and the information it needs can be a useful example, but do not require every group to use the same machine.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-so-what">So what <span>21 min</span></h2>
+
+<section class="block pairs" id="help-with-a-factory-problem">
+  <div class="when"><div class="clock">10:17</div><div class="mins">14 min</div></div>
+  <div class="what">
+    <h3>Help with a factory problem</h3>
+    <p class="purpose">Help students interpret friction from their capstone work and consider changes</p>
+    <p class="structure">Jeremy explains the consultation; invite students with concrete problems to anchor breakout rooms and assign others as consultants for one adapted Troika round per room</p>
+    <blockquote>What happened? What would you like your factory to do?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Invite volunteers who have a concrete factory problem and would like advice. Give each volunteer a breakout room; assign the other students to these rooms. Students who did not complete the homework can take part as consultants. Instructors can visit the rooms.</li>
+<li>Copy each volunteer's problem statement into a Miro frame for that room. Run one adapted <a href="https://www.liberatingstructures.com/troika-consulting/">Troika Consulting</a> round per room: the problem owner, called the client, describes what happened and any next step they have in mind; consultants ask clarifying questions; the client listens silently while consultants discuss ideas; then the client says what was useful. Invite the client to mute and turn off video during the advice, but do not require it.</li>
+<li>Give the rooms a suggested pace: 2 minutes for the client to explain, 1 for clarifying questions, 5 for consultants to discuss, and 2 for the client's takeaways. The remaining four minutes cover instructions and moving into rooms.</li>
+<li>Invite ideas from the context-engineering teach-back and from anything else students have learned. Ask what further work students wish their factories could do, such as defining or checking a result. Do not imply that every problem has a context-engineering solution.</li>
+<li>Invite each group to make whatever notes will help it share back. The client may jot down useful ideas while listening; another member can do it if the client prefers.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="gallery-walk">
+  <div class="when"><div class="clock">10:31</div><div class="mins">7 min</div></div>
+  <div class="what">
+    <h3>Gallery walk</h3>
+    <p class="purpose">Let the room learn from each consultation</p>
+    <p class="structure">Matt visits each group's Miro frame and invites the group to share what happened and what it learned</p>
+    <blockquote>What did your group learn?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Bring everyone back and visit each room's Miro frame. Invite the group to explain the problem, what it discussed, and what it learned. Let the rest of the room ask a question if time allows.</li>
+<li>Instructors can connect ideas across frames. Ask what further work students wish their factories could do; this can lead into the assembly-line preview. Keep the transition brief.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-now-what">Now what <span>22 min</span></h2>
+
+<section class="block demo" id="homework-preview-iterations-003-and-004">
+  <div class="when"><div class="clock">10:38</div><div class="mins">14 min</div></div>
+  <div class="what">
+    <h3>Homework preview: iterations 003 and 004</h3>
+    <p class="purpose">Show how students will edit an assembly line in iteration 003 and choose among lines in iteration 004</p>
+    <p class="structure">Aldric compares the current routing code with the iteration 003 graph. David demonstrates an instructor-built factory with a second line</p>
+    <blockquote>What other line would help your project?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Aldric has four minutes for the iteration 003 comparison. David has ten minutes to demonstrate iteration 004.</li>
+<li>Compare the slide's simplified JavaScript-style hard-coded route with the matching <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/003-assembly-line/features/assembly-line.feature">iteration 003 graph</a>. Trace one branch and one retry. The snippet explains the change in structure; it is not code from the tutorial repository.</li>
+<li>In an instructor-built factory after iteration 004, show more than one assembly line in the target and which one a named run uses. The slide's command is illustrative; a new run also needs a target and seed. Use the <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/004-runs-and-targets/README.md">iteration 004 homework</a> as the reference. David demonstrates the finished result with an instructor-built factory; he need not implement an iteration live.</li>
+<li>Explain what moves from code into a graph in iteration 003, then how iteration 004 lets a target offer more than one route. Leave the homework steps for students to follow later.</li>
+<li>The graph chooses which machine runs next. The <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/003-assembly-line/features/machine.feature">machine configuration</a> says which harness runs a machine; the graph does not choose an agent, script, or model.</li>
+<li>Ask where students would make the change they identified. <a href="https://factory.strongdm.ai/products/attractor">StrongDM's Attractor page</a> can be a weekend reference; there is no need to show it now.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="weekend-homework">
+  <div class="when"><div class="clock">10:52</div><div class="mins">3 min</div></div>
+  <div class="what">
+    <h3>Weekend homework</h3>
+    <p class="purpose">Make the weekend assignment clear</p>
+    <p class="structure">Matt explains the homework: do iteration 003, change the project's assembly line, and run it; do iteration 004, consider another line, and run the capstone again; read about harness engineering anytime</p>
+    <blockquote>How will you change your assembly line for your project?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Give the factory tasks in this order:</li>
+<ol>
+<li>Do iteration 003. Change your project's assembly line using the editable graph, then run the factory on your capstone at least once.</li>
+<li>Do iteration 004. Think about another assembly line your project could use, then run the factory on your capstone again. They do not need to build the other line this weekend.</li>
+</ol>
+<li>The Birgitta Böckeler harness-engineering reading can happen anytime.</li>
+<li>Offer <a href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/cohort-2/week-2/thursday/materials/design-assembly-line/SKILL.md">Design an assembly line</a> if they want help with a new route.</li>
+<li>Extra credit: add a machine that runs a script or other fixed procedure, alongside an agentic machine.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="retro-and-takeaways">
+  <div class="when"><div class="clock">10:55</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Retro and takeaways</h3>
+    <p class="purpose">Hear what students are taking away and collect feedback for the next session</p>
+    <p class="structure">Jeremy invites students to add a takeaway and a keep/change note on Miro, then share a takeaway aloud</p>
+    <blockquote>What's one thing you're taking away?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Reuse Tuesday's Miro retro and takeaways frame. Invite each student to add at least one takeaway and one thing to keep or change for next time. They can pass.</li>
+<li>Invite students to share a takeaway aloud if they wish. Read the keep/change feedback afterwards rather than discussing every note now. End at 11:00.</li>
+</ul></details>
+  </div>
+</section>
+
+<div class="notes"><p><em>Students first tell a partner what happened when they used their factories on their capstones. They then teach back their context-engineering research. They use one piece of friction from the capstone run as the focus for small-group advice. The advice may draw on context engineering or another idea. The last part previews iterations 003 and 004, which students have not done yet.</em> The student-facing agenda has four parts: <strong>What happened in your capstone?</strong>, <strong>Context engineering</strong>, <strong>Factory kaizen</strong>, and <strong>Over the weekend: assembly lines</strong>. Show the full agenda after check-in, then each card before its activity. Check-in opens the session; retro and takeaways closes it, followed by an untimed “See you Tuesday!” card. This session has no reserved buffer. <em>Keep the opening short so the breakout conversations have time. The exact small-group prompts and transition into assembly lines still need a rehearsal.</em></p></div>
+
+<details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
+<div class="framing">
+<div class='card'><h2>Audience</h2><ul>
+<li>Twelve developers and tech leads. On Tuesday they watched instructors plan the first iteration of a capstone, then were asked to try it with their own projects.</li>
+<li>They may have written a vision, planned an iteration, run their factory on their project, and researched context engineering. Some will have done only part of this.</li>
+<li>They have used a factory that plans, does, and validates work. They have not yet built or edited an assembly-line graph; iteration 003 comes after this session.</li>
+<li>Running a factory on a real project may have shown them what it needs next. This session helps them choose a change to try.</li>
+</ul></div>
+<div class='card'><h2>Learning outcomes</h2><ul>
+<li>Describe what their factory did on their capstone, including useful work, stops, and moments when they had to step in.</li>
+<li>Teach back what they learned from their context-engineering research and suggest how a factory could use it.</li>
+<li>Use something they saw in that run to discuss a change to the factory, which may involve better context, validation, or another kind of work.</li>
+<li>Explain that iteration 003 lets them edit the route as a graph, and iteration 004 lets a target hold more than one line. Name one change to try on their project.</li>
+</ul></div>
+<div class='card'><h2>Key concepts</h2><ul>
+<li><a href="https://lean-software-production-website.pages.dev/lexicon/#machine"><strong>Machine</strong></a>: a non-interactive agent or deterministic step that receives an input and returns a result.</li>
+<li><a href="https://lean-software-production-website.pages.dev/lexicon/#assembly-line"><strong>Assembly line</strong></a>: a directed graph of machines whose connections determine what runs next.</li>
+<li><a href="https://lean-software-production-website.pages.dev/lexicon/#orchestrator"><strong>Orchestrator</strong></a>: the part of the factory that runs the line, handles branches and retries, and decides when it finishes.</li>
+<li><strong>Context for a machine:</strong> the information it needs for its own work, selected from what the team knows about the project.</li>
+<li><strong>Project-specific validation:</strong> a check that helps the factory decide whether this project's work is good enough to continue.</li>
+</ul></div>
+<div class='card'><h2>Format &amp; logistics</h2><ul>
+<li>Use Zoom for discussion and breakout rooms. Use the cohort Miro board to collect research takeaways and capstone examples.</li>
+<li>Before class, make a Miro template with three slides per group for the context-engineering teach-back. Each slide needs room for a big idea and a picture or diagram. Make a capstone frame with <strong>Value added</strong> and <strong>Waste or friction noticed</strong> columns. Make one consultation frame per breakout room, with space for a problem statement and whatever notes the group wants to keep. Reuse Tuesday's retro and takeaways frame for checkout.</li>
+<li>If someone could not complete a capstone run, ask what they tried, where they stopped, or what they expected the factory to do on their project.</li>
+<li>Prepare a short preview from the <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/003-assembly-line/README.md">iteration 003 homework</a>, its <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/003-assembly-line/features/assembly-line.feature">example graph</a>, and the <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/004-runs-and-targets/README.md">iteration 004 homework</a>. The tutorial gives students specifications, so use an instructor-built factory to show working code or a run.</li>
+<li>David: rehearse a demonstration with two assembly lines in one target. Show what students will have after the homework and which line a named run selects. The slide uses the illustrative command <code>./bin/factory --run refactor-001 --line refactor</code>; match its names to the demonstration if possible. Prepare a fallback in case the demonstration fails.</li>
+<li>Confirm who runs the breakout rooms and who prepares Miro.</li>
+</ul></div>
+</div>
+</details>
+<footer>Generated from runbook.md · Wed 07 Oct, 23:07</footer>
+</main>
+</body>
+</html>

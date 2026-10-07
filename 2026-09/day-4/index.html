@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 4: Assembly lines</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="kit/sketchbook.css">
+<script src="kit/sketchbook.js" defer></script>
+<style>
+  html, body, .reveal-viewport { background: var(--sk-paper); }
+  .reveal-viewport { background-image: none; }
+  .reveal { font-family: var(--sk-font-body); color: var(--sk-ink); }
+  .reveal .slides section { font-size: 26px; text-align: left; height: 100%; box-sizing: border-box; padding: 30px 10px 20px; display: flex !important; flex-direction: column; }
+  .reveal .slides section.mid { justify-content: center; }
+  .reveal .slides section.center { justify-content: center; align-items: center; text-align: center; }
+  .reveal .sk-bubble::before { border-width: 5px; }
+  .reveal .sk-bubble::after { border-right-width: 5px; border-bottom-width: 5px; }
+  .reveal .sk-panel::before { border-width: 4px; }
+  .reveal .progress { color: var(--sk-mustard); height: 5px; }
+  .reveal .controls { color: var(--sk-deep-teal); }
+  .reveal .slide-number { background: transparent; color: var(--sk-deep-teal); font-family: var(--sk-font-label); font-size: 20px; }
+  .question { font-size:2.2em; line-height:1.18; max-width:1150px; margin:auto 0; }
+  .instruction { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.25em; margin:.7em 0 0; }
+  .icon { height:195px; max-width:260px; object-fit:contain; }
+  .tiny-icon { height:105px; max-width:115px; object-fit:contain; }
+  .duo { display:grid; grid-template-columns:1fr 1fr; gap:35px; flex:1; align-items:stretch; }
+  .trio { display:grid; grid-template-columns:repeat(3,1fr); gap:25px; flex:1; align-items:stretch; }
+  .consultation { grid-template-columns:repeat(4,1fr); }
+  .consultation .card { display:grid; grid-template-rows:110px 75px 55px 1fr; justify-items:center; align-items:start; text-align:center; padding:24px 20px; }
+  .consultation .card img { height:100px; max-width:110px; margin:0; }
+  .consultation .card h3 { font-size:1.5em; margin:0; }
+  .consultation .step-time { font:1.25em var(--sk-font-label); color:var(--sk-deep-teal); margin:0; }
+  .consultation .step-action { font-size:1.18em; line-height:1.2; margin:0; }
+  .gallery-board { width:100%; max-width:1100px; min-height:430px; margin:auto; padding:30px; box-sizing:border-box;
+    border:5px solid var(--sk-ink); border-radius:18px; background:var(--sk-paper);
+    display:flex; align-items:center; justify-content:center; gap:30px; filter:url(#sk-wobble); }
+  .gallery-note { width:270px; min-height:245px; box-sizing:border-box; padding:35px 25px;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center;
+    box-shadow:7px 9px 0 color-mix(in srgb,var(--sk-ink) 22%,transparent); }
+  .gallery-note h3 { font:1.45em var(--sk-font-label); color:var(--sk-deep-teal); margin:0 0 .35em; }
+  .gallery-note p { font-size:1.15em; line-height:1.2; margin:0; }
+  .card { border:4px solid var(--sk-ink); border-radius:22px; padding:28px 32px; background:var(--sk-bubble); filter:url(#sk-wobble); display:flex; flex-direction:column; justify-content:center; }
+  .card.teal { background:color-mix(in srgb,var(--sk-teal) 24%,var(--sk-paper)); }
+  .card.coral { background:color-mix(in srgb,var(--sk-coral) 23%,var(--sk-paper)); }
+  .card.blue { background:color-mix(in srgb,var(--sk-blue) 18%,var(--sk-paper)); }
+  .card.mustard { background:color-mix(in srgb,var(--sk-mustard) 29%,var(--sk-paper)); }
+  .card h3 { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.6em; margin:0 0 .25em; }
+  .card p { font-size:1.42em; line-height:1.2; margin:.25em 0; }
+  .card small { font-size:1.05em; line-height:1.2; }
+  .card img { margin:0 auto .4em; }
+  .sk-row { margin-top: 1em; }
+  .agenda .sk-row { font-size: 1.05em; }
+  .agenda .sk-label { font-size: .8em; }
+  .agenda .sk-panel img { height: 100px; width: auto; margin: .6em auto 0; }
+  .agenda .sk-panel:not(.sk-dashed) { opacity: .45; }
+  .agenda.all .sk-panel { opacity: 1; }
+  .flow { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:60px 0; }
+  .flow .card { min-width:210px; text-align:center; padding:25px; }
+  .arrow { font-family:var(--sk-font-label); font-size:2.5em; color:var(--sk-deep-teal); }
+  .code { font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:1.12em; line-height:1.38; white-space:pre-wrap; margin:0; color:var(--sk-ink); }
+  .route-code-card { justify-content:flex-start; }
+  .route-code-card h3 { min-height:2.4em; display:flex; align-items:center; }
+  .route-code-card .code { font-size:.9em; line-height:1.4; white-space:pre; }
+  .code-panel { box-sizing:border-box; width:100%; min-height:315px; padding:24px;
+    border:2px solid var(--sk-ink); border-radius:12px; background:var(--sk-paper); }
+  .command-example { display:flex; align-items:center; justify-content:center; min-height:220px;
+    margin:auto 0; font-size:1.4em; white-space:pre; filter:url(#sk-wobble); }
+  .route { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.55em; margin:.35em 0; }
+  .route .arrow { font-size:1em; margin:0 .2em; }
+  .draft { font-family:var(--sk-font-label); font-size:.9em; color:var(--sk-rust-text); margin:0 0 .5em; }
+  .homework { display:grid; grid-template-rows:1.2fr 1.2fr .7fr; gap:18px; flex:1; }
+  .homework .card { display:grid; grid-template-columns:300px 1fr; align-items:center; padding:16px 30px; }
+  .homework h3 { font-size:1.35em; margin:0; }
+  .homework ul { margin:0; padding-left:1.2em; font-size:1.06em; line-height:1.25; }
+  .homework li { margin:.12em 0; }
+  .homework p { font-size:1.12em; }
+  .homework-title { display:flex; align-items:center; gap:22px; }
+  .homework-title img { height:66px; width:66px; object-fit:contain; }
+  a { color:var(--sk-deep-teal); }
+  .presenter-toggle { position:fixed; z-index:100; top:12px; right:18px; padding:7px 13px;
+    border:2px solid var(--sk-ink); border-radius:9px; background:var(--sk-paper);
+    color:var(--sk-deep-teal); font:24px var(--sk-font-label); cursor:pointer; }
+  .presenter-panel { position:fixed; z-index:90; inset:0 0 0 60%; overflow:auto;
+    box-sizing:border-box; padding:58px 28px 24px; background:var(--sk-paper);
+    border-left:4px solid var(--sk-ink); color:var(--sk-ink);
+    font:clamp(17px,1.5vw,24px)/1.35 var(--sk-font-body); }
+  .presenter-panel[hidden] { display:none; }
+  .presenter-panel h2 { margin:0 0 .45em; font:1.7em var(--sk-font-label); color:var(--sk-deep-teal); }
+  .presenter-panel ul { padding-left:1.2em; }
+  .presenter-panel li { margin:.45em 0; }
+  .presenter-panel a { color:var(--sk-deep-teal); }
+  body.presenter-open .reveal { width:60vw; }
+  @media (max-width:850px) {
+    body.presenter-open .reveal { width:100vw; height:52vh; }
+    .presenter-panel { inset:52vh 0 0; border-left:0; border-top:4px solid var(--sk-ink); padding-top:50px; }
+  }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+  <!-- 1 · Title -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.1em"><span class="sk-burst"><span class="sk-hl">Welcome back</span></span></h1>
+    <p style="font-size:1.5em">Day 4 of 8 · Thursday 8 October</p>
+    <img src="kit/characters/group.svg" alt="People ready to work together" style="height:270px">
+    <aside class="notes"><strong class="when">⏱ 09:30–09:33 · 3 min</strong><br><strong class="who">🎤 Matt</strong><br><a class="lesson-checklists" href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/checklists/live-lesson-checklists.md">Lesson checklists</a> · <a class="go-live-checklist" href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/checklists/live-lesson-checklists.md#-go-live--before-admitting-students">Go live</a><br><a class="storyboard-link" href="https://lean-software-production.github.io/slides/2026-09/day-4/storyboard.html">Storyboard</a><br><ul><li>Before admitting students, use the linked lesson checklists: confirm roles, co-host controls, recording and transcript, links, and the demo fallback. Keep the linked storyboard open beside the slides.</li><li>Open the cohort Miro board and paste its link in Zoom chat. <span class="todo">Open: Miro board URL</span></li></ul></aside>
+  </section>
+  <!-- 2 · Check in -->
+  <section class="center">
+    <h2 class="sk-section">Check in</h2>
+    <div class="sk-bubble question" style="text-align:center">“What new idea has the course sparked for you so far?”</div>
+    <img src="kit/icons/lightbulb.svg" alt="Lightbulb" class="icon">
+    <aside class="notes"><strong class="when">⏱ 09:33–09:37 · 4 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Introduce the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/right-to-pass.md">right to pass</a>: “We invite you to take part. You can always pass without explaining, and join in later if you want to.”</li><li>Use a whole-room popcorn round so everyone who wants to speak has a turn. Invite students to switch video off if they want to pass. If their video is off and they want a turn, they can raise a hand or say so in chat. Include them when calling on people. See the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/camera-participation.md">camera participation protocol</a>.</li><li>Keep the round moving and allow each speaker to finish a thought. Four minutes may be tight; watch the clock.</li></ul></aside>
+  </section>
+  <!-- 3 · Agenda (all) -->
+  <section class="mid agenda all" data-step="0">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:37 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Preview the four parts: compare what happened in the capstone, teach back context-engineering research, help each other improve factories, then preview the assembly-line homework. Students do not need to have built iteration 003 yet.</li></ul></aside>
+  </section>
+  <!-- 4 · Agenda: What happened in your capstone? -->
+  <section class="mid agenda" data-step="1">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:37 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Begin with what happened when students used their factories on their capstones. Send pairs to their Miro frame.</li></ul></aside>
+  </section>
+  <!-- 5 · Capstone facts -->
+  <section><h2 class="sk-section">What happened on your capstone?</h2>
+    <div class="duo"><div class="card teal"><img src="kit/icons/sprout.svg" alt="" class="tiny-icon"><h3>Value added</h3><p>What useful work did your factory produce?</p></div><div class="card coral"><img src="kit/icons/magnifier.svg" alt="" class="tiny-icon"><h3>Waste or friction noticed</h3><p>What surprised or frustrated you?</p></div>
+</div>
+    <p class="instruction">Talk in pairs. Add one observed example to each Miro column.</p>
+    <aside class="notes"><strong class="when">⏱ 09:37–09:47 · 10 min</strong><br><strong class="who">🎤 Jeremy; co-host runs pairs</strong><br><ul><li>Ask students to tell a partner what actually happened before explaining it. Include useful failures and incomplete runs.</li><li>Each pair places one concrete result in Value added and one difficulty in Waste or friction noticed. Ask what happened before labeling something waste.</li><li>If a student did not complete a run, ask what they tried, where they stopped, or what they expected their factory to do.</li><li>Keep the examples on Miro for the small-group problem-solving round.</li></ul></aside>
+  </section>
+  <!-- 6 · Agenda: Context engineering -->
+  <section class="mid agenda" data-step="2">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:47 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Invite working groups to teach back their context-engineering research. Look for ideas that could help with factory problems later in the session.</li></ul></aside>
+  </section>
+  <!-- 7 · Context engineering teach-back -->
+  <section class="center"><h2 class="sk-section">Context engineering teach-back</h2>
+    <ul style="font-size:1.45em;line-height:1.45;text-align:left;margin:1em auto"><li>Choose three big ideas from your research.</li><li>Make one Miro slide for each idea.</li><li>Put a picture or diagram on every slide.</li></ul>
+    <p class="instruction">10 minutes to prepare · then teach the room</p>
+    <aside class="notes"><strong class="when">⏱ 09:47–10:17 · 30 min</strong><br><strong class="who">🎤 Matt; co-host runs rooms</strong><br><ul><li>Make working groups. Give them 10 minutes to prepare, then use the remaining time for teach-backs and discussion.</li><li>Each group chooses three big ideas and makes one Miro slide per idea. Ask for something other than words on each slide: a picture or diagram they draw, bring in, or generate with AI. Words are allowed too. Prepare a template with three slides per group.</li><li>Hear each teach-back and leave time for one question or addition. A machine's responsibility and the information it needs can be an example, but do not require all groups to use the same machine.</li></ul></aside>
+  </section>
+  <!-- 8 · Agenda: Factory kaizen -->
+  <section class="mid agenda" data-step="3">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:17 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Use the capstone observations and context-engineering ideas to help students work through concrete factory problems. Other useful ideas are welcome too.</li></ul></aside>
+  </section>
+  <!-- 9 · Help with a factory problem -->
+  <section><h2 class="sk-section">Help with a factory problem</h2>
+    <div class="trio consultation"><div class="card blue"><img src="kit/icons/magnifier.svg" alt=""><h3>Client</h3><p class="step-time">2 min</p><p class="step-action">Explain the problem</p></div><div class="card mustard"><img src="kit/icons/puzzle.svg" alt=""><h3>Consultants</h3><p class="step-time">1 min</p><p class="step-action">Ask questions</p></div><div class="card coral"><img src="kit/icons/lightbulb.svg" alt=""><h3>Consultants</h3><p class="step-time">5 min</p><p class="step-action">Discuss ideas while the client listens</p></div><div class="card teal"><img src="kit/icons/checklist.svg" alt=""><h3>Client</h3><p class="step-time">2 min</p><p class="step-action">Share what helped</p></div>
+</div>
+    <p class="instruction">One client per room · add useful notes to your Miro frame</p>
+    <aside class="notes"><strong class="when">⏱ 10:17–10:31 · 14 min</strong><br><strong class="who">🎤 Jeremy; co-host runs rooms</strong><br><ul><li>Invite volunteers with concrete factory problems. Give each volunteer a room and assign other students as consultants. Students who did not complete the homework can consult. Instructors can visit rooms. Copy each volunteer's problem statement into that room's Miro frame.</li><li>Use one adapted <a href="https://www.liberatingstructures.com/troika-consulting/">Troika Consulting</a> round. Suggested pace: client explains for 2 minutes, clarifying questions for 1, consultants discuss for 5, client shares takeaways for 2. Allow the rest of this block for instructions, moving into rooms, and conversation. Invite the client to mute and turn off video during the advice, but do not require it.</li><li>Invite ideas from the context-engineering teach-back and elsewhere. Ask the group to make whatever notes will help it share back. The client can jot ideas down while listening, or someone else can do that.</li></ul></aside>
+  </section>
+  <!-- 10 · Gallery walk -->
+  <section class="mid"><h2 class="sk-section">Gallery walk: what did we learn?</h2>
+    <div class="gallery-board" aria-label="Example Miro frame with notes from one consultation"><div class="gallery-note" style="background:color-mix(in srgb,var(--sk-blue) 30%,var(--sk-paper))"><h3>Problem</h3><p>What happened?</p></div><div class="gallery-note" style="background:color-mix(in srgb,var(--sk-mustard) 45%,var(--sk-paper))"><h3>Ideas</h3><p>What did the group discuss?</p></div><div class="gallery-note" style="background:color-mix(in srgb,var(--sk-coral) 35%,var(--sk-paper))"><h3>Takeaway</h3><p>What was useful?</p></div>
+</div>
+    <p class="instruction">Visit each room's Miro frame. Share what you learned.</p>
+    <aside class="notes"><strong class="when">⏱ 10:31–10:38 · 7 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Bring everyone back and visit each room's Miro frame. Invite the group to explain its problem, what it discussed, and what it learned. Let others ask a question if time allows.</li><li>Connect ideas across frames. Ask what further work students wish their factories could do; this can lead into the assembly-line preview.</li></ul></aside>
+  </section>
+  <!-- 11 · Agenda: Over the weekend: assembly lines -->
+  <section class="mid agenda" data-step="4">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:38 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Now show how students can edit the route after iteration 003 and choose among routes after iteration 004.</li></ul></aside>
+  </section>
+  <!-- 12 · Homework: iteration 003 -->
+  <section><h2 class="sk-section">Homework: iteration 003: Customize assembly lines</h2>
+    <div class="duo"><div class="card mustard route-code-card"><h3>Today: route in code</h3><pre class="code code-panel">let plan = await planner();
+let work = await doer(plan);
+
+while (!await validator(work)) {
+  work = await doer(work);
+}</pre></div><div class="card teal route-code-card"><h3>Iteration 003: route in a graph</h3><pre class="code code-panel">planner → doer
+doer → validator
+validator → doer
+validator → planner
+planner → finish</pre></div>
+</div>
+    <p class="instruction">The graph names machines and decides which runs next.</p>
+    <aside class="notes"><strong class="when">⏱ 10:38–10:42 · 4 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>The JavaScript-style left side is simplified pseudocode showing routing embedded in code, not code from a tutorial implementation. Rehearse the comparison with an instructor-built factory if available.</li><li>Right side summarizes the example route in the <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/003-assembly-line/features/assembly-line.feature">iteration 003 specification</a>. Trace one branch and one retry. The full graph includes conditional labels.</li><li>The graph routes machine results. Machine configuration names the harness; the graph does not select an agent, script, or model.</li></ul></aside>
+  </section>
+  <!-- 13 · Homework: iteration 004 -->
+  <section><h2 class="sk-section">Homework: iteration 004: Multiple assembly lines</h2>
+    <pre class="code code-panel command-example">$ ./bin/factory --run refactor-001 --line refactor</pre>
+    <aside class="notes"><strong class="when">⏱ 10:42–10:52 · 10 min</strong><br><strong class="who">🎤 David</strong><br><ul><li>This command illustrates a named run selecting an assembly line. The iteration 004 tutorial uses <code>--run</code> and <code>--line</code>; a first invocation also supplies a target and seed. Match the names to the rehearsed demonstration.</li><li>Demonstrate an instructor-built factory after iteration 004 with more than one line in its target. Show which line one named run uses. Rehearse the demo and prepare a fallback.</li><li>Ask what other line would help their project. Keep attention on their proposed change, not Graphviz syntax.</li></ul></aside>
+  </section>
+  <!-- 14 · Weekend homework -->
+  <section><h2 class="sk-section homework-title"><img src="kit/icons/checklist.svg" alt="">Weekend homework</h2>
+    <div class="homework">
+      <div class="card teal"><h3>1. Iteration 003</h3><ul><li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/003-assembly-line/README.md">tutorial 003</a></li><li>Customize your assembly line for your project</li><li>Run your capstone through it at least once</li></ul></div>
+      <div class="card coral"><h3>2. Iteration 004</h3><ul><li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/004-runs-and-targets/README.md">tutorial 004</a></li><li>Think about another line your project could use</li><li>Run your capstone through the factory again</li></ul></div>
+      <div class="card mustard"><h3>Reading</h3><p>Read Birgitta Böckeler on harness engineering</p></div>
+</div>
+    <aside class="notes"><strong class="when">⏱ 10:52–10:55 · 3 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>The numbered groups show the order for the factory work. The reading can happen anytime.</li><li>After iteration 003, ask students to use the editable graph on their project and run the capstone at least once. After iteration 004, ask them to consider another line and run their capstone through the factory again. Building another line is optional. <a href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/cohort-2/week-2/thursday/materials/design-assembly-line/SKILL.md">Design an assembly line</a> is an optional aid.</li><li>Extra credit: support a deterministic machine as well as an agentic machine.</li><li>Check the syllabus against the agreed homework and update it if the wording or links differ.</li></ul></aside>
+  </section>
+  <!-- 15 · Checkout -->
+  <section class="center"><h2 class="sk-section">Retro and takeaways</h2>
+    <div class="sk-bubble" style="font-size:2.2em">“One thing you're taking away.”</div>
+    <img src="art/whiteboard.svg" alt="A whiteboard with stickies on it" style="height:260px;margin-top:.6em">
+    <aside class="notes"><strong class="when">⏱ 10:55–11:00 · 5 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Use the same Miro retro and takeaways frame as Tuesday. Invite everyone to add at least one takeaway and one thing to keep or change. Passing is welcome.</li><li>Ask students to share their takeaway out loud if they wish. Read the keep/change notes after the session; do not spend the checkout discussing each one.</li><li>Keep this to five minutes and end on time.</li></ul></aside>
+  </section>
+  <!-- 16 · See you Tuesday -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.6em"><span class="sk-burst"><span class="sk-hl">See you Tuesday!</span></span></h1>
+    <img src="kit/characters/waver.svg" alt="A person waving" style="height:320px;margin-top:.6em">
+    <aside class="notes"><strong class="when">⏱ 11:00 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Close after the retro. There is no reserved buffer in this session; end at 11:00.</li></ul></aside>
+  </section>
+</div></div>
+<template id="agenda-row">
+  <div class="sk-row">
+    <div class="sk-panel sk-forest"><div class="sk-step"><span class="sk-label">What happened in your capstone?</span></div><img src="kit/icons/kite.svg" alt=""></div>
+    <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">Context engineering</span></div><img src="kit/icons/books.svg" alt=""></div>
+    <div class="sk-panel sk-coral"><div class="sk-step"><span class="sk-label">Factory kaizen</span></div><img src="kit/icons/magnifier.svg" alt=""></div>
+    <div class="sk-panel sk-blue"><div class="sk-step"><span class="sk-label">Over the weekend: assembly lines</span></div><img src="kit/icons/gear.svg" alt=""></div>
+  </div>
+</template>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  document.querySelectorAll('section.agenda').forEach(function (section) {
+    var row = document.getElementById('agenda-row').content.cloneNode(true);
+    var step = +section.dataset.step;
+    if (step) row.querySelectorAll('.sk-panel')[step - 1].classList.add('sk-dashed');
+    section.appendChild(row);
+  });
+  var presenterPanel;
+  var presenterBody;
+  var presenterHeading;
+  var presenterButton;
+  function updatePresenterNotes() {
+    if (!presenterPanel) return;
+    var slide = Reveal.getCurrentSlide();
+    var notes = slide && slide.querySelector('aside.notes');
+    presenterHeading.textContent = 'Slide ' + (Reveal.getIndices().h + 1) + ' notes';
+    presenterBody.innerHTML = notes ? notes.innerHTML : '<p>No notes for this slide.</p>';
+  }
+  function togglePresenterNotes(forceOpen) {
+    if (!presenterPanel) return;
+    var open = typeof forceOpen === 'boolean' ? forceOpen : presenterPanel.hidden;
+    presenterPanel.hidden = !open;
+    document.body.classList.toggle('presenter-open', open);
+    presenterButton.setAttribute('aria-expanded', String(open));
+    presenterButton.textContent = open ? 'Hide notes (S)' : 'Notes (S)';
+    if (open) updatePresenterNotes();
+    Reveal.layout();
+  }
+  Reveal.initialize({ width:1600, height:900, margin:0.04, hash:true, slideNumber: 'c/t', transition:'fade', center:false,
+    keyboard:{ 83: function () { togglePresenterNotes(); } }
+  }).then(function () {
+    // The one-slide canvas previews should stay uncluttered.
+    if (document.querySelectorAll('.reveal .slides > section').length < 2) return;
+    presenterButton = document.createElement('button');
+    presenterButton.className = 'presenter-toggle';
+    presenterButton.type = 'button';
+    presenterButton.setAttribute('aria-controls', 'presenter-notes');
+    presenterButton.setAttribute('aria-expanded', 'false');
+    presenterButton.textContent = 'Notes (S)';
+    presenterButton.addEventListener('click', function () { togglePresenterNotes(); });
+    presenterPanel = document.createElement('aside');
+    presenterPanel.id = 'presenter-notes';
+    presenterPanel.className = 'presenter-panel';
+    presenterPanel.hidden = true;
+    presenterPanel.setAttribute('aria-label', 'Presenter notes');
+    presenterPanel.innerHTML = '<h2></h2><div></div>';
+    presenterHeading = presenterPanel.querySelector('h2');
+    presenterBody = presenterPanel.querySelector('div');
+    document.body.append(presenterButton, presenterPanel);
+    Reveal.on('slidechanged', updatePresenterNotes);
+    if (new URLSearchParams(location.search).has('notes')) togglePresenterNotes(true);
+  });
+  new ResizeObserver(function () { Reveal.layout(); }).observe(document.documentElement);
+  if (document.fonts) document.fonts.ready.then(function () { Reveal.layout(); });
+  document.addEventListener('visibilitychange', function () { Reveal.layout(); });
+</script>
+</body>
+</html>
