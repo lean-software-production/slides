@@ -50,6 +50,11 @@
   .card p { font-size:1.42em; line-height:1.2; margin:.25em 0; }
   .card small { font-size:1.05em; line-height:1.2; }
   .card img { margin:0 auto .4em; }
+  .feedback-headings { display:grid; grid-template-columns:1fr 1fr; gap:25px; margin:.15em 0 .5em; }
+  .feedback-headings h3 { font:1.25em var(--sk-font-label); color:var(--sk-deep-teal); margin:0; }
+  .feedback-grid { display:grid; grid-template-columns:1fr 1fr; grid-template-rows:repeat(3,1fr); gap:16px 25px; flex:1; }
+  .feedback-grid .card { padding:15px 27px; }
+  .feedback-grid .card p { font-size:1.08em; line-height:1.18; margin:0; }
   .sk-row { margin-top: 1em; }
   .agenda .sk-row { font-size: 1.05em; }
   .agenda .sk-label { font-size: .8em; }
@@ -114,11 +119,18 @@
     <img src="kit/icons/lightbulb.svg" alt="Lightbulb" class="icon">
     <aside class="notes"><strong class="when">⏱ 09:33–09:37 · 4 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Introduce the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/right-to-pass.md">right to pass</a>: “We invite you to take part. You can always pass without explaining, and join in later if you want to.”</li><li>Use a whole-room popcorn round so everyone who wants to speak has a turn. Invite students to switch video off if they want to pass. If their video is off and they want a turn, they can raise a hand or say so in chat. Include them when calling on people. See the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/camera-participation.md">camera participation protocol</a>.</li><li>Keep the round moving and allow each speaker to finish a thought. Four minutes may be tight; watch the clock.</li></ul></aside>
   </section>
-  <!-- 3 · What we heard -->
-  <section class="mid"><h2 class="sk-section">What we heard</h2>
-    <div class="trio"><div class="card teal"><h3>More time to talk</h3><p>We’re covering a little less, with more time in breakouts and afterwards.</p></div><div class="card mustard"><h3>Make it concrete</h3><p>We’ll use specific examples. Please ask when something feels unclear.</p></div><div class="card blue"><h3>Support teach-backs</h3><p>You’ll still teach each other. We’ll visit rooms while you prepare.</p></div>
-</div>
-    <aside class="notes"><strong class="when">⏱ 09:37 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Thank students for the feedback they gave in the last session. Briefly explain the three changes we are trying today.</li><li>Keep this transition brief so the first pair conversation can start on time. Invite students to ask for a specific example whenever an explanation feels abstract.</li><li>During teach-back preparation, instructors should visit the rooms and help groups make their ideas clear.</li></ul></aside>
+  <!-- 3 · What we heard; what we’re doing -->
+  <section><h2 class="sk-section">What we heard; what we’re doing</h2>
+    <div class="feedback-headings"><h3>What we heard</h3><h3>What we’re doing</h3></div>
+    <div class="feedback-grid">
+      <div class="card blue"><p>Breakout time feels short. The conversations afterwards are useful.</p></div>
+      <div class="card teal"><p>We’re covering a little less to leave more time in rooms and for discussion afterwards.</p></div>
+      <div class="card blue"><p>Some ideas feel abstract without a specific example.</p></div>
+      <div class="card teal"><p>We’ll use concrete examples. Please ask us to clarify anything that feels unclear.</p></div>
+      <div class="card blue"><p>Breakouts help you share what you’ve learned.</p></div>
+      <div class="card teal"><p>We’ll keep teach-backs and spend more time in rooms while groups prepare.</p></div>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 09:37 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Thank students for their feedback. Read each row as something we heard and what we are trying in response.</li><li>The Miro retro called out short breakout times, useful conversations after breakouts, and the need for specific examples. Invite students to ask whenever an explanation feels abstract.</li><li>We are keeping teach-backs. During preparation, instructors will visit rooms and help groups make their ideas clear. Keep this transition brief so pairs can start on time.</li></ul></aside>
   </section>
   <!-- 4 · Agenda (all) -->
   <section class="mid agenda all" data-step="0">
