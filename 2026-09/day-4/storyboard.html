@@ -85,7 +85,7 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
 <main>
 <h1>Day 4: Assembly lines (Thu 8 Oct)</h1>
 <div class="intro"><p>Fourth live session of cohort 2. Thursday, 09:30 to 11:00 PT, on Zoom. This is a draft for instructors. Check it against the <a href="https://docs.google.com/document/d/1BaFQNOLfRDk1crjXVwlclpE8N_0qNxrwORuiRMkTA_o/edit?tab=t.0">cohort 2 syllabus</a> and confirm any remaining operational roles.</p></div>
-<a class="slides-link" href="index.html?v=6097c9bb04c7">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=6097c9bb04c7">Open with notes</a>
+<a class="slides-link" href="index.html?v=ce7b1b4e34eb">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=ce7b1b4e34eb">Open with notes</a>
 
 <div class="transformation"><p>Students bring facts from their context-engineering research and examples from trying their factories on their capstones.</p><p>They leave able to say what information their factory used, where it helped or got stuck, and one change to try once they can edit and choose its routes.</p></div>
 
@@ -207,7 +207,7 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
 <li>Aldric has four minutes for the iteration 003 comparison. David has ten minutes to demonstrate iteration 004.</li>
 <li>Compare the slide's simplified JavaScript-style hard-coded route with the matching <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/003-assembly-line/features/assembly-line.feature">iteration 003 graph</a>. Trace one branch and one retry. The snippet explains the change in structure; it is not code from the tutorial repository.</li>
 <li>In an instructor-built factory after iteration 004, show more than one assembly line in the target and which one a named run uses. The slide's command is illustrative; a new run also needs a target and seed. Use the <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/004-runs-and-targets/README.md">iteration 004 homework</a> as the reference. David demonstrates the finished result with an instructor-built factory; he need not implement an iteration live.</li>
-<li>Explain what moves from code into a graph in iteration 003, then how iteration 004 lets a target offer more than one route. Leave the homework steps for students to follow later.</li>
+<li>Explain what shifts from code into a graph in iteration 003, then how iteration 004 lets a target offer more than one route. Leave the homework steps for students to follow later.</li>
 <li>The graph chooses which machine runs next. The <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/003-assembly-line/features/machine.feature">machine configuration</a> says which harness runs a machine; the graph does not choose an agent, script, or model.</li>
 <li>Ask where students would make the change they identified. <a href="https://factory.strongdm.ai/products/attractor">StrongDM's Attractor page</a> can be a weekend reference; there is no need to show it now.</li>
 </ul></details>
@@ -219,17 +219,19 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
   <div class="what">
     <h3>Weekend homework</h3>
     <p class="purpose">Make the weekend assignment clear</p>
-    <p class="structure">Matt explains the homework: do iteration 003, change the project's assembly line, and run it; do iteration 004, consider another line, and run the capstone again; read about harness engineering anytime</p>
+    <p class="structure">Matt explains the homework as published in Maven: iterations 3 and 4, with bonuses to customize the assembly line and add a second one; run at least one capstone iteration through the factory; read Böckeler on harness engineering for Tuesday's teach-back</p>
     <blockquote>How will you change your assembly line for your project?</blockquote>
     <details open><summary>Notes</summary><ul>
-<li>Give the factory tasks in this order:</li>
+<li>The homework as published in <a href="https://maven.com/lean-software-production/hands-off-agentic-coding/3/syllabus/modules/910f79">Maven under Session 4</a>, due before Tuesday's session:</li>
 <ol>
-<li>Do iteration 003. Change your project's assembly line using the editable graph, then run the factory on your capstone at least once.</li>
-<li>Do iteration 004. Think about another assembly line your project could use, then run the factory on your capstone again. They do not need to build the other line this weekend.</li>
+<li><strong>Iteration 3 (assembly lines).</strong> Ask the coding agent to implement it; the workflow becomes editable in <code>./factory/assembly-line.dot</code>. Send a ✅ when done.</li>
+<li><strong>Bonus: customize your assembly line.</strong> Change it before the next run, say what changed, and share an agent-drawn diagram of the new workflow.</li>
+<li><strong>Iteration 4 (multiple assembly lines).</strong> Choose which <code>.dot</code> line to run when invoking the factory. Send a ✅ when done.</li>
+<li><strong>Bonus: add a second assembly line to your project,</strong> such as a refactoring line, and try it out.</li>
+<li><strong>Run at least one iteration of your capstone through the factory.</strong> Share the code on GitHub and what you learned.</li>
+<li><strong>Read Birgitta Böckeler on <a href="https://martinfowler.com/articles/harness-engineering.html">harness engineering</a></strong> and share three key ideas. Tuesday has a teach-back on it.</li>
 </ol>
-<li>The Birgitta Böckeler harness-engineering reading can happen anytime.</li>
-<li>Offer <a href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/cohort-2/week-2/thursday/materials/design-assembly-line/SKILL.md">Design an assembly line</a> if they want help with a new route.</li>
-<li>Extra credit: add a machine that runs a script or other fixed procedure, alongside an agentic machine.</li>
+<li>Offer <a href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/cohort-2/week-2/thursday/materials/design-assembly-line/SKILL.md">Design an assembly line</a> if they want help with a new route. It isn't on the Maven page.</li>
 </ul></details>
   </div>
 </section>
@@ -281,7 +283,7 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
 </ul></div>
 </div>
 </details>
-<footer>Generated from runbook.md · Thu 08 Oct, 16:18</footer>
+<footer>Generated from runbook.md · Sat 10 Oct, 19:56</footer>
 </main>
 </body>
 </html>
