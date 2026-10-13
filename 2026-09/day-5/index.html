@@ -100,11 +100,11 @@
   .machine-map .out { grid-column:4; grid-row:3; }
   .machine-map .writes { grid-column:5; grid-row:3; align-self:center; text-align:center; }
 
-  /* The plan checker as the Miro card students fill in next. */
-  .machine-card { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:1fr 1fr; gap:16px; flex:1; margin-top:.3em; }
+  /* The plan conformance checker as the Miro card students fill in next. */
+  .machine-card { display:grid; grid-template-columns:repeat(4,1fr); grid-template-rows:1fr 1fr; gap:16px; flex:1; min-height:0; margin-top:.3em; }
   .machine-card .card { justify-content:flex-start; padding:16px 20px; }
   .machine-card h3 { font-size:1.65em; }
-  .machine-card p { font-size:1.3em; line-height:1.25; }
+  .machine-card p { font-size:1.15em; line-height:1.2; }
 
   /* Preview: fan out. */
   .fan { display:grid; grid-template-columns:1fr 90px 1.1fr 90px 1fr; align-items:center; gap:0 6px; margin:.6em 0 0; flex:1; }
@@ -163,7 +163,7 @@
 
   <!-- 7 · A machine, up close -->
   <section>
-    <h2 class="sk-section">A machine, up close: the plan checker</h2>
+    <h2 class="sk-section">A machine, up close: the plan conformance checker</h2>
     <div class="machine-map">
       <div class="card mustard guide"><h3>AGENTS.md <span class="tag">· guide</span></h3><p>The task, the four criteria, and how to find the plan</p></div>
       <div class="arrow down">↓</div>
@@ -174,18 +174,18 @@
         <div class="card blue"><h3>Screenshot API</h3><p>read: “show me this page”</p></div>
       </div>
       <div class="arrow in">→</div>
-      <div class="card teal machine"><img src="kit/icons/robot.svg" alt="A robot"><h3>Plan checker</h3><p>How much of the plan is built?</p><p>Rigor · fidelity · quality · releasability</p></div>
+      <div class="card teal machine"><img src="kit/icons/robot.svg" alt="A robot"><h3>Plan conformance checker</h3><p>Does the code match the implementation plan?</p><p>Rigor · fidelity · quality · releasability</p></div>
       <div class="arrow out">→</div>
       <div class="card coral writes"><h3>Results endpoint</h3><p>POST its analysis</p><p class="tag">its only write</p></div>
     </div>
-    <aside class="notes"><strong class="when">⏱ 09:54–09:57 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>The machine checks how much of a given implementation plan is implemented in a codebase, and judges it on rigor, fidelity, quality and releasability.</li><li><strong>Harness:</strong> what it can reach. Read the plan and the codebase; the defect tracker; read an API that asks another system for a screenshot of a page on the website; POST to one endpoint to submit its analysis. Nothing else: it can't change the code or the plan.</li><li><strong>Context:</strong> its AGENTS.md gives it the task and the four criteria, and tells it how to find the plan it has to evaluate. Everything else it reads when it needs it. It has no way to see the doer's conversation, so it judges the work, not the story.</li><li>In Böckeler's words: AGENTS.md is a <em>guide</em>, steering it before it acts. The screenshots and the defect tracker are how it observes the software. The machine itself is a <em>sensor</em> for the line (feedback after the doer acts), and an <em>inferential</em> one: a model's judgement, not a script.</li><li>Point at the one coral box: the only thing it can write. Narrow permissions are part of the harness.</li><li><span class="todo">Open:</span> can it write to the defect tracker (file issues), or only read it?</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 09:54–09:57 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>The plan conformance checker compares the implementation with a given implementation plan. It reports what has been built, what is missing or different, and judges the work on rigor, fidelity, quality and releasability. It does not judge whether the plan itself is good.</li><li><strong>Harness:</strong> what it can reach. Read the plan and the codebase; the defect tracker; read an API that asks another system for a screenshot of a page on the website; POST to one endpoint to submit its analysis. Nothing else: it can't change the code or the plan.</li><li><strong>Context:</strong> its AGENTS.md gives it the task and the four criteria, and tells it how to find the plan it has to evaluate. Everything else it reads when it needs it. It has no way to see the doer's conversation, so it judges the work, not the story.</li><li>In Böckeler's words: AGENTS.md is a <em>guide</em>, steering it before it acts. The screenshots and the defect tracker are how it observes the software. The machine itself is a <em>sensor</em> for the line (feedback after the doer acts), and an <em>inferential</em> one: a model's judgement, not a script.</li><li>Point at the one coral box: the only thing it can write. Narrow permissions are part of the harness.</li><li><span class="todo">Open:</span> can it write to the defect tracker (file issues), or only read it?</li></ul></aside>
   </section>
 
-  <!-- 8 · The plan checker as a card -->
+  <!-- 8 · The plan conformance checker as a card -->
   <section>
-    <h2 class="sk-section">The plan checker, as a card</h2>
+    <h2 class="sk-section">The plan conformance checker, as a card</h2>
     <div class="machine-card">
-      <div class="card teal"><h3>Job</h3><p>Say how much of the plan is built: rigor, fidelity, quality, releasability</p></div>
+      <div class="card teal"><h3>Job</h3><p>Compare code with the plan. Report matches, gaps and differences. Assess rigor, fidelity, quality and releasability.</p></div>
       <div class="card blue"><h3>Allowed</h3><p>Read the plan and the code · the defect tracker · ask for screenshots · POST results</p></div>
       <div class="card coral"><h3>Not allowed</h3><p>Change the code, the plan, or anything else</p></div>
       <div class="card mustard"><h3>Result</h3><p>Its analysis, POSTed to one endpoint</p></div>

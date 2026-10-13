@@ -152,10 +152,10 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
   <div class="what">
     <h3>A machine, up close</h3>
     <p class="purpose">See the reading take shape in one concrete machine</p>
-    <p class="structure">Talk, two slides: a plan checker's harness and context, with Böckeler's guides and sensors labelled, then the same machine as the Miro card students fill in next</p>
+    <p class="structure">Talk, two slides: a plan conformance checker's harness and context, with Böckeler's guides and sensors labelled, then the same machine as the Miro card students fill in next</p>
     
     <details open><summary>Notes</summary><ul>
-<li>The worked example is a <strong>plan checker</strong>: a machine that checks how much of an implementation plan is implemented in a codebase, judged on rigor, fidelity, quality and releasability.</li>
+<li>The worked example is a <strong>plan conformance checker</strong>: a machine that compares the codebase with an implementation plan, reports matches, gaps and differences, and judges the work on rigor, fidelity, quality and releasability.</li>
 <li>Its harness: read access to the plan and the codebase; access to the defect tracker (GitHub Issues); read access to an API that asks another system for a screenshot of a page on the website; POST access to one endpoint, where it submits its results. Nothing else.</li>
 <li>Its context: an AGENTS.md that gives it the task and the four criteria, and tells it how to find the plan to evaluate. Everything else it reads on demand.</li>
 <li>Label the AGENTS.md as a guide. The screenshots and defect tracker are how it observes the software. The machine itself is an inferential sensor for the line: a model's judgement on the doer's work. It can't see the doer's conversation, so it judges the work, not the story. The second slide is the same machine as a Miro card, the one students fill in next.</li>
