@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session Storyboard</title>
+<style>
+:root {
+  --bg: #f6f5f1; --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6a64; --line: #e3e1da;
+  --present: #4f6d8f; --pairs: #c0673a; --demo: #3f8a5c; --talk: #8a6fb0; --buffer: #b9b6ac;
+  --quote-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --paper: #1f1f1c; --ink: #ecebe6; --muted: #a09e96; --line: #33322e;
+    --present: #7fa0c4; --pairs: #e08a5c; --demo: #6cbf8a; --talk: #b39ad6; --buffer: #5d5b55;
+    --quote-bg: #2a2925;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { font: 600 30px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 6px; }
+.intro p { margin: 2px 0; color: var(--muted); }
+.slides-link { display: inline-block; margin-top: 10px; padding: 7px 12px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 6px;
+  color: var(--ink); font-weight: 600; text-decoration: none; }
+.slides-link:hover, .slides-link:focus-visible { text-decoration: underline; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; }
+.transformation { margin: 16px 0 0; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; font-size: 16px; }
+.transformation p { margin: 0; }
+.framing-wrap { margin-top: 24px; }
+.framing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 22px 0; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card p { margin: 0; }
+.timeline { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 10px 0; margin: 12px 0 8px; }
+.bar { display: flex; gap: 2px; height: 58px; }
+.phase-bar { display: flex; gap: 2px; margin-bottom: 4px; }
+.phase-bar a { min-width: 0; padding: 3px 6px; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--line); border-radius: 5px; font-size: 12px; font-weight: 700;
+  text-decoration: none; overflow: hidden; white-space: nowrap; }
+.phase-heading { margin: 22px 0 8px; padding: 8px 4px 4px; border-bottom: 2px solid var(--ink);
+  color: var(--ink); font: 600 22px/1.2 Georgia, serif; text-transform: none; letter-spacing: 0;
+  scroll-margin-top: 115px; }
+.phase-heading span { float: right; color: var(--muted); font: 12px/2 Helvetica, Arial, sans-serif; }
+.seg { min-width: 0; border-radius: 5px; padding: 4px 6px; color: #fff; text-decoration: none;
+  display: flex; flex-direction: column; overflow: hidden; font-size: 11px; line-height: 1.2; }
+.seg-t { opacity: .85; font-variant-numeric: tabular-nums; }
+.seg-n { font-weight: 600; overflow: hidden; }
+.seg.present { background: var(--present); } .seg.pairs { background: var(--pairs); }
+.seg.demo { background: var(--demo); } .seg.talk { background: var(--talk); }
+.seg.buffer { background: var(--buffer); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.sum { font-size: 13px; color: var(--muted); }
+.warn { color: #c0392b; font-weight: 600; margin-left: 8px; }
+.block { display: grid; grid-template-columns: 76px 1fr; gap: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-left: 5px solid var(--present); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0; scroll-margin-top: 110px; }
+.block.pairs { border-left-color: var(--pairs); } .block.demo { border-left-color: var(--demo); }
+.block.talk { border-left-color: var(--talk); } .block.buffer { border-left-color: var(--buffer); }
+.clock { font: 600 20px/1 Georgia, serif; font-variant-numeric: tabular-nums; }
+.mins { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.what h3 { margin: 0 0 4px; font-size: 18px; }
+.purpose { margin: 0 0 4px; font-weight: 500; }
+ul.purpose { padding-left: 20px; }
+.structure { margin: 0; color: var(--muted); }
+blockquote { margin: 10px 0 0; padding: 8px 12px; background: var(--quote-bg); border-radius: 6px; font-style: italic; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+details ul { margin: 6px 0 0; padding-left: 18px; }
+details ol { margin: 2px 0 4px; }
+li.cont { list-style: none; }
+.notes { margin-top: 22px; color: var(--muted); }
+footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .seg-n { display: none; }
+  .block { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Day 5: How far can we push assembly lines? (Tue 13 Oct)</h1>
+<div class="intro"><p>Fifth live session of cohort 2. Tuesday, 09:30 to 11:00 PT, on Zoom. Led by Aldric and Matt; David runs Zoom and the breakout rooms, and gives the demo. This is a draft for instructors. What students were given is in the <a href="https://maven.com/lean-software-production/hands-off-agentic-coding/3/syllabus/modules/7cfb62">Maven portal</a>; the module's description still mentions building a coding agent and needs updating.</p></div>
+<a class="slides-link" href="index.html?v=9db5f4b509b4">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=9db5f4b509b4">Open with notes</a>
+
+<div class="transformation"><p>Students arrive with an assembly line they have changed, or tried to, and a capstone run behind it.</p><p>They leave having shown what they changed and what happened, having designed the harness and context of a machine for their own capstone, and knowing what fan out adds to an assembly line and what they will build before Thursday.</p></div>
+
+<div class="timeline">
+  <div class="phase-bar"><a href="#phase-check-in" style="flex:7">Check-in · 7 min</a><a href="#phase-what" style="flex:15">What · 15 min</a><a href="#phase-so-what" style="flex:43">So what · 43 min</a><a href="#phase-now-what" style="flex:20">Now what · 20 min</a><a href="#phase-buffer" style="flex:5">Buffer · 5 min</a></div>
+  <div class="bar">
+<a class='seg talk' href='#check-in-and-today' style='flex:7' title='Check-in · Check-in and today · 7 min'><span class='seg-t'>09:30</span><span class='seg-n'>Check-in and today</span></a>
+<a class='seg pairs' href='#your-assembly-lines' style='flex:15' title='What · Your assembly lines · 15 min'><span class='seg-t'>09:37</span><span class='seg-n'>Your assembly lines</span></a>
+<a class='seg present' href='#a-machine-up-close' style='flex:5' title='So what · A machine, up close · 5 min'><span class='seg-t'>09:52</span><span class='seg-n'>A machine, up close</span></a>
+<a class='seg pairs' href='#design-your-machines' style='flex:25' title='So what · Design your machines · 25 min'><span class='seg-t'>09:57</span><span class='seg-n'>Design your machines</span></a>
+<a class='seg talk' href='#how-far-can-we-push-assembly-lines' style='flex:13' title='So what · How far can we push assembly lines? · 13 min'><span class='seg-t'>10:22</span><span class='seg-n'>How far can we push assembly lines?</span></a>
+<a class='seg demo' href='#preview-fan-out' style='flex:12' title='Now what · Preview: fan out · 12 min'><span class='seg-t'>10:35</span><span class='seg-n'>Preview: fan out</span></a>
+<a class='seg talk' href='#homework' style='flex:3' title='Now what · Homework · 3 min'><span class='seg-t'>10:47</span><span class='seg-n'>Homework</span></a>
+<a class='seg talk' href='#retro-and-takeaways' style='flex:5' title='Now what · Retro and takeaways · 5 min'><span class='seg-t'>10:50</span><span class='seg-n'>Retro and takeaways</span></a>
+<a class='seg buffer' href='#buffer' style='flex:5' title='Buffer · Buffer · 5 min'><span class='seg-t'>10:55</span><span class='seg-n'>Buffer</span></a>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--present)"></i>presenting</span>
+    <span><i style="background:var(--talk)"></i>whole group</span>
+    <span><i style="background:var(--pairs)"></i>breakouts</span>
+    <span><i style="background:var(--demo)"></i>factory demo</span>
+    <span><i style="background:var(--buffer)"></i>buffer</span>
+    <span class="sum">09:30 to 11:00 · 90 min</span>
+  </div>
+</div>
+
+<h2 class="phase-heading" id="phase-check-in">Check-in <span>7 min</span></h2>
+
+<section class="block talk" id="check-in-and-today">
+  <div class="when"><div class="clock">09:30</div><div class="mins">7 min</div></div>
+  <div class="what">
+    <h3>Check-in and today</h3>
+    <p class="purpose">Give everyone who wants to speak a turn, then show why we're here and the agenda</p>
+    <p class="structure">Right to pass; whole-room popcorn; then the objective and the student-facing agenda</p>
+    <blockquote>What was an 'aha' moment for you this week?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Say that everyone has the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/right-to-pass.md">right to pass</a>, and follow the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/camera-participation.md">camera participation protocol</a>.</li>
+<li>Ask, "What was an 'aha' moment for you this week?" Give each person time to finish.</li>
+<li>Share the Miro link in Zoom chat, then show the objective and the agenda.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-what">What <span>15 min</span></h2>
+
+<section class="block pairs" id="your-assembly-lines">
+  <div class="when"><div class="clock">09:37</div><div class="mins">15 min</div></div>
+  <div class="what">
+    <h3>Your assembly lines</h3>
+    <p class="purpose">Hear what students changed in their lines and what happened when they ran them</p>
+    <p class="structure">Random pairs or threes in breakouts, then a few share in the whole room; each person adds a sticky to both Miro columns</p>
+    <blockquote>What did you change in your assembly line, and what happened?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>David opens random rooms of two or three for 9 minutes and broadcasts at 5 and 1 minutes left.</li>
+<li>In rooms, each person says what they changed in their assembly line, or meant to, and what happened when they ran their capstone. Share an agent-drawn diagram if they made one.</li>
+<li>Each person adds one sticky to <strong>What I changed</strong> and one to <strong>What happened</strong>. If someone didn't get to the homework, ask what they would change.</li>
+<li>Back in the room, invite two or three people to share. Keep notes for the So what.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-so-what">So what <span>43 min</span></h2>
+
+<section class="block present" id="a-machine-up-close">
+  <div class="when"><div class="clock">09:52</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>A machine, up close</h3>
+    <p class="purpose">See the reading take shape in one concrete machine</p>
+    <p class="structure">Talk, two slides: a plan checker's harness and context, with Böckeler's guides and sensors labelled, then the same machine as the Miro card students fill in next</p>
+    
+    <details open><summary>Notes</summary><ul>
+<li>The worked example is a <strong>plan checker</strong>: a machine that checks how much of an implementation plan is implemented in a codebase, judged on rigor, fidelity, quality and releasability.</li>
+<li>Its harness: read access to the plan and the codebase; access to the defect tracker (GitHub Issues); read access to an API that asks another system for a screenshot of a page on the website; POST access to one endpoint, where it submits its results. Nothing else.</li>
+<li>Its context: an AGENTS.md that gives it the task and the four criteria, and tells it how to find the plan to evaluate. Everything else it reads on demand.</li>
+<li>Label the AGENTS.md as a guide. The screenshots and defect tracker are how it observes the software. The machine itself is an inferential sensor for the line: a model's judgement on the doer's work. It can't see the doer's conversation, so it judges the work, not the story. The second slide is the same machine as a Miro card, the one students fill in next.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block pairs" id="design-your-machines">
+  <div class="when"><div class="clock">09:57</div><div class="mins">25 min</div></div>
+  <div class="what">
+    <h3>Design your machines</h3>
+    <p class="purpose">Use the reading to design machines for students' own capstones</p>
+    <p class="structure">Three working groups in breakouts; each person fills in a Miro card for one machine and the group questions it; back in the room, each group presents one machine</p>
+    <blockquote>In your group, define a harness and context for at least one machine per person, for your capstone's assembly line.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>David opens three rooms for 15 minutes and broadcasts at 5 and 1 minutes left.</li>
+<li>Each person picks one machine their capstone's assembly line needs, new or existing, and fills in a Miro card like the worked example. The group asks questions: what would go wrong, what does it not need to see, what checks its work?</li>
+<li>Instructors visit rooms. If someone has no capstone line yet, they design a machine for the tutorial's Tetris line.</li>
+<li>Back in the room, about 2 minutes per group to present one machine; use the rest for a question or addition.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="how-far-can-we-push-assembly-lines">
+  <div class="when"><div class="clock">10:22</div><div class="mins">13 min</div></div>
+  <div class="what">
+    <h3>How far can we push assembly lines?</h3>
+    <p class="purpose">Connect what students want from their lines to harness engineering, and open the way to fan out</p>
+    <p class="structure">Whole-room discussion, collected on Miro; ask whether each wish belongs in a machine, a check or the route</p>
+    <blockquote>What would you want an assembly line to do that yours can't yet?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Ask what students would want an assembly line to do that theirs can't yet. Collect answers in the Miro frame.</li>
+<li>For each, ask whether it belongs in a machine, a check or the route, and which harness-engineering idea it touches.</li>
+<li>Steer towards wanting more than one opinion on the same work, which leads into fan out. Don't force every wish into an assembly-line answer.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-now-what">Now what <span>20 min</span></h2>
+
+<section class="block demo" id="preview-fan-out">
+  <div class="when"><div class="clock">10:35</div><div class="mins">12 min</div></div>
+  <div class="what">
+    <h3>Preview: fan out</h3>
+    <p class="purpose">Show a line that runs several machines at once and fans back in</p>
+    <p class="structure">David demonstrates the three big brains on an instructor-built factory, from prepared runs</p>
+    <blockquote>Where would your project want more than one opinion?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Show the <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/005-fan-out/README.md">iteration 005</a> line: the doer fans out to three reviewers, and they fan in to the synthesiser, which decides.</li>
+<li>From the prepared runs, show the reviewers working at the same time and the synthesiser's result. Use the recorded fallback if the live run fails.</li>
+<li>Point out that fanning out is the factory's new ability; the three big brains is one choice of what to fan out to.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="homework">
+  <div class="when"><div class="clock">10:47</div><div class="mins">3 min</div></div>
+  <div class="what">
+    <h3>Homework</h3>
+    <p class="purpose">Make Thursday's homework clear</p>
+    <p class="structure">Matt explains the homework: iteration 005, and at least one more capstone iteration</p>
+    <blockquote>What will you fan out to?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Do iteration 005 (fan out).</li>
+<li>Run at least one more iteration of your capstone through the factory.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="retro-and-takeaways">
+  <div class="when"><div class="clock">10:50</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Retro and takeaways</h3>
+    <p class="purpose">Hear what students are taking away and collect feedback for Thursday</p>
+    <p class="structure">Miro: a takeaway and a keep or change each; share takeaways aloud</p>
+    <blockquote>What's one thing you're taking away?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Invite each student to add a takeaway and one thing to keep or change on Miro. They can pass.</li>
+<li>Invite a few takeaways aloud. Read the keep/change notes afterwards. End by 11:00; the buffer sits on the closing card.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-buffer">Buffer <span>5 min</span></h2>
+
+<section class="block buffer" id="buffer">
+  <div class="when"><div class="clock">10:55</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Buffer</h3>
+    <p class="purpose">Live timings run long</p>
+    <p class="structure">-</p>
+    
+    
+  </div>
+</section>
+
+<div class="notes"><p><em>Students first show each other what they did with their assembly lines. One worked machine turns the harness-engineering reading into something concrete, then groups design machines for their own capstones. The whole room then asks what they want their lines to do next, which leads into fan out and the homework.</em> The student-facing agenda has four parts: <strong>Your assembly lines</strong>, <strong>Design your machines</strong>, <strong>How far can we push assembly lines?</strong> and <strong>Before Thursday: fan out</strong>. Check-in opens the session; retro and takeaways closes it, followed by a "See you Thursday!" card that holds the buffer.</p></div>
+
+<details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
+<div class="framing">
+<div class='card'><h2>Audience</h2><ul>
+<li>About twelve developers and tech leads, starting week 3. Over the weekend they were asked to do <a href="https://maven.com/lean-software-production/hands-off-agentic-coding/3/syllabus/modules/910f79">Session 4's homework</a>: tutorial iterations 3 and 4, with bonuses to customize their assembly line and add a second one; run at least one capstone iteration through the factory; read Birgitta Böckeler on <a href="https://martinfowler.com/articles/harness-engineering.html">harness engineering</a> and share three key ideas.</li>
+<li>Maven promised them a harness-engineering teach-back today; instead they put the reading to work on machines for their own capstones. Session 4 showed the reading often isn't done, so a worked example comes first.</li>
+<li>They have an editable assembly line and can choose between lines. They have not yet seen a line that runs machines at the same time.</li>
+</ul></div>
+<div class='card'><h2>Learning outcomes</h2><ul>
+<li>Describe a change they made, or want to make, to their assembly line, and what happened when they ran it.</li>
+<li>Define the harness and context of at least one machine for their capstone's assembly line: what steers it before it acts, what checks its work, and what it is given and not given.</li>
+<li>Name something they wish their assembly line could do, and say whether it belongs in a machine, a check or the route.</li>
+<li>Explain how a line fans out to several machines and fans back in, using the three big brains as the example, and know the homework.</li>
+</ul></div>
+<div class='card'><h2>Key concepts</h2><ul>
+<li><a href="https://lean-software-production-website.pages.dev/lexicon/#harness"><strong>Harness</strong></a>: everything around the model call. Böckeler splits the part we build into <strong>guides</strong>, which steer the agent before it acts, and <strong>sensors</strong>, which check its work afterwards; each can be computational (a script) or inferential (a model's judgement).</li>
+<li><strong>Fan out and fan in:</strong> a machine with several unlabelled edges out runs every machine they lead to at the same time; the branches meet at one machine, which runs once all have finished and is given their answers.</li>
+<li><a href="https://lean-software-production-website.pages.dev/lexicon/#model-diversity"><strong>The three big brains</strong></a>: the same review run on three providers' models, with a synthesiser that decides. It is the tutorial's example of fan out, not a requirement of it.</li>
+</ul></div>
+<div class='card'><h2>Format &amp; logistics</h2><ul>
+<li>Zoom for talking and breakouts; the <a href="https://miro.com/app/board/uXjVEeUpa9Y=/">cohort Miro board</a> for the work.</li>
+<li>David is the Zoom host and runs every breakout, including its timer and broadcasts. He also gives the demo; no room block overlaps it.</li>
+<li>Before class, on Miro: an <strong>Our assembly lines</strong> frame with <strong>What I changed</strong> and <strong>What happened</strong> columns; a <strong>Design your machines</strong> frame per group, with one card per person, titled with the machine's name, with the eight boxes from slide 8: job, allowed, not allowed, result, context given, left out, guides, sensors; a <strong>What would you want a line to do?</strong> frame. Reuse the retro and takeaways frame.</li>
+<li>David: prepare a factory with iteration 005 done and a line using the three big brains: one run in progress, one finished, and a recorded fallback. The tutorial gives specifications, not an implementation, so it has to be an instructor-built factory.</li>
+<li>Add the homework to Maven as a new section for Session 5, and publish it before the session.</li>
+</ul></div>
+</div>
+</details>
+<footer>Generated from runbook.md · Tue 13 Oct, 04:24</footer>
+</main>
+</body>
+</html>
