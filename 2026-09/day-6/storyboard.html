@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session Storyboard</title>
+<style>
+:root {
+  --bg: #f6f5f1; --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6a64; --line: #e3e1da;
+  --present: #4f6d8f; --pairs: #c0673a; --demo: #3f8a5c; --talk: #8a6fb0; --buffer: #b9b6ac;
+  --quote-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --paper: #1f1f1c; --ink: #ecebe6; --muted: #a09e96; --line: #33322e;
+    --present: #7fa0c4; --pairs: #e08a5c; --demo: #6cbf8a; --talk: #b39ad6; --buffer: #5d5b55;
+    --quote-bg: #2a2925;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { font: 600 30px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 6px; }
+.intro p { margin: 2px 0; color: var(--muted); }
+.slides-link { display: inline-block; margin-top: 10px; padding: 7px 12px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 6px;
+  color: var(--ink); font-weight: 600; text-decoration: none; }
+.slides-link:hover, .slides-link:focus-visible { text-decoration: underline; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; }
+.transformation { margin: 16px 0 0; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; font-size: 16px; }
+.transformation p { margin: 0; }
+.framing-wrap { margin-top: 24px; }
+.framing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 22px 0; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card p { margin: 0; }
+.timeline { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 10px 0; margin: 12px 0 8px; }
+.bar { display: flex; gap: 2px; height: 58px; }
+.phase-bar { display: flex; gap: 2px; margin-bottom: 4px; }
+.phase-bar a { min-width: 0; padding: 3px 6px; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--line); border-radius: 5px; font-size: 12px; font-weight: 700;
+  text-decoration: none; overflow: hidden; white-space: nowrap; }
+.phase-heading { margin: 22px 0 8px; padding: 8px 4px 4px; border-bottom: 2px solid var(--ink);
+  color: var(--ink); font: 600 22px/1.2 Georgia, serif; text-transform: none; letter-spacing: 0;
+  scroll-margin-top: 115px; }
+.phase-heading span { float: right; color: var(--muted); font: 12px/2 Helvetica, Arial, sans-serif; }
+.seg { min-width: 0; border-radius: 5px; padding: 4px 6px; color: #fff; text-decoration: none;
+  display: flex; flex-direction: column; overflow: hidden; font-size: 11px; line-height: 1.2; }
+.seg-t { opacity: .85; font-variant-numeric: tabular-nums; }
+.seg-n { font-weight: 600; overflow: hidden; }
+.seg.present { background: var(--present); } .seg.pairs { background: var(--pairs); }
+.seg.demo { background: var(--demo); } .seg.talk { background: var(--talk); }
+.seg.buffer { background: var(--buffer); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.sum { font-size: 13px; color: var(--muted); }
+.warn { color: #c0392b; font-weight: 600; margin-left: 8px; }
+.block { display: grid; grid-template-columns: 76px 1fr; gap: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-left: 5px solid var(--present); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0; scroll-margin-top: 110px; }
+.block.pairs { border-left-color: var(--pairs); } .block.demo { border-left-color: var(--demo); }
+.block.talk { border-left-color: var(--talk); } .block.buffer { border-left-color: var(--buffer); }
+.clock { font: 600 20px/1 Georgia, serif; font-variant-numeric: tabular-nums; }
+.mins { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.what h3 { margin: 0 0 4px; font-size: 18px; }
+.purpose { margin: 0 0 4px; font-weight: 500; }
+ul.purpose { padding-left: 20px; }
+.structure { margin: 0; color: var(--muted); }
+blockquote { margin: 10px 0 0; padding: 8px 12px; background: var(--quote-bg); border-radius: 6px; font-style: italic; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+details ul { margin: 6px 0 0; padding-left: 18px; }
+details ol { margin: 2px 0 4px; }
+li.cont { list-style: none; }
+.notes { margin-top: 22px; color: var(--muted); }
+footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .seg-n { display: none; }
+  .block { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Day 6: Fix the machine, not the code (Thu 15 Oct)</h1>
+<div class="intro"><p>Sixth live session of cohort 2. Thursday, 09:30 to 11:00 PT, on Zoom. Led by Matt and Jeremy, with Aldric previewing and demonstrating the homework; David is the Zoom host and runs every breakout, including its timer and broadcasts. This is a draft for instructors. What students were given is in the <a href="https://maven.com/lean-software-production/hands-off-agentic-coding/3/syllabus/modules/490329">Maven portal</a> ("Monitoring and steering"); the module has no description or homework yet.</p></div>
+<a class="slides-link" href="index.html?v=9c6dcefccb64">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=9c6dcefccb64">Open with notes</a>
+
+<div class="transformation"><p>Students arrive with a factory that has just run, or tried to run, a capstone iteration, and a habit of fixing what it produced by hand.</p><p>They leave knowing that improving the factory is now most of their work, with a North Star for their factory, a target condition for the end of next week and a first step towards it. They know the weekend homework (watching, then steering), have signed up for a show and tell next week, and have told us what they still need from the course.</p></div>
+
+<div class="timeline">
+  <div class="phase-bar"><a href="#phase-check-in" style="flex:9">Check-in · 9 min</a><a href="#phase-what" style="flex:15">What · 15 min</a><a href="#phase-so-what" style="flex:21">So what · 21 min</a><a href="#phase-now-what" style="flex:34">Now what · 34 min</a><a href="#phase-buffer" style="flex:11">Buffer · 11 min</a></div>
+  <div class="bar">
+<a class='seg talk' href='#check-in-and-today' style='flex:9' title='Check-in · Check-in and today · 9 min'><span class='seg-t'>09:30</span><span class='seg-n'>Check-in and today</span></a>
+<a class='seg pairs' href='#how-did-the-homework-go' style='flex:15' title='What · How did the homework go? · 15 min'><span class='seg-t'>09:39</span><span class='seg-n'>How did the homework go?</span></a>
+<a class='seg present' href='#improving-the-factory' style='flex:6' title='So what · Improving the factory · 6 min'><span class='seg-t'>09:54</span><span class='seg-n'>Improving the factory</span></a>
+<a class='seg talk' href='#your-north-star' style='flex:15' title='So what · Your North Star · 15 min'><span class='seg-t'>10:00</span><span class='seg-n'>Your North Star</span></a>
+<a class='seg present' href='#show-and-tell-next-week' style='flex:6' title='Now what · Show and tell next week · 6 min'><span class='seg-t'>10:15</span><span class='seg-n'>Show and tell next week</span></a>
+<a class='seg pairs' href='#what-s-missing' style='flex:10' title='Now what · What&#x27;s missing? · 10 min'><span class='seg-t'>10:21</span><span class='seg-n'>What's missing?</span></a>
+<a class='seg demo' href='#weekend-watching-and-steering' style='flex:13' title='Now what · Weekend: watching and steering · 13 min'><span class='seg-t'>10:31</span><span class='seg-n'>Weekend: watching and steering</span></a>
+<a class='seg talk' href='#retro-and-takeaways' style='flex:5' title='Now what · Retro and takeaways · 5 min'><span class='seg-t'>10:44</span><span class='seg-n'>Retro and takeaways</span></a>
+<a class='seg buffer' href='#buffer' style='flex:11' title='Buffer · Buffer · 11 min'><span class='seg-t'>10:49</span><span class='seg-n'>Buffer</span></a>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--present)"></i>presenting</span>
+    <span><i style="background:var(--talk)"></i>whole group</span>
+    <span><i style="background:var(--pairs)"></i>breakouts</span>
+    <span><i style="background:var(--demo)"></i>factory demo</span>
+    <span><i style="background:var(--buffer)"></i>buffer</span>
+    <span class="sum">09:30 to 11:00 · 90 min</span>
+  </div>
+</div>
+
+<h2 class="phase-heading" id="phase-check-in">Check-in <span>9 min</span></h2>
+
+<section class="block talk" id="check-in-and-today">
+  <div class="when"><div class="clock">09:30</div><div class="mins">9 min</div></div>
+  <div class="what">
+    <h3>Check-in and today</h3>
+    <p class="purpose">Hear from everyone and see where each person is on the tutorial and their capstone, then the objective and agenda</p>
+    <p class="structure">Right to pass; each person puts a dot on the two-axis grid and says a word; then the objective and agenda</p>
+    <blockquote>Where are you, and how's it feeling?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Say that everyone has the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/right-to-pass.md">right to pass</a>.</li>
+<li>Each person puts a dot on <strong>Where are you?</strong>: tutorial iterations across, capstone iterations up. They say one word about how it's going.</li>
+<li>David uses the grid to make the rooms for the next block.</li>
+<li>Show the objective and agenda.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-what">What <span>15 min</span></h2>
+
+<section class="block pairs" id="how-did-the-homework-go">
+  <div class="when"><div class="clock">09:39</div><div class="mins">15 min</div></div>
+  <div class="what">
+    <h3>How did the homework go?</h3>
+    <p class="purpose">Hear how the homework went for everyone, whether or not they got to fan out</p>
+    <p class="structure">Small groups in breakouts, paired using the grid; then a few share, and the room discusses when fanning out is worth it; a sticky each in both Miro columns</p>
+    <blockquote>How did the homework go? What did you try, and what happened?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>David opens small rooms for 9 minutes, using the grid so each room has someone who did the homework, and broadcasts at 5 and 1 minutes left.</li>
+<li>Keep the question open: whatever they did and wherever they got to counts, fan out or not. Sharla had COVID last week and is catching up.</li>
+<li>Each person adds a sticky to <strong>What I did</strong> and one to <strong>What happened</strong>.</li>
+<li>Back in the room, a few share. Then ask when it's worth looking at the same work through several models or lenses and merging the results. Fan out itself is a familiar idea to developers; the trade-offs aren't. It costs more, and it can surface irrelevant findings: a reviewer that always reports its worst finding as a P1, even when by the fourth run that's a minor snag.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-so-what">So what <span>21 min</span></h2>
+
+<section class="block present" id="improving-the-factory">
+  <div class="when"><div class="clock">09:54</div><div class="mins">6 min</div></div>
+  <div class="what">
+    <h3>Improving the factory</h3>
+    <p class="purpose">Show that improving the factory is now most of the work, and give a way to structure it</p>
+    <p class="structure">Matt talks through two slides: two backlogs, then the Improvement Kata</p>
+    
+    <details open><summary>Notes</summary><ul>
+<li>Matt takes the two-backlogs slide; Jeremy takes the Improvement Kata.</li>
+<li>Slide 1, two backlogs: one for the work, one for improving the factory. More and more of your work is now on the second one. Fix the machine, not the code.</li>
+<li>Slide 2, the Improvement Kata: North Star, current condition, target condition, and the obstacles in between, worked through one PDCA loop at a time.</li>
+<li>The human sets the North Star and agrees the target condition. The robot is good at the numbers that describe the current condition, which are tedious to gather by hand.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="your-north-star">
+  <div class="when"><div class="clock">10:00</div><div class="mins">15 min</div></div>
+  <div class="what">
+    <h3>Your North Star</h3>
+    <p class="purpose">Practise the Improvement Kata on one real factory</p>
+    <p class="structure">Students choose one of three rooms by North Star; each room picks one person's factory and coaches them through the kata on its Miro frame; then each room shares its target condition</p>
+    <blockquote>Pick the North Star you care about most. Where is this factory now, and where should it be by the end of next week?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Three North Stars, as scaffolding: pick one, and you can change it later.</li>
+<ol>
+<li><strong>Dark factory:</strong> give it an idea and then see it in production. I'm only involved in the product loop: seeing it in production and deciding what it should do next.</li>
+<li><strong>As good as a human:</strong> code and product quality as good as a senior dev.</li>
+<li><strong>Fast and cheap:</strong> every feature is one hour and five dollars, or better.</li>
+</ol>
+<li>David opens three rooms, one per North Star, for 10 minutes; students choose their room. An empty room is fine.</li>
+<li>Each room picks one person's factory and coaches them through the kata on its Miro frame: current condition, a target condition for the end of next week, and the next step. Instructors visit rooms.</li>
+<li>A vague current condition is fine. "I have no idea what a run costs" can have the target "each run costs less than $10", replaced once watching gives them real numbers.</li>
+<li>Back in the room, each room says its North Star and target condition.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-now-what">Now what <span>34 min</span></h2>
+
+<section class="block present" id="show-and-tell-next-week">
+  <div class="when"><div class="clock">10:15</div><div class="mins">6 min</div></div>
+  <div class="what">
+    <h3>Show and tell next week</h3>
+    <p class="purpose">Explain the show and tell and get people signed up</p>
+    <p class="structure">Talk: about 7 minutes each, three parts; sign up on Miro for Tuesday</p>
+    <blockquote>Who'll go on Tuesday?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>About 7 minutes each, in the whole room, in three parts: what you built, your factory, and what you learned. Roughly four on Tuesday (30 minutes) and the rest on Thursday.</li>
+<li>There's a slide frame for each person in the Miro <strong>Show and tell</strong> section, if they want something to talk to.</li>
+<li>Sign up now for Tuesday. Anyone who doesn't takes Thursday, unless they pass.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block pairs" id="what-s-missing">
+  <div class="when"><div class="clock">10:21</div><div class="mins">10 min</div></div>
+  <div class="what">
+    <h3>What's missing?</h3>
+    <p class="purpose">Find out what students still need, to plan next week</p>
+    <p class="structure">1-2-All: alone, then pairs in breakouts, then the whole room; stickies on Miro</p>
+    <blockquote>What do you still want to figure out for this course to be a really valuable use of your time?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Remind everyone of their hopes and goals from the start of the course; they may have changed.</li>
+<li>1-2-All: a minute alone; David opens pairs for 3 minutes; then the whole room. Collect stickies in <strong>What's missing?</strong></li>
+<li>Say that this shapes next week's sessions, and that more are welcome in Slack over the weekend.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block demo" id="weekend-watching-and-steering">
+  <div class="when"><div class="clock">10:31</div><div class="mins">13 min</div></div>
+  <div class="what">
+    <h3>Weekend: watching and steering</h3>
+    <p class="purpose">Introduce watching and steering, and make the homework clear</p>
+    <p class="structure">Two short previews, each followed by a demo; then the homework list</p>
+    <blockquote>Which run do you want to watch?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Aldric takes the two slides, <strong>Preview: watch</strong> and <strong>Preview: steer</strong>, each a one-sentence intro followed by his short demo (about 5 minutes each). Matt then takes the homework list.</li>
+<li><a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">Iteration 006, watching</a>: start a run and get the terminal back, attach later from another command, see each machine's output live and the tokens it spends, keep a record you can read tomorrow. One run at a time. Each machine now runs as an ACP agent.</li>
+<li><a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">Iteration 007, steering</a>: send a message to a named machine while it runs; it arrives at its next step. Messages to a machine that isn't running are refused, and a message lasts only for that run.</li>
+<li>Watch to understand a run; steer to correct this run; change the seed, plan or prompt when the lesson should last.</li>
+<li>Open: which prepared factory, with 006 and 007 done, Aldric demonstrates from, and a recorded fallback.</li>
+<li>Then run a capstone iteration, watch it, and take your next step towards your target condition. If you're behind, get as far as you can.</li>
+<li>Anytime: read Kief Morris, <a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">Humans and Agents in Software Engineering Loops</a>.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="retro-and-takeaways">
+  <div class="when"><div class="clock">10:44</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Retro and takeaways</h3>
+    <p class="purpose">Hear takeaways and collect feedback</p>
+    <p class="structure">Miro: a takeaway and a keep or change each; a few aloud</p>
+    <blockquote>What's one thing you're taking away?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>A takeaway and one keep or change each on Miro; a few aloud. End by 11:00.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-buffer">Buffer <span>11 min</span></h2>
+
+<section class="block buffer" id="buffer">
+  <div class="when"><div class="clock">10:49</div><div class="mins">11 min</div></div>
+  <div class="what">
+    <h3>Buffer</h3>
+    <p class="purpose">Live timings run long</p>
+    <p class="structure">-</p>
+    
+    
+  </div>
+</section>
+
+<div class="notes"><p><em>Students start from how the homework went, whatever they got to. Matt shows that improving the factory is now most of their work, and the Improvement Kata as a way to structure it. Rooms then coach one person each through the kata towards a North Star. Signing up for next week's show and tell and saying what would make the course worthwhile set up the final week. The weekend homework comes last: watching and steering the next run, which shows them their factory's current condition.</em> The student-facing agenda has four parts: <strong>How did the homework go?</strong>, <strong>Improving the factory</strong>, <strong>Next week</strong> and <strong>This weekend</strong>. Check-in opens the session; retro and takeaways closes it, followed by a "See you Tuesday!" card that holds the buffer.</p></div>
+
+<details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
+<div class="framing">
+<div class='card'><h2>Audience</h2><ul>
+<li>Eleven active students; seven came to Session 5 (Rob, Victoria and Joel on one laptop, Ed, Matt Penning, Fouad, Marek). Farid watches the recordings.</li>
+<li>On Tuesday they were asked to do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/005-fan-out/README.md">tutorial iteration 005</a> (fan out and fan in), apply fan out somewhere in their capstone line, and run at least one more capstone iteration through the changed factory. No one has marked 005 done on Maven yet.</li>
+<li>Progress varies a lot. Some will be on iteration 5 or 6; Rob was stuck before his first capstone iteration until Matt helped him on Wednesday. His run also showed two things the course hasn't taught: how to inspect a run, and how to change a factory when the tutorial's specs say not to.</li>
+<li>They designed machines on Miro on Tuesday and liked the practical breakout. Open questions from Tuesday: what context and guides a machine gets, how machines hand work to each other, reviewing versus editing, and how much detail belongs in a plan.</li>
+</ul></div>
+<div class='card'><h2>Learning outcomes</h2><ul>
+<li>Describe how their homework went, and say when looking at the same work through several models or lenses is worth its cost.</li>
+<li>Use the Improvement Kata on their own factory: choose a North Star, describe the current condition, set a target condition for the end of next week, and name the next step.</li>
+<li>Say when to watch a run, when to steer it, and when to change the seed, plan or prompt instead, and know the weekend homework.</li>
+<li>Say what they still want to figure out for the course to be a valuable use of their time.</li>
+</ul></div>
+<div class='card'><h2>Key concepts</h2><ul>
+<li><strong>Fix the machine, not the code:</strong> when a run goes wrong, the job is to change the factory so the next run goes right, not to repair this run's output by hand.</li>
+<li><strong>Kaizen:</strong> small, continuous improvements. Keep two backlogs, one for the work and one for improving the factory; more and more of your work is the second.</li>
+<li><strong>On the loop:</strong> Kief Morris's framing in <a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">Humans and Agents in Software Engineering Loops</a>. Humans run the <em>why loop</em> (what the software should do); agents run the <em>how loop</em> (building it). Working <em>on</em> the loop means changing the harness rather than the artefact; being <em>in</em> the loop, reviewing every line, becomes the bottleneck.</li>
+<li><strong>The Improvement Kata:</strong> a way to structure kaizen. Pick a North Star, describe the current condition, set a target condition, then work through the obstacles one PDCA step at a time.</li>
+<li><strong>Watch, steer, change:</strong> watch to understand a run; steer to correct this run; change the seed, plan or prompt when the lesson should last.</li>
+</ul></div>
+<div class='card'><h2>Format &amp; logistics</h2><ul>
+<li>Zoom for talking and breakouts; the <a href="https://miro.com/app/board/uXjVEeUpa9Y=/">cohort Miro board</a> for the work.</li>
+<li>David is the Zoom host and runs every breakout, including its timer and broadcasts.</li>
+<li>Before class, on Miro: a <strong>Where are you?</strong> grid with two axes, tutorial iterations done (1 to 7) and capstone iterations run (0 to 3+), for a dot each; a <strong>How did the homework go?</strong> frame with <strong>What I did</strong> and <strong>What happened</strong> columns; three <strong>Improvement Kata</strong> frames, one per North Star (dark factory, as good as a human, fast and cheap), each with boxes for North Star, current condition, target condition and next step; a <strong>Show and tell</strong> section with a slide frame per student and a Tuesday/Thursday sign-up; a <strong>What's missing?</strong> frame. Reuse the retro and takeaways frame.</li>
+<li>The Improvement Kata drawing from the July cohort's Session 7 (in the EW LSP July room) for the kaizen slides.</li>
+<li>Have the course's opening hopes and fears (or goals) to hand for the last block.</li>
+<li>Add the weekend homework to Maven under Session 6 and publish it before the session.</li>
+</ul></div>
+</div>
+</details>
+<footer>Generated from runbook.md · Thu 15 Oct, 07:49</footer>
+</main>
+</body>
+</html>

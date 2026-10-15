@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 6: Fix the machine, not the code</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="kit/sketchbook.css">
+<script src="kit/sketchbook.js" defer></script>
+<style>
+  /* The cohort 2 live-session base (Days 1-3). Slides are 1600×900. Keep these rules as they are;
+     add session-specific layout classes below the marked line. */
+  html, body, .reveal-viewport { background: var(--sk-paper); }
+  .reveal-viewport { background-image: none; }
+  .reveal { font-family: var(--sk-font-body); color: var(--sk-ink); }
+  .reveal .slides section { font-size: 26px; text-align: left; height: 100%; box-sizing: border-box; padding: 30px 10px 20px; display: flex !important; flex-direction: column; }
+  .reveal .slides section.mid { justify-content: center; }
+  .reveal .slides section.center { justify-content: center; align-items: center; text-align: center; }
+  .reveal .sk-bubble::before { border-width: 5px; }
+  .reveal .sk-bubble::after { border-right-width: 5px; border-bottom-width: 5px; }
+  .reveal .sk-panel::before { border-width: 4px; }
+  .reveal .progress { color: var(--sk-mustard); height: 5px; }
+  .reveal .controls { color: var(--sk-deep-teal); }
+  .reveal .slide-number { background: transparent; color: var(--sk-deep-teal); font-family: var(--sk-font-label); font-size: 20px; }
+  .reveal a { color: var(--sk-deep-teal); }
+
+  .lede { font-size: 1.7em; line-height: 1.3; color: var(--sk-body-text); max-width: 30em; margin: .4em 0; }
+  .center .lede { margin-left: auto; margin-right: auto; }
+  .big { font-size: 4.2em; }
+  .split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2.5em; align-items: center; flex: 1; min-height: 0; }
+  .split > img { max-height: 560px; justify-self: center; }
+  .mid .split { flex: 0 0 auto; }
+  ul.sk-list { list-style: none; padding: 0; margin: .6em 0 0; }
+  ul.sk-list li { font-size: 1.5em; line-height: 1.3; margin: .5em 0; padding-left: 1.4em; position: relative; color: var(--sk-body-text); }
+  ul.sk-list li::before { content: ""; position: absolute; left: 0; top: .45em; width: .55em; height: .55em; border-radius: 50%; background: var(--sk-accent, var(--sk-teal)); }
+  ul.sk-list li small { display: block; font-size: .75em; color: #6b665c; }
+  .sk-row { margin-top: 1em; }
+  .sk-row .sk-panel p { font-size: 1.15em; }
+  .agenda .sk-row { font-size: 1.05em; }
+  .agenda .sk-label { font-size: .8em; }
+  .agenda .sk-panel img { height: 100px; width: auto; margin: .6em auto 0; }
+  .agenda .sk-panel:not(.sk-dashed) { opacity: .45; }
+  .agenda.all .sk-panel { opacity: 1; }
+  .steps { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.5em; text-align: center; margin-top: 1em; }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4em; margin-top: 1.2em; }
+  .trio .sk-panel { text-align: center; }
+  .trio .sk-panel img { height: 150px; width: auto; display: block; margin: .3em auto; }
+  .trio .sk-panel p { font-size: 1.6em; line-height: 1.25; margin: .2em 0; }
+  .scenes { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5em; margin-top: .8em; }
+  .scene { margin: 0; text-align: center; }
+  .scene img { height: 470px; max-width: 100%; }
+  .scene figcaption { font-size: 1.35em; color: var(--sk-body-text); }
+  .scene figcaption span { display: block; font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.35em; }
+  .code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.3em; line-height: 1.4; white-space: pre; margin: 0; }
+  .todo { background: var(--sk-highlighter); font-family: var(--sk-font-label); padding: 0 .3em; }
+
+  /* In-page presenter notes: S or the Notes button. Works where speaker-view popups are blocked. */
+  .presenter-toggle { position: fixed; z-index: 100; top: 12px; right: 18px; padding: 7px 13px; border: 2px solid var(--sk-ink); border-radius: 9px; background: var(--sk-paper); color: var(--sk-deep-teal); font: 24px var(--sk-font-label); cursor: pointer; }
+  .presenter-panel { position: fixed; z-index: 90; inset: 0 0 0 60%; overflow: auto; box-sizing: border-box; padding: 58px 28px 24px; background: var(--sk-paper); border-left: 4px solid var(--sk-ink); color: var(--sk-ink); font: clamp(17px, 1.5vw, 24px)/1.35 var(--sk-font-body); }
+  .presenter-panel[hidden] { display: none; }
+  .presenter-panel h2 { margin: 0 0 .45em; font: 1.7em var(--sk-font-label); color: var(--sk-deep-teal); }
+  .presenter-panel ul { padding-left: 1.2em; }
+  .presenter-panel li { margin: .45em 0; }
+  .presenter-panel a { color: var(--sk-deep-teal); }
+  body.presenter-open .reveal { width: 60vw; }
+  @media (max-width: 850px) {
+    body.presenter-open .reveal { width: 100vw; height: 52vh; }
+    .presenter-panel { inset: 52vh 0 0; border-left: 0; border-top: 4px solid var(--sk-ink); padding-top: 50px; }
+  }
+
+  /* Session-specific layout classes go below this line. */
+  .card { border:4px solid var(--sk-ink); border-radius:22px; padding:22px 26px; background:var(--sk-bubble); filter:url(#sk-wobble); display:flex; flex-direction:column; justify-content:center; box-sizing:border-box; }
+  .card.teal { background:color-mix(in srgb,var(--sk-teal) 24%,var(--sk-paper)); }
+  .card.blue { background:color-mix(in srgb,var(--sk-blue) 18%,var(--sk-paper)); }
+  .card h3 { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.8em; margin:.2em 0; }
+  .card p { font-size:1.4em; line-height:1.22; margin:.1em 0; }
+  .instruction { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.35em; text-align:center; margin:.8em 0 0; }
+  .question { font-size:2.1em; line-height:1.2; max-width:1250px; text-align:center; }
+  .icon { height:200px; width:auto; margin-top:.5em; }
+  .homework-title { display:flex; align-items:center; gap:22px; }
+  .homework-title img { height:66px; width:66px; object-fit:contain; }
+  .trio .sk-panel p.small { font-size:1.2em; color:var(--sk-body-text); }
+
+  /* Check in: where are you, on two axes. */
+  .where-grid { display:grid; grid-template-columns:200px 520px; grid-template-rows:230px auto; gap:8px 14px; margin-top:.7em; }
+  .where-grid .plot { position:relative; border-left:4px solid var(--sk-ink); border-bottom:4px solid var(--sk-ink); filter:url(#sk-wobble); }
+  .where-grid .dot { position:absolute; width:26px; height:26px; border-radius:50%; background:var(--sk-coral); border:3px solid var(--sk-ink); }
+  .where-grid .axis-y { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.15em; text-align:right; align-self:center; }
+  .where-grid .axis-x { grid-column:2; font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.15em; text-align:center; }
+
+  /* Two backlogs: the work, and the bigger one for improving the factory. */
+  .backlogs { display:grid; grid-template-columns:1fr 1.35fr; gap:2.5em; align-items:center; margin-top:1em; }
+  .backlogs .card { text-align:center; align-items:center; min-height:330px; }
+  .backlogs .card.more { min-height:420px; }
+  .backlogs .card img { height:130px; }
+  .backlogs .card.more img { height:170px; }
+
+  /* Preview: watch and steer. A short command example beside its icon. */
+  .preview { display:grid; grid-template-columns:auto 240px; gap:3em; align-items:center; justify-content:center; margin-top:1em; }
+  .preview .card { padding:28px 36px; }
+  .preview .code { font-size:1.45em; }
+  .preview img { height:220px; justify-self:center; }
+  .card.coral { background:color-mix(in srgb,var(--sk-coral) 23%,var(--sk-paper)); }
+
+  /* The Improvement Kata drawing. */
+  .kata { max-height:690px; max-width:100%; align-self:center; margin-top:.3em; border:4px solid var(--sk-ink); border-radius:22px; filter:url(#sk-wobble); }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+  <!-- 1 · Title -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.4em"><span class="sk-burst"><span class="sk-hl">Welcome back</span></span></h1>
+    <p class="lede">Day 6 of 8 · Thursday 15 October</p>
+    <img src="kit/characters/group.svg" alt="A group of four friendly people and a dog" style="height:260px;margin-top:.4em">
+    <aside class="notes"><strong class="when">⏱ 09:30–09:33 · 3 min</strong><br><strong class="who">🎤 Matt</strong><br><a class="lesson-checklists" href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/checklists/live-lesson-checklists.md">Lesson checklists</a> · <a class="go-live-checklist" href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/checklists/live-lesson-checklists.md#-go-live--before-admitting-students">Go live</a><br><a class="storyboard-link" href="https://lean-software-production.github.io/slides/2026-09/day-6/storyboard.html">Storyboard</a><br><ul><li>Before admitting students, use the linked lesson checklists. David is Zoom host and recording manager, and runs every breakout room, including timers and broadcasts.</li><li>Paste the <a href="https://miro.com/app/board/uXjVEeUpa9Y=/">cohort Miro board</a> link in Zoom chat, and pin it.</li><li>Recording on; check the BB transcript is connected. Stop recording at 11:00.</li></ul></aside>
+  </section>
+
+  <!-- 2 · Check in -->
+  <section class="center">
+    <h2 class="sk-section">Check in</h2>
+    <div class="sk-bubble question">“Where are you, and how's it feeling?”</div>
+    <div class="where-grid">
+      <div class="axis-y">capstone iterations run<br>0 → 3+</div>
+      <div class="plot"><span class="dot" style="left:18%;bottom:12%"></span><span class="dot" style="left:52%;bottom:30%"></span><span class="dot" style="left:70%;bottom:62%"></span><span class="dot" style="left:84%;bottom:40%"></span></div>
+      <div class="axis-x">tutorial iterations done: 1 → 7</div>
+    </div>
+    <p class="steps">a dot each on the Miro grid · one word about how it's going</p>
+    <aside class="notes"><strong class="when">⏱ 09:33–09:38 · 5 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Introduce the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/right-to-pass.md">right to pass</a>: “You can always pass without explaining, and join in later.”</li><li>Each person puts a dot on the <strong>Where are you?</strong> grid on Miro: tutorial iterations done across, capstone iterations run up. Then one word each, popcorn.</li><li>David: use the grid to make the rooms for the next activity, so each room has someone who got through the homework.</li><li><span class="todo">Open:</span> pair people who are flying with people who are stuck, or people at the same place?</li></ul></aside>
+  </section>
+
+  <!-- 3 · Agenda (all) -->
+  <section class="mid agenda all" data-step="0">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:38–09:39 · 1 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>The objective in a line: “Today we hear how the homework went, learn a way to keep improving our factories, and set up the last week of the course.”</li><li>Read the four cards.</li></ul></aside>
+  </section>
+
+  <!-- 4 · Agenda: How did the homework go? -->
+  <section class="mid agenda" data-step="1">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:39 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Start with the homework, whatever people got to.</li></ul></aside>
+  </section>
+
+  <!-- 5 · How did the homework go? -->
+  <section class="center">
+    <h2 class="sk-title big"><span class="sk-hl">How did the homework go?</span></h2>
+    <div class="sk-bubble question" style="margin-top:.5em">“What did you try, and what happened?”</div>
+    <img src="kit/icons/page-pencil.svg" alt="A page and pencil" class="icon" style="height:170px">
+    <p class="steps">small rooms · 9 min · a sticky in each Miro column · then a few of us share</p>
+    <aside class="notes"><strong class="when">⏱ 09:39–09:54 · 15 min</strong><br><strong class="who">🎤 Jeremy; David runs the rooms</strong><br><ul><li>Rooms: David · rooms of 2 or 3 · manual, from the check-in grid, so each room has someone who did the homework · open 9 min, plus 1 min to move · broadcast at 5 and 1 min left.</li><li>Keep it open: whatever they did counts, fan out or not. “If you didn't get to fan out, tell us what you did get to.”</li><li>On Miro, in <strong>How did the homework go?</strong>: one sticky in <strong>What I did</strong>, one in <strong>What happened</strong>.</li><li>Back in the room (about 5 min): a few share. Then ask: “When is it worth looking at the same work through several models or lenses?” Fan out is a familiar idea to developers; the trade-offs aren't. It costs more, and it can surface irrelevant findings: a reviewer that always reports its worst finding as a P1, even when by the fourth run that's a minor snag.</li></ul></aside>
+  </section>
+
+  <!-- 6 · Agenda: Improving the factory -->
+  <section class="mid agenda" data-step="2">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:54 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Hand over to Matt.</li></ul></aside>
+  </section>
+
+  <!-- 7 · Two backlogs -->
+  <section class="mid">
+    <h2 class="sk-section">Two backlogs</h2>
+    <div class="backlogs">
+      <div class="card blue"><img src="kit/icons/kite.svg" alt="A kite"><h3>The work</h3><p>Features for your capstone</p></div>
+      <div class="card teal more"><img src="kit/icons/gear.svg" alt="A gear"><h3>Improving the factory</h3><p>Machines, checks, routes, seeds</p></div>
+    </div>
+    <p class="instruction">More and more of your work is on the right: fix the machine, not the code</p>
+    <aside class="notes"><strong class="when">⏱ 09:54–09:57 · 3 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Keep two backlogs: one for the work itself, one for improving the factory. They are orthogonal.</li><li>More and more of your work is now on the second one. When a run goes wrong, fixing its output by hand fixes one run; fixing the machine fixes every run after it.</li><li>Tie it to Tuesday's toast (<a href="https://deming.org/you-burn-ill-scrape/">“You burn, I'll scrape”</a>): build quality in by changing the machine that made the mistake.</li><li>Kief Morris calls this working <em>on the loop</em> (<a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">Humans and Agents in Software Engineering Loops</a>): humans run the <em>why loop</em>, deciding what the software should do; agents run the <em>how loop</em> that builds it. When the output is wrong, change the harness, not the artefact. Reviewing every line is being <em>in</em> the loop, and it becomes the bottleneck.</li><li>“Here's a way to structure that second backlog.”</li></ul></aside>
+  </section>
+
+  <!-- 8 · The Improvement Kata -->
+  <section class="mid">
+    <h2 class="sk-section">The Improvement Kata</h2>
+    <img src="art/improvement-kata.png" alt="A path from the current condition, through a cloud of obstacles crossed by small Plan-Do-Check-Act loops, to a target condition, and on towards a North Star" class="kata">
+    <aside class="notes"><strong class="when">⏱ 09:57–10:00 · 3 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li><strong>North Star:</strong> where you're heading, which you may never reach. E.g. a dark factory: concept to cash, no bugs, no human intervention.</li><li><strong>Current condition:</strong> where your factory is today. E.g. given a story, it produces code.</li><li><strong>Target condition:</strong> the next place you want to be, close enough to reach soon. E.g. given fleshed-out stories, it produces deploy-ready code with no intervention.</li><li><strong>Obstacles:</strong> you can't see the way through yet. Take them one at a time, each a small Plan-Do-Check-Act loop.</li><li>Who does what: you set the North Star and agree the target condition. The robot is good at the numbers that describe the current condition, which are tedious to gather by hand.</li><li>Keep it under five minutes; they learn it by doing it next.</li></ul></aside>
+  </section>
+
+  <!-- 9 · Your North Star -->
+  <section class="mid">
+    <h2 class="sk-title big" style="font-size:3.4em"><span class="sk-hl">Your North Star</span></h2>
+    <div class="trio">
+      <div class="sk-panel sk-deep-teal"><img src="kit/icons/owl.svg" alt="An owl"><p><strong>Dark factory</strong></p><p class="small">Give it an idea and then see it in production</p></div>
+      <div class="sk-panel sk-coral"><img src="kit/icons/magnifier.svg" alt="A magnifying glass"><p><strong>As good as a human</strong></p><p class="small">Code and product quality as good as a senior dev</p></div>
+      <div class="sk-panel sk-mustard"><img src="kit/icons/car.svg" alt="A car"><p><strong>Fast and cheap</strong></p><p class="small">Every feature is one hour and five dollars, or better</p></div>
+    </div>
+    <p class="steps">choose a room · 10 min · coach one person: current condition → target for next week → next step</p>
+    <aside class="notes"><strong class="when">⏱ 10:00–10:15 · 15 min</strong><br><strong class="who">🎤 Jeremy; David runs the rooms</strong><br><ul><li>Rooms: David · 3 rooms, one per North Star · self-select · open 10 min, plus 1 min to move · broadcast at 5 and 1 min left. An empty room is fine.</li><li>Say: “Pick the North Star you care about most. It's scaffolding: you can change it later.”</li><li>In each room, pick one person's factory and coach them through the kata on the room's Miro frame: current condition, a target condition for the end of next week, and the next step.</li><li>A vague current condition is fine. “I have no idea what a run costs” can have the target “each run costs less than $10”, replaced once watching gives real numbers. That's this weekend's homework.</li><li>Instructors visit rooms. Back in the room (about 4 min): each room says its North Star and target condition.</li><li>A North Star is a point to aim at, not a metric. Dark factory: you're only involved in the product loop, seeing it in production and deciding what it should do next: Morris's <a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">why loop</a>. He warns that staying outside the how loop risks neglecting internal quality, which is what the second room aims at. Fast and cheap: one hour and five dollars per feature is the bar to beat.</li></ul></aside>
+  </section>
+
+  <!-- 10 · Agenda: Next week -->
+  <section class="mid agenda" data-step="3">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:15 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Next week is the last week: show and tells, and what you still need from us.</li></ul></aside>
+  </section>
+
+  <!-- 11 · Show and tell -->
+  <section class="mid">
+    <h2 class="sk-section">Show and tell, next week</h2>
+    <div class="trio">
+      <div class="sk-panel sk-blue"><img src="kit/icons/kite.svg" alt="A kite"><p>What you built</p></div>
+      <div class="sk-panel sk-teal"><img src="kit/icons/gear.svg" alt="A gear"><p>Your factory</p></div>
+      <div class="sk-panel sk-mustard"><img src="kit/icons/lightbulb.svg" alt="A lightbulb"><p>What you learned</p></div>
+    </div>
+    <p class="steps">about 7 min each · the whole group · sign up for Tuesday on Miro now</p>
+    <aside class="notes"><strong class="when">⏱ 10:15–10:21 · 6 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Everyone gets about 7 minutes in front of the whole group, in three parts: what you built, your factory, and what you learned.</li><li>There's a slide frame for each person in the Miro <strong>Show and tell</strong> section, if they want something to talk to.</li><li>Roughly four on Tuesday (about 30 minutes), the rest on Thursday. Ask who'll go on Tuesday, and put names in the sign-up now. Anyone who doesn't takes Thursday, unless they pass.</li><li><span class="todo">Open:</span> sign-up on Miro, Maven, or a column in the projects Google Sheet, so students who miss today can sign up.</li></ul></aside>
+  </section>
+
+  <!-- 12 · What's missing? -->
+  <section class="center">
+    <h2 class="sk-section">What's missing?</h2>
+    <div class="sk-bubble question">“What do you still want to figure out for this course to be a really valuable use of your time?”</div>
+    <img src="kit/icons/puzzle.svg" alt="A puzzle piece" class="icon" style="height:160px">
+    <p class="steps">1 min alone · pairs · then all of us</p>
+    <aside class="notes"><strong class="when">⏱ 10:21–10:31 · 10 min</strong><br><strong class="who">🎤 Jeremy; David runs the pairs</strong><br><ul><li>Rooms: David · pairs · random · open 3 min, plus 1 min to move · broadcast at 1 min left.</li><li>First, remind everyone of their hopes and goals from the start of the course: they may have changed.</li><li>1-2-All: one minute alone, writing stickies in <strong>What's missing?</strong> on Miro; then pairs; then the whole room. Group the stickies as they come in.</li><li>Say: “This shapes next week's sessions. Add more in Slack over the weekend.”</li></ul></aside>
+  </section>
+
+  <!-- 13 · Agenda: This weekend -->
+  <section class="mid agenda" data-step="4">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:31 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>The homework: watching, then steering. This is the summit; next week is for consolidating.</li></ul></aside>
+  </section>
+
+  <!-- 14 · Preview: watch -->
+  <section class="mid">
+    <h2 class="sk-section">Preview: watch</h2>
+    <div class="preview">
+      <div class="card blue"><pre class="code">$ bin/factory --run tetris …
+started run tetris
+
+$ bin/factory watch tetris
+doer    | …
+tokens  doer 12.4k in / 3.1k out</pre></div>
+      <img src="kit/icons/magnifier.svg" alt="A magnifying glass">
+    </div>
+    <p class="instruction">Start a run, get your terminal back, and watch it from anywhere: what each machine says, and what it spends</p>
+    <aside class="notes"><strong class="when">⏱ 10:31–10:36 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">iteration 006's README</a>.</li><li>What's new: the factory runs in the background. Watching is a separate command that attaches to a run in flight, even late, catches up and then follows live. It shows what each machine generates and the tokens it spends, and it leaves a record you can still read tomorrow. One run at a time.</li><li>Heads up for the homework: each machine now runs as an ACP agent, so this iteration is bigger than the last few.</li><li>Watching is how they'll see their factory's current condition, in numbers.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
+  </section>
+
+  <!-- 15 · Preview: steer -->
+  <section class="mid">
+    <h2 class="sk-section">Preview: steer</h2>
+    <div class="preview">
+      <div class="card coral"><pre class="code">$ bin/factory say tetris doer "use curses"
+delivered to doer
+
+$ bin/factory say tetris validator "be strict"
+refused: doer is what is running</pre></div>
+      <img src="kit/icons/compass.svg" alt="A compass">
+    </div>
+    <p class="instruction">Send a message to a machine while it works. It lasts for this run only.</p>
+    <aside class="notes"><strong class="when">⏱ 10:36–10:41 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">iteration 007's README</a>.</li><li>A message names the machine it's for, because during fan out several run at once. It arrives at that machine's next step, the way you interrupt an agent mid-task. A machine that isn't running refuses it rather than holding it for whoever comes next.</li><li>The message dies with that machine's run. If the lesson should last, change the seed, the plan or the machine's prompt: watch to understand a run, steer to correct this run, change the factory to make it last.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
+  </section>
+
+  <!-- 16 · Homework -->
+  <section class="mid">
+    <h2 class="sk-section homework-title"><img src="kit/icons/checklist.svg" alt="">Over the weekend</h2>
+    <div class="split">
+      <ul class="sk-list" style="--sk-accent:var(--sk-blue)">
+        <li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">iteration 006</a> of the tutorial: watching</li>
+        <li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">iteration 007</a>: steering</li>
+        <li>Run a capstone iteration, watch it, and take your next step towards your target condition</li>
+        <li>Read Kief Morris on <a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">humans and agents</a> <small>anytime</small></li>
+      </ul>
+      <img src="kit/icons/laptop.svg" alt="A laptop" style="height:300px">
+    </div>
+    <aside class="notes"><strong class="when">⏱ 10:41–10:44 · 3 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>The homework is in Maven under Session 6, in the same words and order; students find the links there.</li><li>If you're behind, get as far as you can and tell us where you got to.</li><li>The reading names what today was about: humans run the why loop, agents run the how loop, and our job is to work on the loop, improving the harness rather than the output. It's short; read it anytime.</li><li>Ask: “Which run do you want to watch?”</li><li><span class="todo">Open:</span> post the Session 6 homework in Maven before the session.</li></ul></aside>
+  </section>
+
+  <!-- 17 · Retro and takeaways -->
+  <section class="center">
+    <h2 class="sk-section">Retro and takeaways</h2>
+    <div class="sk-bubble" style="font-size:2.2em">“One thing you're taking away.”</div>
+    <img src="art/whiteboard.svg" alt="A whiteboard with stickies on it" style="height:260px;margin-top:.6em">
+    <aside class="notes"><strong class="when">⏱ 10:44–10:49 · 5 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>On Miro, reuse the retro and takeaways frame: at least one takeaway, and one thing to keep or change. Passing is welcome.</li><li>Invite a few takeaways aloud. We read the keeps and changes afterwards.</li></ul></aside>
+  </section>
+
+  <!-- 18 · See you Tuesday -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.6em"><span class="sk-burst"><span class="sk-hl">See you Tuesday!</span></span></h1>
+    <img src="kit/characters/waver.svg" alt="A person waving" style="height:320px;margin-top:.6em">
+    <aside class="notes"><strong class="when">⏱ 10:49–11:00 · 11 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Buffer: 11 min. End by 11:00, or earlier if we're done, and stop the recording.</li></ul></aside>
+  </section>
+
+</div></div>
+
+<template id="agenda-row">
+  <div class="sk-row">
+    <div class="sk-panel sk-forest"><div class="sk-step"><span class="sk-label">How did the homework go?</span></div><img src="kit/icons/page-pencil.svg" alt=""></div>
+    <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">Improving the factory</span></div><img src="kit/icons/gear.svg" alt=""></div>
+    <div class="sk-panel sk-coral"><div class="sk-step"><span class="sk-label">Next week</span></div><img src="kit/icons/kite.svg" alt=""></div>
+    <div class="sk-panel sk-blue"><div class="sk-step"><span class="sk-label">This weekend</span></div><img src="kit/icons/checklist.svg" alt=""></div>
+  </div>
+</template>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  // The agenda slides share one row; the current step gets the dashed outline.
+  document.querySelectorAll('section.agenda').forEach(function (s) {
+    var row = document.getElementById('agenda-row').content.cloneNode(true);
+    var step = +s.dataset.step;
+    if (step) row.querySelectorAll('.sk-panel')[step - 1].classList.add('sk-dashed');
+    s.appendChild(row);
+  });
+
+  // S or the Notes button shows the current slide's notes beside it, in the same page.
+  // ?notes=1 opens with notes showing (the storyboard's "Open with notes" link).
+  var presenterPanel, presenterBody, presenterHeading, presenterButton;
+  function updatePresenterNotes() {
+    if (!presenterPanel) return;
+    var notes = Reveal.getCurrentSlide().querySelector('aside.notes');
+    presenterHeading.textContent = 'Slide ' + (Reveal.getIndices().h + 1) + ' notes';
+    presenterBody.innerHTML = notes ? notes.innerHTML : '<p>No notes for this slide.</p>';
+  }
+  function togglePresenterNotes(forceOpen) {
+    if (!presenterPanel) return;
+    var open = typeof forceOpen === 'boolean' ? forceOpen : presenterPanel.hidden;
+    presenterPanel.hidden = !open;
+    document.body.classList.toggle('presenter-open', open);
+    presenterButton.setAttribute('aria-expanded', String(open));
+    presenterButton.textContent = open ? 'Hide notes (S)' : 'Notes (S)';
+    if (open) updatePresenterNotes();
+    Reveal.layout();
+  }
+
+  Reveal.initialize({ width: 1600, height: 900, margin: 0.04, hash: true, slideNumber: 'c/t', transition: 'fade', center: false,
+    keyboard: { 83: function () { togglePresenterNotes(); } }
+  }).then(function () {
+    // The one-slide canvas pages (split-pages.py) stay uncluttered.
+    if (document.querySelectorAll('.reveal .slides > section').length < 2) return;
+    presenterButton = document.createElement('button');
+    presenterButton.className = 'presenter-toggle';
+    presenterButton.type = 'button';
+    presenterButton.setAttribute('aria-controls', 'presenter-notes');
+    presenterButton.setAttribute('aria-expanded', 'false');
+    presenterButton.textContent = 'Notes (S)';
+    presenterButton.addEventListener('click', function () { togglePresenterNotes(); });
+    presenterPanel = document.createElement('aside');
+    presenterPanel.id = 'presenter-notes';
+    presenterPanel.className = 'presenter-panel';
+    presenterPanel.hidden = true;
+    presenterPanel.setAttribute('aria-label', 'Presenter notes');
+    presenterPanel.innerHTML = '<h2></h2><div></div>';
+    presenterHeading = presenterPanel.querySelector('h2');
+    presenterBody = presenterPanel.querySelector('div');
+    document.body.append(presenterButton, presenterPanel);
+    Reveal.on('slidechanged', updatePresenterNotes);
+    if (new URLSearchParams(location.search).has('notes')) togglePresenterNotes(true);
+  });
+
+  // Viewers on the canvas can load while hidden or tiny, and don't always fire a window resize
+  // when they grow. Re-fit the slide whenever its box changes size, and once fonts have loaded.
+  new ResizeObserver(function () { Reveal.layout(); }).observe(document.documentElement);
+  if (document.fonts) document.fonts.ready.then(function () { Reveal.layout(); });
+  document.addEventListener('visibilitychange', function () { Reveal.layout(); });
+</script>
+</body>
+</html>
