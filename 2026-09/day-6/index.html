@@ -101,6 +101,9 @@
   .preview .card { padding:28px 36px; }
   .preview .code { font-size:1.45em; }
   .preview img { height:220px; justify-self:center; }
+  .start-prompt { display:flex; align-items:center; justify-content:center; gap:1em; margin-top:1em; }
+  .start-prompt .label { font-family:var(--sk-font-label); color:var(--sk-rust-text); font-size:1.4em; white-space:nowrap; }
+  .start-prompt .sk-bubble { font-size:1.5em; line-height:1.25; }
   .card.coral { background:color-mix(in srgb,var(--sk-coral) 23%,var(--sk-paper)); }
 
   /* The Improvement Kata drawing. */
@@ -231,7 +234,9 @@
       <img src="kit/icons/robot.svg" alt="A robot">
     </div>
     <p class="instruction">Each machine runs on its own configuration, and no other. Change its AGENTS.md, and the machine changes.</p>
-    <aside class="notes"><strong class="when">⏱ 10:31–10:34 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>A fix, added to the tutorial this week (<a href="https://github.com/lean-software-production/tutorial/pull/8">tutorial PR #8</a>). Since iteration 004 every machine has had a folder, <code>.assembly-lines/.machines/&lt;name&gt;/</code>, “holding its configuration”, but no iteration said what goes in it. Most factories still keep machines' prompts in code, and the harness reads the student's own <code>AGENTS.md</code> or <code>CLAUDE.md</code> above the target.</li><li><a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/005a-machine-configuration/README.md">Iteration 005a</a> makes the folder the configuration directory of the harness that runs the machine: its <code>AGENTS.md</code> (instructions, lens included), its harness and model, and its own copy of the login, kept out of Git.</li><li>Two rules: a machine runs on its own configuration and no other (not yours, not another machine's, not files in or above the target); a machine signs in with its own login, or its provider's API key, or the factory says it can't before running anything.</li><li>Tie it to today: this is where “fix the machine, not the code” happens. Improving a machine means editing its <code>AGENTS.md</code>, with no change to the factory's code.</li><li>To get it: click <strong>Sync fork</strong> on the capstone repo on GitHub, then say “fetch iteration”. Anyone who has started 006: set <code>factory/ITERATION</code> to <code>005 Done</code> first.</li></ul></aside>
+    <div class="start-prompt"><span class="label">Start with this prompt:</span><div class="sk-bubble">“Please pull in the changes from the upstream fork; then pull iteration 005a”</div>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 10:31–10:34 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>A fix, added to the tutorial this week (<a href="https://github.com/lean-software-production/tutorial/pull/8">tutorial PR #8</a>). Since iteration 004 every machine has had a folder, <code>.assembly-lines/.machines/&lt;name&gt;/</code>, “holding its configuration”, but no iteration said what goes in it. Most factories still keep machines' prompts in code, and the harness reads the student's own <code>AGENTS.md</code> or <code>CLAUDE.md</code> above the target.</li><li><a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/005a-machine-configuration/README.md">Iteration 005a</a> makes the folder the configuration directory of the harness that runs the machine: its <code>AGENTS.md</code> (instructions, lens included), its harness and model, and its own copy of the login, kept out of Git.</li><li>Two rules: a machine runs on its own configuration and no other (not yours, not another machine's, not files in or above the target); a machine signs in with its own login, or its provider's API key, or the factory says it can't before running anything.</li><li>Tie it to today: this is where “fix the machine, not the code” happens. Improving a machine means editing its <code>AGENTS.md</code>, with no change to the factory's code.</li><li>Point at the prompt: this is how they start. The agent pulls the tutorial's new changes from the upstream fork, then fetches iteration 005a. Anyone who has started 006: set <code>factory/ITERATION</code> to <code>005 Done</code> first.</li></ul></aside>
   </section>
 
   <!-- 15 · Preview: watch -->
@@ -250,9 +255,9 @@ tokens  doer 12.4k in / 3.1k out</pre></div>
     <aside class="notes"><strong class="when">⏱ 10:34–10:39 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">iteration 006's README</a>.</li><li>What's new: the factory runs in the background. Watching is a separate command that attaches to a run in flight, even late, catches up and then follows live. It shows what each machine generates and the tokens it spends, and it leaves a record you can still read tomorrow. One run at a time.</li><li>Heads up for the homework: each machine now runs as an ACP agent, so this iteration is bigger than the last few.</li><li>Watching is how they'll see their factory's current condition, in numbers.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
   </section>
 
-  <!-- 16 · Preview: steer -->
+  <!-- 16 · Preview: steer (bonus) -->
   <section class="mid">
-    <h2 class="sk-section">Preview: steer</h2>
+    <h2 class="sk-section">Preview: steer (bonus)</h2>
     <div class="preview">
       <div class="card coral"><pre class="code">$ bin/factory say tetris doer "use curses"
 delivered to doer
@@ -262,7 +267,7 @@ refused: doer is what is running</pre></div>
       <img src="kit/icons/compass.svg" alt="A compass">
     </div>
     <p class="instruction">Send a message to a machine while it works. It lasts for this run only.</p>
-    <aside class="notes"><strong class="when">⏱ 10:39–10:44 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">iteration 007's README</a>.</li><li>A message names the machine it's for, because during fan out several run at once. It arrives at that machine's next step, the way you interrupt an agent mid-task. A machine that isn't running refuses it rather than holding it for whoever comes next.</li><li>The message dies with that machine's run. If the lesson should last, change the seed, the plan or the machine's prompt: watch to understand a run, steer to correct this run, change the factory to make it last.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 10:39–10:44 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Say it's a bonus: do it after 006 and a watched capstone run, if there's time. Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">iteration 007's README</a>.</li><li>A message names the machine it's for, because during fan out several run at once. It arrives at that machine's next step, the way you interrupt an agent mid-task. A machine that isn't running refuses it rather than holding it for whoever comes next.</li><li>The message dies with that machine's run. If the lesson should last, change the seed, the plan or the machine's prompt: watch to understand a run, steer to correct this run, change the factory to make it last.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
   </section>
 
   <!-- 17 · Homework -->
@@ -271,8 +276,9 @@ refused: doer is what is running</pre></div>
     <div class="split">
       <ul class="sk-list" style="--sk-accent:var(--sk-blue)">
         <li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/005a-machine-configuration/README.md">iteration 005a</a> of the tutorial: machine configuration</li>
-        <li>Do iterations <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">006</a> (watching) and <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">007</a> (steering)</li>
+        <li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">iteration 006</a>: watching</li>
         <li>Run a capstone iteration, watch it, and take your next step towards your target condition</li>
+        <li>Bonus: do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">iteration 007</a>: steering</li>
         <li>Read Kief Morris on <a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">humans and agents</a> <small>anytime</small></li>
       </ul>
       <img src="kit/icons/laptop.svg" alt="A laptop" style="height:300px">
