@@ -220,7 +220,21 @@
     <aside class="notes"><strong class="when">⏱ 10:31 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>The homework: watching, then steering. This is the summit; next week is for consolidating.</li></ul></aside>
   </section>
 
-  <!-- 14 · Preview: watch -->
+  <!-- 14 · Homework 5a: machine configuration (bugfix) -->
+  <section class="mid">
+    <h2 class="sk-section">Homework 5a: machine configuration (bugfix)</h2>
+    <div class="preview">
+      <div class="card teal"><pre class="code">.machines/doer/
+  AGENTS.md     what it's for, how it works
+  machine.json  its harness and model
+  auth.json     its own login, not in Git</pre></div>
+      <img src="kit/icons/robot.svg" alt="A robot">
+    </div>
+    <p class="instruction">Each machine runs on its own configuration, and no other. Change its AGENTS.md, and the machine changes.</p>
+    <aside class="notes"><strong class="when">⏱ 10:31–10:34 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>A fix, added to the tutorial this week (<a href="https://github.com/lean-software-production/tutorial/pull/8">tutorial PR #8</a>). Since iteration 004 every machine has had a folder, <code>.assembly-lines/.machines/&lt;name&gt;/</code>, “holding its configuration”, but no iteration said what goes in it. Most factories still keep machines' prompts in code, and the harness reads the student's own <code>AGENTS.md</code> or <code>CLAUDE.md</code> above the target.</li><li><a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/005a-machine-configuration/README.md">Iteration 005a</a> makes the folder the configuration directory of the harness that runs the machine: its <code>AGENTS.md</code> (instructions, lens included), its harness and model, and its own copy of the login, kept out of Git.</li><li>Two rules: a machine runs on its own configuration and no other (not yours, not another machine's, not files in or above the target); a machine signs in with its own login, or its provider's API key, or the factory says it can't before running anything.</li><li>Tie it to today: this is where “fix the machine, not the code” happens. Improving a machine means editing its <code>AGENTS.md</code>, with no change to the factory's code.</li><li>To get it: click <strong>Sync fork</strong> on the capstone repo on GitHub, then say “fetch iteration”. Anyone who has started 006: set <code>factory/ITERATION</code> to <code>005 Done</code> first.</li></ul></aside>
+  </section>
+
+  <!-- 15 · Preview: watch -->
   <section class="mid">
     <h2 class="sk-section">Preview: watch</h2>
     <div class="preview">
@@ -233,10 +247,10 @@ tokens  doer 12.4k in / 3.1k out</pre></div>
       <img src="kit/icons/magnifier.svg" alt="A magnifying glass">
     </div>
     <p class="instruction">Start a run, get your terminal back, and watch it from anywhere: what each machine says, and what it spends</p>
-    <aside class="notes"><strong class="when">⏱ 10:31–10:36 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">iteration 006's README</a>.</li><li>What's new: the factory runs in the background. Watching is a separate command that attaches to a run in flight, even late, catches up and then follows live. It shows what each machine generates and the tokens it spends, and it leaves a record you can still read tomorrow. One run at a time.</li><li>Heads up for the homework: each machine now runs as an ACP agent, so this iteration is bigger than the last few.</li><li>Watching is how they'll see their factory's current condition, in numbers.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 10:34–10:39 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">iteration 006's README</a>.</li><li>What's new: the factory runs in the background. Watching is a separate command that attaches to a run in flight, even late, catches up and then follows live. It shows what each machine generates and the tokens it spends, and it leaves a record you can still read tomorrow. One run at a time.</li><li>Heads up for the homework: each machine now runs as an ACP agent, so this iteration is bigger than the last few.</li><li>Watching is how they'll see their factory's current condition, in numbers.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
   </section>
 
-  <!-- 15 · Preview: steer -->
+  <!-- 16 · Preview: steer -->
   <section class="mid">
     <h2 class="sk-section">Preview: steer</h2>
     <div class="preview">
@@ -248,37 +262,37 @@ refused: doer is what is running</pre></div>
       <img src="kit/icons/compass.svg" alt="A compass">
     </div>
     <p class="instruction">Send a message to a machine while it works. It lasts for this run only.</p>
-    <aside class="notes"><strong class="when">⏱ 10:36–10:41 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">iteration 007's README</a>.</li><li>A message names the machine it's for, because during fan out several run at once. It arrives at that machine's next step, the way you interrupt an agent mid-task. A machine that isn't running refuses it rather than holding it for whoever comes next.</li><li>The message dies with that machine's run. If the lesson should last, change the seed, the plan or the machine's prompt: watch to understand a run, steer to correct this run, change the factory to make it last.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 10:39–10:44 · 5 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Introduce the idea in a sentence, then go straight to the demo. The code is from <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">iteration 007's README</a>.</li><li>A message names the machine it's for, because during fan out several run at once. It arrives at that machine's next step, the way you interrupt an agent mid-task. A machine that isn't running refuses it rather than holding it for whoever comes next.</li><li>The message dies with that machine's run. If the lesson should last, change the seed, the plan or the machine's prompt: watch to understand a run, steer to correct this run, change the factory to make it last.</li><li>Aldric gives the demo. <span class="todo">Open:</span> which prepared factory, and the recorded fallback.</li></ul></aside>
   </section>
 
-  <!-- 16 · Homework -->
+  <!-- 17 · Homework -->
   <section class="mid">
     <h2 class="sk-section homework-title"><img src="kit/icons/checklist.svg" alt="">Over the weekend</h2>
     <div class="split">
       <ul class="sk-list" style="--sk-accent:var(--sk-blue)">
-        <li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">iteration 006</a> of the tutorial: watching</li>
-        <li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">iteration 007</a>: steering</li>
+        <li>Do <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/005a-machine-configuration/README.md">iteration 005a</a> of the tutorial: machine configuration</li>
+        <li>Do iterations <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">006</a> (watching) and <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">007</a> (steering)</li>
         <li>Run a capstone iteration, watch it, and take your next step towards your target condition</li>
         <li>Read Kief Morris on <a href="https://martinfowler.com/articles/exploring-gen-ai/humans-and-agents.html">humans and agents</a> <small>anytime</small></li>
       </ul>
       <img src="kit/icons/laptop.svg" alt="A laptop" style="height:300px">
     </div>
-    <aside class="notes"><strong class="when">⏱ 10:41–10:44 · 3 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>The homework is in Maven under Session 6, in the same words and order; students find the links there.</li><li>If you're behind, get as far as you can and tell us where you got to.</li><li>The reading names what today was about: humans run the why loop, agents run the how loop, and our job is to work on the loop, improving the harness rather than the output. It's short; read it anytime.</li><li>Ask: “Which run do you want to watch?”</li><li><span class="todo">Open:</span> post the Session 6 homework in Maven before the session.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 10:44–10:47 · 3 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>The homework is in Maven under Session 6, in the same words and order; students find the links there.</li><li>If you're behind, get as far as you can and tell us where you got to.</li><li>The reading names what today was about: humans run the why loop, agents run the how loop, and our job is to work on the loop, improving the harness rather than the output. It's short; read it anytime.</li><li>Ask: “Which run do you want to watch?”</li><li><span class="todo">Open:</span> post the Session 6 homework in Maven before the session.</li></ul></aside>
   </section>
 
-  <!-- 17 · Retro and takeaways -->
+  <!-- 18 · Retro and takeaways -->
   <section class="center">
     <h2 class="sk-section">Retro and takeaways</h2>
     <div class="sk-bubble" style="font-size:2.2em">“One thing you're taking away.”</div>
     <img src="art/whiteboard.svg" alt="A whiteboard with stickies on it" style="height:260px;margin-top:.6em">
-    <aside class="notes"><strong class="when">⏱ 10:44–10:49 · 5 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>On Miro, reuse the retro and takeaways frame: at least one takeaway, and one thing to keep or change. Passing is welcome.</li><li>Invite a few takeaways aloud. We read the keeps and changes afterwards.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 10:47–10:52 · 5 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>On Miro, reuse the retro and takeaways frame: at least one takeaway, and one thing to keep or change. Passing is welcome.</li><li>Invite a few takeaways aloud. We read the keeps and changes afterwards.</li></ul></aside>
   </section>
 
-  <!-- 18 · See you Tuesday -->
+  <!-- 19 · See you Tuesday -->
   <section class="center">
     <h1 class="sk-title" style="font-size:4.6em"><span class="sk-burst"><span class="sk-hl">See you Tuesday!</span></span></h1>
     <img src="kit/characters/waver.svg" alt="A person waving" style="height:320px;margin-top:.6em">
-    <aside class="notes"><strong class="when">⏱ 10:49–11:00 · 11 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Buffer: 11 min. End by 11:00, or earlier if we're done, and stop the recording.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 10:52–11:00 · 8 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Buffer: 8 min. End by 11:00, or earlier if we're done, and stop the recording.</li></ul></aside>
   </section>
 
 </div></div>
