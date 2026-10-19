@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session Storyboard</title>
+<style>
+:root {
+  --bg: #f6f5f1; --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6a64; --line: #e3e1da;
+  --present: #4f6d8f; --pairs: #c0673a; --demo: #3f8a5c; --talk: #8a6fb0; --buffer: #b9b6ac;
+  --quote-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --paper: #1f1f1c; --ink: #ecebe6; --muted: #a09e96; --line: #33322e;
+    --present: #7fa0c4; --pairs: #e08a5c; --demo: #6cbf8a; --talk: #b39ad6; --buffer: #5d5b55;
+    --quote-bg: #2a2925;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { font: 600 30px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 6px; }
+.intro p { margin: 2px 0; color: var(--muted); }
+.slides-link { display: inline-block; margin-top: 10px; padding: 7px 12px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 6px;
+  color: var(--ink); font-weight: 600; text-decoration: none; }
+.slides-link:hover, .slides-link:focus-visible { text-decoration: underline; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; }
+.transformation { margin: 16px 0 0; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; font-size: 16px; }
+.transformation p { margin: 0; }
+.framing-wrap { margin-top: 24px; }
+.framing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 22px 0; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card p { margin: 0; }
+.timeline { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 10px 0; margin: 12px 0 8px; }
+.bar { display: flex; gap: 2px; height: 58px; }
+.phase-bar { display: flex; gap: 2px; margin-bottom: 4px; }
+.phase-bar a { min-width: 0; padding: 3px 6px; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--line); border-radius: 5px; font-size: 12px; font-weight: 700;
+  text-decoration: none; overflow: hidden; white-space: nowrap; }
+.phase-heading { margin: 22px 0 8px; padding: 8px 4px 4px; border-bottom: 2px solid var(--ink);
+  color: var(--ink); font: 600 22px/1.2 Georgia, serif; text-transform: none; letter-spacing: 0;
+  scroll-margin-top: 115px; }
+.phase-heading span { float: right; color: var(--muted); font: 12px/2 Helvetica, Arial, sans-serif; }
+.seg { min-width: 0; border-radius: 5px; padding: 4px 6px; color: #fff; text-decoration: none;
+  display: flex; flex-direction: column; overflow: hidden; font-size: 11px; line-height: 1.2; }
+.seg-t { opacity: .85; font-variant-numeric: tabular-nums; }
+.seg-n { font-weight: 600; overflow: hidden; }
+.seg.present { background: var(--present); } .seg.pairs { background: var(--pairs); }
+.seg.demo { background: var(--demo); } .seg.talk { background: var(--talk); }
+.seg.buffer { background: var(--buffer); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.sum { font-size: 13px; color: var(--muted); }
+.warn { color: #c0392b; font-weight: 600; margin-left: 8px; }
+.block { display: grid; grid-template-columns: 76px 1fr; gap: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-left: 5px solid var(--present); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0; scroll-margin-top: 110px; }
+.block.pairs { border-left-color: var(--pairs); } .block.demo { border-left-color: var(--demo); }
+.block.talk { border-left-color: var(--talk); } .block.buffer { border-left-color: var(--buffer); }
+.clock { font: 600 20px/1 Georgia, serif; font-variant-numeric: tabular-nums; }
+.mins { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.what h3 { margin: 0 0 4px; font-size: 18px; }
+.purpose { margin: 0 0 4px; font-weight: 500; }
+ul.purpose { padding-left: 20px; }
+.structure { margin: 0; color: var(--muted); }
+blockquote { margin: 10px 0 0; padding: 8px 12px; background: var(--quote-bg); border-radius: 6px; font-style: italic; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+details ul { margin: 6px 0 0; padding-left: 18px; }
+details ol { margin: 2px 0 4px; }
+li.cont { list-style: none; }
+.notes { margin-top: 22px; color: var(--muted); }
+footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .seg-n { display: none; }
+  .block { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Day 7: Show and tell, and how we work (Tue 20 Oct)</h1>
+<div class="intro"><p>Seventh live session of cohort 2. Tuesday, 09:30 to 11:00 PT, on Zoom. Led by Matt and Jeremy. David demonstrates the foreman pattern, Aldric presents the superpowers workflow, and Matt shows his Memba project (not yet asked; drop the block if he hasn't time). David is the Zoom host and runs any breakouts. This is a draft for instructors. What students were given is in the <a href="https://maven.com/lean-software-production/hands-off-agentic-coding/3/syllabus/modules/0efda6">Maven portal</a> ("Capstone show and tell, harness &amp; context management"); the session itself has no description yet.</p></div>
+<a class="slides-link" href="index.html?v=ff4ed2271699">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=ff4ed2271699">Open with notes</a>
+
+<div class="transformation"><p>Students arrive having spent the weekend watching their factory run and tuning its machines, with four of them ready to show their capstone.</p><p>They leave having seen what their peers built and learned, two ways experienced practitioners work around a factory (a foreman that shapes work and makes sense of what comes back, and the superpowers workflow), and a trainer's own factory on a real project. They know what Thursday holds.</p></div>
+
+<div class="timeline">
+  <div class="phase-bar"><a href="#phase-check-in" style="flex:6">Check-in · 6 min</a><a href="#phase-what" style="flex:41">What · 41 min</a><a href="#phase-so-what" style="flex:30">So what · 30 min</a><a href="#phase-now-what" style="flex:8">Now what · 8 min</a><a href="#phase-buffer" style="flex:5">Buffer · 5 min</a></div>
+  <div class="bar">
+<a class='seg talk' href='#welcome-and-today' style='flex:6' title='Check-in · Welcome and today · 6 min'><span class='seg-t'>09:30</span><span class='seg-n'>Welcome and today</span></a>
+<a class='seg pairs' href='#how-did-the-weekend-go' style='flex:9' title='What · How did the weekend go? · 9 min'><span class='seg-t'>09:36</span><span class='seg-n'>How did the weekend go?</span></a>
+<a class='seg talk' href='#show-and-tell' style='flex:32' title='What · Show and tell · 32 min'><span class='seg-t'>09:45</span><span class='seg-n'>Show and tell</span></a>
+<a class='seg demo' href='#the-foreman' style='flex:10' title='So what · The foreman · 10 min'><span class='seg-t'>10:17</span><span class='seg-n'>The foreman</span></a>
+<a class='seg present' href='#the-superpowers-workflow' style='flex:10' title='So what · The superpowers workflow · 10 min'><span class='seg-t'>10:27</span><span class='seg-n'>The superpowers workflow</span></a>
+<a class='seg demo' href='#memba' style='flex:10' title='So what · Memba · 10 min'><span class='seg-t'>10:37</span><span class='seg-n'>Memba</span></a>
+<a class='seg present' href='#before-thursday' style='flex:3' title='Now what · Before Thursday · 3 min'><span class='seg-t'>10:47</span><span class='seg-n'>Before Thursday</span></a>
+<a class='seg talk' href='#retro-and-takeaways' style='flex:5' title='Now what · Retro and takeaways · 5 min'><span class='seg-t'>10:50</span><span class='seg-n'>Retro and takeaways</span></a>
+<a class='seg buffer' href='#buffer' style='flex:5' title='Buffer · Buffer · 5 min'><span class='seg-t'>10:55</span><span class='seg-n'>Buffer</span></a>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--present)"></i>presenting</span>
+    <span><i style="background:var(--talk)"></i>whole group</span>
+    <span><i style="background:var(--pairs)"></i>breakouts</span>
+    <span><i style="background:var(--demo)"></i>factory demo</span>
+    <span><i style="background:var(--buffer)"></i>buffer</span>
+    <span class="sum">09:30 to 11:00 · 90 min</span>
+  </div>
+</div>
+
+<h2 class="phase-heading" id="phase-check-in">Check-in <span>6 min</span></h2>
+
+<section class="block talk" id="welcome-and-today">
+  <div class="when"><div class="clock">09:30</div><div class="mins">6 min</div></div>
+  <div class="what">
+    <h3>Welcome and today</h3>
+    <p class="purpose">Arrive, hear a word from everyone, then the objective and agenda</p>
+    <p class="structure">Right to pass; one word each; objective and agenda</p>
+    <blockquote>One word for your weekend with the factory?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Say that everyone has the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/right-to-pass.md">right to pass</a>.</li>
+<li>One word each about the weekend. Then the objective and agenda.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-what">What <span>41 min</span></h2>
+
+<section class="block pairs" id="how-did-the-weekend-go">
+  <div class="when"><div class="clock">09:36</div><div class="mins">9 min</div></div>
+  <div class="what">
+    <h3>How did the weekend go?</h3>
+    <p class="purpose">Hear what watching (and optional steering) showed them, and what they changed</p>
+    <p class="structure">Pairs in breakouts, then a few share; a sticky each in both Miro columns</p>
+    <blockquote>What did you see when you watched a run, and what did you change?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>David opens pairs for 5 minutes and broadcasts at 1 minute left.</li>
+<li>The weekend was watching, with steering optional. Ask what they saw and what they changed because of it (a machine's <code>AGENTS.md</code>, the seed, the plan). Whatever they got to counts.</li>
+<li>Each person adds a sticky to <strong>What I saw</strong> and one to <strong>What I changed</strong>.</li>
+<li>Back in the room, two or three share. Listen for machine improvements that worked; they are good material for Thursday.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="show-and-tell">
+  <div class="when"><div class="clock">09:45</div><div class="mins">32 min</div></div>
+  <div class="what">
+    <h3>Show and tell</h3>
+    <p class="purpose">Celebrate what four students built and learned</p>
+    <p class="structure">Ed, Rob, Matt Penning and Joel, about 6 minutes each, then a question</p>
+    <blockquote>What did you build, how did you build it, and what did you learn?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Order: Ed, Rob, Matt Penning, Joel. About 6 minutes each, then a question; 8 minutes per person in all.</li>
+<li>Matt keeps time kindly: a one-minute warning in chat.</li>
+<li>Thank each presenter. Questions that need longer go to the parking area for Thursday.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-so-what">So what <span>30 min</span></h2>
+
+<section class="block demo" id="the-foreman">
+  <div class="when"><div class="clock">10:17</div><div class="mins">10 min</div></div>
+  <div class="what">
+    <h3>The foreman</h3>
+    <p class="purpose">Show a way to work around a factory: shaping work before a line runs and making sense of it after</p>
+    <p class="structure">David's 3-minute demo, then Q&amp;A</p>
+    <blockquote>Where in your factory would a foreman have helped this weekend?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Open: what David shows, and from which project.</li>
+<li>The foreman lives in its own conversation, beside the factory. Before a line runs, it helps shape the work. While it runs, it watches. After, it helps recover the original intent, check that we asked for the right thing, and understand the changes well enough to guide the next piece of work.</li>
+<li>A 3-minute demo, then 7 minutes of Q&amp;A.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block present" id="the-superpowers-workflow">
+  <div class="when"><div class="clock">10:27</div><div class="mins">10 min</div></div>
+  <div class="what">
+    <h3>The superpowers workflow</h3>
+    <p class="purpose">Show a disciplined single-agent workflow, and how its steps map onto a factory's machines</p>
+    <p class="structure">Aldric's 3 minutes of slides, then Q&amp;A</p>
+    <blockquote>Which step would you steal for your factory?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Slides only, no live demo.</li>
+<li>Brainstorm, write a plan, then execute it task by task with fresh subagents, test-first, reviewing between tasks.</li>
+<li>Each step looks like a machine in a factory: the plan is the hand-off, subagents are the assembly line, review is the validator. Where it differs: one human conversation steers it all.</li>
+<li>3 minutes of slides, then 7 minutes of Q&amp;A.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block demo" id="memba">
+  <div class="when"><div class="clock">10:37</div><div class="mins">10 min</div></div>
+  <div class="what">
+    <h3>Memba</h3>
+    <p class="purpose">Show a trainer's factory on a real project</p>
+    <p class="structure">Matt's 3-minute demo, then Q&amp;A</p>
+    <blockquote>What would you ask about a factory that's been running for weeks?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Memba: an open-source membership database and community forum for non-profit societies, replacing the WordPress sites and Google Groups many of them use.</li>
+<li>A 3-minute look at the factory that builds it, then 7 minutes of Q&amp;A.</li>
+<li>A natural place to answer Marek's ask: a few things that worked in this factory, and a few Matt had to change.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-now-what">Now what <span>8 min</span></h2>
+
+<section class="block present" id="before-thursday">
+  <div class="when"><div class="clock">10:47</div><div class="mins">3 min</div></div>
+  <div class="what">
+    <h3>Before Thursday</h3>
+    <p class="purpose">Set the homework, and collect ideas for Thursday</p>
+    <p class="structure">Homework slide; then stickies and dots on Miro</p>
+    <blockquote>What do you want to see on Thursday?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Homework: try the foreman pattern on your capstone; ask another agent to read the transcript of your assembly line's run and suggest improvements to prompts, tools, even the shape of the line. Fouad and Marek prepare their show and tells.</li>
+<li>On Miro: add ideas for what you want to see on Thursday, and dot the ones you want. Now if there's time, otherwise before Thursday.</li>
+<li>Add the homework to Maven under Session 7 before the session.</li>
+</ul></details>
+  </div>
+</section>
+
+<section class="block talk" id="retro-and-takeaways">
+  <div class="when"><div class="clock">10:50</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Retro and takeaways</h3>
+    <p class="purpose">Hear takeaways and collect feedback</p>
+    <p class="structure">Miro: a takeaway and a keep or change each; a few aloud</p>
+    <blockquote>What's one thing you're taking away?</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>A takeaway and one keep or change each on Miro; a few aloud. End by 11:00.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-buffer">Buffer <span>5 min</span></h2>
+
+<section class="block buffer" id="buffer">
+  <div class="when"><div class="clock">10:55</div><div class="mins">5 min</div></div>
+  <div class="what">
+    <h3>Buffer</h3>
+    <p class="purpose">Live timings run long</p>
+    <p class="structure">-</p>
+    
+    
+  </div>
+</section>
+
+<div class="notes"><p><em>Students start with what the weekend's watching showed them and what they changed. Four of them then show their capstones. Three short instructor demos follow, each mostly Q&amp;A: David's foreman, which sits beside the factory and helps a person shape work and understand the results; the superpowers workflow, a disciplined process inside one agent conversation that maps closely onto a factory's machines; and Matt's Memba factory, a real project. Two pieces of homework try today's ideas, and students say what they want on Thursday.</em> The student-facing agenda has six parts: <strong>How did the weekend go?</strong>, <strong>Show and tell</strong>, <strong>The foreman</strong>, <strong>Superpowers</strong>, <strong>Memba</strong> and <strong>Before Thursday</strong>. Welcome opens the session; retro and takeaways closes it, followed by a "See you Thursday!" card that holds the buffer.</p></div>
+
+<details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
+<div class="framing">
+<div class='card'><h2>Audience</h2><ul>
+<li>Eleven active students; Farid watches the recordings.</li>
+<li>Four show their capstone today: Ed Snodgrass, Rob Westgeest and Matt Penning signed up on Maven, and Joel Howe on the Miro board. Fouad and Marek chose Thursday. Each was asked to prepare: what did you build, how did you build it, and what did you learn?</li>
+<li>Weekend homework, due today: <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/005a-machine-configuration/README.md">iteration 005a</a> (machine configuration), <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/006-watching/README.md">006</a> (watching), bonus <a href="https://github.com/lean-software-production/tutorial/blob/main/docs/iterations/007-steering/README.md">007</a> (steering), and more capstone iterations, using a strong model to read a run's <code>events.jsonl</code> and improve a machine's <code>AGENTS.md</code>. They were asked to tell us what problems they found and which machine improvements helped.</li>
+<li>On Thursday, under <strong>What's missing?</strong>, they asked for:</li>
+<ol>
+<li>A reasonable factory design from us: three or four things that worked and three or four we had to change, and why (Marek; Joel asked in chat for examples of good factory harnesses).</li>
+<li>How to test the stochastic parts of a factory (evals).</li>
+<li>Loops, and how to limit them (raised in office hours).</li>
+<li>Theory of constraints and value stream maps (Matt; Jeremy could show the value stream map in Relay).</li>
+</ol>
+<li>Several said the homework took their whole weekend. This is the last weekend homework.</li>
+</ul></div>
+<div class='card'><h2>Learning outcomes</h2><ul>
+<li>Describe what watching (and, optionally, steering) a run showed them, and one change they made because of it.</li>
+<li>Say what a classmate built, how, and one thing they learned from it.</li>
+<li>Describe the foreman pattern: what it does before a line runs and after it finishes.</li>
+<li>Describe the superpowers workflow, and say which part of it they would bring into their own factory.</li>
+</ul></div>
+<div class='card'><h2>Key concepts</h2><ul>
+<li><strong>Foreman:</strong> an agent in a dedicated conversation that helps a person shape work for a software factory, invoke its assembly lines, and monitor progress. When a line finishes, the foreman helps them recover the original intent, consider whether they asked for the right thing, and understand the changes well enough to guide the next work. (<a href="../../../../docs/lexicon/software-factory.yaml">lexicon</a>)</li>
+<li><strong>Superpowers:</strong> a skills library for coding agents that turns one conversation into a disciplined workflow: brainstorm a design, write a plan, then execute it task by task with subagents, test-first, with review between tasks.</li>
+</ul></div>
+<div class='card'><h2>Format &amp; logistics</h2><ul>
+<li>Zoom for talking; the <a href="https://miro.com/app/board/uXjVEeUpa9Y=/">cohort Miro board</a> for the work.</li>
+<li>Before class, on Miro: a <strong>How did the weekend go?</strong> frame with <strong>What I saw</strong> and <strong>What I changed</strong> columns; the <strong>Show and tell</strong> slide frames from Thursday, in order Ed, Rob, Matt Penning, Joel; a parking area for questions that need longer; reuse the retro and takeaways frame.</li>
+<li>Message Ed, Rob, Matt Penning and Joel the day before: order, about 6 minutes each, screen share or Miro frame, and that a recording of their factory running is a fine fallback.</li>
+<li>David: a prepared foreman conversation (one line running, one finished) and a recorded fallback. Three minutes is short: show one moment, not the whole loop.</li>
+<li>Aldric: slides for superpowers, no live demo.</li>
+<li>Matt: Memba, its factory, and a recorded fallback.</li>
+<li>A Miro frame for ideas for Thursday, with dots (or reuse <strong>What's missing?</strong>).</li>
+<li>Add the Session 7 homework to Maven and publish it before the session.</li>
+</ul></div>
+</div>
+</details>
+<footer>Generated from runbook.md · Mon 19 Oct, 13:28</footer>
+</main>
+</body>
+</html>
