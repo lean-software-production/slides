@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Day 8: Show and tell, and taking it home</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="kit/sketchbook.css">
+<script src="kit/sketchbook.js" defer></script>
+<style>
+  /* The cohort 2 live-session base (Days 1-3). Slides are 1600×900. Keep these rules as they are;
+     add session-specific layout classes below the marked line. */
+  html, body, .reveal-viewport { background: var(--sk-paper); }
+  .reveal-viewport { background-image: none; }
+  .reveal { font-family: var(--sk-font-body); color: var(--sk-ink); }
+  .reveal .slides section { font-size: 26px; text-align: left; height: 100%; box-sizing: border-box; padding: 30px 10px 20px; display: flex !important; flex-direction: column; }
+  .reveal .slides section.mid { justify-content: center; }
+  .reveal .slides section.center { justify-content: center; align-items: center; text-align: center; }
+  .reveal .sk-bubble::before { border-width: 5px; }
+  .reveal .sk-bubble::after { border-right-width: 5px; border-bottom-width: 5px; }
+  .reveal .sk-panel::before { border-width: 4px; }
+  .reveal .progress { color: var(--sk-mustard); height: 5px; }
+  .reveal .controls { color: var(--sk-deep-teal); }
+  .reveal .slide-number { background: transparent; color: var(--sk-deep-teal); font-family: var(--sk-font-label); font-size: 20px; }
+  .reveal a { color: var(--sk-deep-teal); }
+
+  .lede { font-size: 1.7em; line-height: 1.3; color: var(--sk-body-text); max-width: 30em; margin: .4em 0; }
+  .center .lede { margin-left: auto; margin-right: auto; }
+  .big { font-size: 4.2em; }
+  .split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2.5em; align-items: center; flex: 1; min-height: 0; }
+  .split > img { max-height: 560px; justify-self: center; }
+  .mid .split { flex: 0 0 auto; }
+  ul.sk-list { list-style: none; padding: 0; margin: .6em 0 0; }
+  ul.sk-list li { font-size: 1.5em; line-height: 1.3; margin: .5em 0; padding-left: 1.4em; position: relative; color: var(--sk-body-text); }
+  ul.sk-list li::before { content: ""; position: absolute; left: 0; top: .45em; width: .55em; height: .55em; border-radius: 50%; background: var(--sk-accent, var(--sk-teal)); }
+  ul.sk-list li small { display: block; font-size: .75em; color: #6b665c; }
+  .sk-row { margin-top: 1em; }
+  .sk-row .sk-panel p { font-size: 1.15em; }
+  .agenda .sk-row { font-size: 1.05em; }
+  .agenda .sk-label { font-size: .8em; }
+  .agenda .sk-panel img { height: 100px; width: auto; margin: .6em auto 0; }
+  .agenda .sk-panel:not(.sk-dashed) { opacity: .45; }
+  .agenda.all .sk-panel { opacity: 1; }
+  .steps { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.5em; text-align: center; margin-top: 1em; }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4em; margin-top: 1.2em; }
+  .trio .sk-panel { text-align: center; }
+  .trio .sk-panel img { height: 150px; width: auto; display: block; margin: .3em auto; }
+  .trio .sk-panel p { font-size: 1.6em; line-height: 1.25; margin: .2em 0; }
+  .scenes { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5em; margin-top: .8em; }
+  .scene { margin: 0; text-align: center; }
+  .scene img { height: 470px; max-width: 100%; }
+  .scene figcaption { font-size: 1.35em; color: var(--sk-body-text); }
+  .scene figcaption span { display: block; font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.35em; }
+  .code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.3em; line-height: 1.4; white-space: pre; margin: 0; }
+  .todo { background: var(--sk-highlighter); font-family: var(--sk-font-label); padding: 0 .3em; }
+
+  /* In-page presenter notes: S or the Notes button. Works where speaker-view popups are blocked. */
+  .presenter-toggle { position: fixed; z-index: 100; top: 12px; right: 18px; padding: 7px 13px; border: 2px solid var(--sk-ink); border-radius: 9px; background: var(--sk-paper); color: var(--sk-deep-teal); font: 24px var(--sk-font-label); cursor: pointer; }
+  .presenter-panel { position: fixed; z-index: 90; inset: 0 0 0 60%; overflow: auto; box-sizing: border-box; padding: 58px 28px 24px; background: var(--sk-paper); border-left: 4px solid var(--sk-ink); color: var(--sk-ink); font: clamp(17px, 1.5vw, 24px)/1.35 var(--sk-font-body); }
+  .presenter-panel[hidden] { display: none; }
+  .presenter-panel h2 { margin: 0 0 .45em; font: 1.7em var(--sk-font-label); color: var(--sk-deep-teal); }
+  .presenter-panel ul { padding-left: 1.2em; }
+  .presenter-panel li { margin: .45em 0; }
+  .presenter-panel a { color: var(--sk-deep-teal); }
+  body.presenter-open .reveal { width: 60vw; }
+  @media (max-width: 850px) {
+    body.presenter-open .reveal { width: 100vw; height: 52vh; }
+    .presenter-panel { inset: 52vh 0 0; border-left: 0; border-top: 4px solid var(--sk-ink); padding-top: 50px; }
+  }
+
+  /* Session-specific layout classes go below this line. */
+  .card { border:4px solid var(--sk-ink); border-radius:22px; padding:22px 26px; background:var(--sk-bubble); filter:url(#sk-wobble); display:flex; flex-direction:column; justify-content:center; box-sizing:border-box; }
+  .card.teal { background:color-mix(in srgb,var(--sk-teal) 24%,var(--sk-paper)); }
+  .card.blue { background:color-mix(in srgb,var(--sk-blue) 18%,var(--sk-paper)); }
+  .card h3 { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.8em; margin:.2em 0; }
+  .card p { font-size:1.4em; line-height:1.22; margin:.1em 0; }
+  .instruction { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.35em; text-align:center; margin:.8em 0 0; }
+  .question { font-size:2.1em; line-height:1.2; max-width:1250px; text-align:center; }
+  .icon { height:200px; width:auto; margin-top:.5em; }
+  .homework-title { display:flex; align-items:center; gap:22px; }
+  .homework-title img { height:66px; width:66px; object-fit:contain; }
+  .trio .sk-panel p.small { font-size:1.2em; color:var(--sk-body-text); }
+
+  /* Show and tell: who's on, and the three questions. */
+  .presenter { display:grid; grid-template-columns:1fr auto; gap:2em; align-items:center; margin-top:.6em; }
+  .up-next { font-family:var(--sk-font-label); color:var(--sk-deep-teal); font-size:1.35em; text-align:center; margin-top:.8em; }
+  /* Demo then Q&A: a short demo, then most of the time for questions. */
+  .demo-qa { display:grid; grid-template-columns:1fr 2.3fr; gap:1.4em; margin-top:2.6em; }
+  .demo-qa .sk-panel { text-align:center; }
+  .demo-qa .sk-panel p { font-size:1.6em; margin:.2em 0; }
+  /* Highlight reel: the timeline picture fills the slide. */
+  .reveal .slides section.reel-slide { padding:0; }
+  .reel-slide img { width:100%; height:100%; object-fit:contain; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+  <!-- 1 · Title -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.4em"><span class="sk-burst"><span class="sk-hl">Welcome back</span></span></h1>
+    <p class="lede">Day 8 of 8 · Thursday 22 October</p>
+    <img src="kit/characters/group.svg" alt="A group of four friendly people and a dog" style="height:260px;margin-top:.4em">
+    <aside class="notes"><strong class="when">⏱ 09:30–09:32 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><a class="lesson-checklists" href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/checklists/live-lesson-checklists.md">Lesson checklists</a> · <a class="go-live-checklist" href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/checklists/live-lesson-checklists.md#-go-live--before-admitting-students">Go live</a><br><a class="storyboard-link" href="https://lean-software-production.github.io/slides/2026-09/day-8/storyboard.html">Storyboard</a><br><ul><li>Before admitting students, use the linked lesson checklists. David is Zoom host and recording manager, and runs the breakout rooms, including timers and broadcasts.</li><li>Paste the <a href="https://miro.com/app/board/uXjVEeUpa9Y=/">cohort Miro board</a> link in Zoom chat, and pin it.</li><li>Recording on; check the BB transcript is connected. Stop recording at 11:00.</li><li>The last session. Keep it relaxed, and finish on time so everyone gets to say goodbye.</li><li>Who runs what: Aldric opens and hosts the show and tells; Matt does the admin slide and Memba; Jeremy introduces the troikas, shows Relay and runs the ending, pairing with Matt on the celebration. David is Zoom host and runs the rooms.</li></ul></aside>
+  </section>
+
+  <!-- 2 · Check in -->
+  <section class="center">
+    <h2 class="sk-section">Check in</h2>
+    <div class="sk-bubble question">“One word for how you're arriving at the last session?”</div>
+    <img src="kit/icons/mug.svg" alt="A mug" class="icon" style="height:180px">
+    <p class="steps">one word each · right to pass</p>
+    <aside class="notes"><strong class="when">⏱ 09:32–09:33 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Remind everyone of the <a href="https://github.com/lean-software-production/workshops/blob/main/docs/live-session-protocols/right-to-pass.md">right to pass</a>.</li><li>One word each, popcorn. Keep it quick.</li></ul></aside>
+  </section>
+
+  <!-- 3 · After today -->
+  <section class="mid">
+    <h2 class="sk-section homework-title"><img src="kit/icons/chat.svg" alt="">The course ends today. We don't.</h2>
+    <div class="split">
+      <ul class="sk-list" style="--sk-accent:var(--sk-blue)">
+        <li>We're still around in <a href="https://leansoftwareai.slack.com/archives/C0BPWQ72PFE">Slack</a> for your questions</li>
+        <li><a href="https://maven.com/p/7ad547">Agentic Coding Clinic</a>: Thu 5 Nov, noon PT</li>
+        <li>Lightning lesson tomorrow: <a href="https://maven.com/p/255321/your-agents-will-know-what-s-true-record-driven-development?utm_medium=ll_share_link&amp;utm_source=instructor">the Recs Files</a></li>
+        <li>Tell us how it went: feedback, testimonials and reviews</li>
+      </ul>
+      <img src="kit/characters/coffee.svg" alt="A person with a cup of coffee" style="height:300px">
+    </div>
+    <aside class="notes"><strong class="when">⏱ 09:33–09:34 · 1 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Admin now, at the start, so it isn't what they leave with.</li><li>Check everyone is in the Slack community. Paste the <a href="https://leansoftwareai.slack.com/archives/C0BPWQ72PFE">general channel</a> and <a href="https://leansoftwareai.slack.com/archives/C0BPBNPT59V">interesting channel</a> links in Zoom chat.</li><li>The Agentic Coding Clinic is a free lightning lesson in lean coffee format: bring your toughest questions. Paste the <a href="https://maven.com/p/7ad547">sign-up link</a> in chat. Seven people have already signed up.</li><li>Ask explicitly for feedback, testimonials and reviews. The Maven reflection is due tomorrow, 23 October: “What are you excited to put into practice from the course?”</li><li>Name what we didn't get to: evals, sandboxing, metrics, human in the loop. We may run something on them in future.</li><li>The Recs Files lightning lesson is tomorrow: “Your agents will know what's true: record-driven development”. Paste the <a href="https://maven.com/p/255321/your-agents-will-know-what-s-true-record-driven-development?utm_medium=ll_share_link&amp;utm_source=instructor">sign-up link</a> in chat.</li></ul></aside>
+  </section>
+
+  <!-- 4 · Agenda (all) -->
+  <section class="mid agenda all" data-step="0">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:34–09:35 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>The objective in a line: “Today we see what three of you built, help each other take this home, and show you two of our own factories.”</li><li>Read the five cards.</li></ul></aside>
+  </section>
+
+  <!-- 5 · Agenda: Show and tell -->
+  <section class="mid agenda" data-step="1">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:35 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Hand over to the show and tell host.</li></ul></aside>
+  </section>
+
+  <!-- 6 · Show and tell: Fouad -->
+  <section class="mid">
+    <h2 class="sk-title big" style="font-size:3.4em"><span class="sk-hl">Show and tell: Fouad</span></h2>
+    <div class="trio">
+      <div class="sk-panel sk-blue"><img src="kit/icons/kite.svg" alt="A kite"><p>What you built</p></div>
+      <div class="sk-panel sk-teal"><img src="kit/icons/gear.svg" alt="A gear"><p>How you built it</p></div>
+      <div class="sk-panel sk-mustard"><img src="kit/icons/lightbulb.svg" alt="A lightbulb"><p>What you learned</p></div>
+    </div>
+    <p class="up-next">about 6 min, then a question · next: Marek</p>
+    <aside class="notes"><strong class="when">⏱ 09:35–09:43 · 8 min</strong><br><strong class="who">🎤 Fouad; Aldric hosts</strong><br><ul><li>Say how it works once: three show and tells, about 6 minutes each and then a question from the room.</li><li>Each presenter shares their screen or their Miro frame. Aldric gives a kind one-minute warning in chat, as on Tuesday.</li><li>Thank each presenter. Questions that need longer go in the Miro parking area.</li><li>If anyone else wants to show their capstone, welcome it and flex: take the time from the buffer first.</li></ul></aside>
+  </section>
+
+  <!-- 7 · Show and tell: Marek -->
+  <section class="mid">
+    <h2 class="sk-title big" style="font-size:3.4em"><span class="sk-hl">Show and tell: Marek</span></h2>
+    <div class="trio">
+      <div class="sk-panel sk-blue"><img src="kit/icons/kite.svg" alt="A kite"><p>What you built</p></div>
+      <div class="sk-panel sk-teal"><img src="kit/icons/gear.svg" alt="A gear"><p>How you built it</p></div>
+      <div class="sk-panel sk-mustard"><img src="kit/icons/lightbulb.svg" alt="A lightbulb"><p>What you learned</p></div>
+    </div>
+    <p class="up-next">about 6 min, then a question · next: Joel</p>
+    <aside class="notes"><strong class="when">⏱ 09:43–09:51 · 8 min</strong><br><strong class="who">🎤 Marek; Aldric hosts</strong><br><ul><li>One-minute warning in chat.</li></ul></aside>
+  </section>
+
+  <!-- 8 · Show and tell: Joel -->
+  <section class="mid">
+    <h2 class="sk-title big" style="font-size:3.4em"><span class="sk-hl">Show and tell: Joel</span></h2>
+    <div class="trio">
+      <div class="sk-panel sk-blue"><img src="kit/icons/kite.svg" alt="A kite"><p>What you built</p></div>
+      <div class="sk-panel sk-teal"><img src="kit/icons/gear.svg" alt="A gear"><p>How you built it</p></div>
+      <div class="sk-panel sk-mustard"><img src="kit/icons/lightbulb.svg" alt="A lightbulb"><p>What you learned</p></div>
+    </div>
+    <p class="up-next">about 6 min, then a question</p>
+    <aside class="notes"><strong class="when">⏱ 09:51–09:59 · 8 min</strong><br><strong class="who">🎤 Joel; Aldric hosts</strong><br><ul><li>One-minute warning in chat. Thank all three.</li></ul></aside>
+  </section>
+
+  <!-- 9 · Agenda: What's next? -->
+  <section class="mid agenda" data-step="2">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 09:59 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Bring out Tuesday's writing: how you'll use the course ideas, and what's in the way.</li></ul></aside>
+  </section>
+
+  <!-- 10 · What's next? -->
+  <section class="center">
+    <h2 class="sk-title big"><span class="sk-hl">What's next?</span></h2>
+    <div class="sk-bubble question" style="margin-top:.5em">“Where will you start, and what's in your way?”</div>
+    <img src="kit/icons/compass.svg" alt="A compass" class="icon" style="height:150px">
+    <p class="steps">groups of three · each of you is the client once · 9 min a round</p>
+    <aside class="notes"><strong class="when">⏱ 09:59–10:19 · 20 min</strong><br><strong class="who">🎤 Jeremy; David runs the breakouts</strong><br><ul><li>Rooms: David · 3 rooms, two students and a trainer in each · manual · open 19 min, including moving · broadcast at the round change.</li><li>Troika consulting. The trainer consults but isn't a client, so each room needs only two rounds.</li><li>Client: 2 minutes on where you'll start and what's in your way, from your writing. Consultants: 1 minute of clarifying questions. Client turns their camera off; the consultants talk about the challenge for 5 minutes. Camera back on: 1 minute on what was useful.</li><li>No writing? Talk from what you'd say anyway.</li><li>Paste in Zoom chat before opening the rooms:<br><pre style="white-space:pre-wrap;font-size:.85em">Troika consulting: 2 rounds of 9 minutes. Your trainer consults but isn&#x27;t a client, so each of you is the client once.
+1. Client, 2 min: where will you start, and what&#x27;s in your way? Use your writing.
+2. Consultants, 1 min: clarifying questions only.
+3. Client turns their camera off, 5 min: the consultants talk about the challenge together. Client just listens and takes notes.
+4. Client turns their camera back on, 1 min: what was useful?
+Then swap. We&#x27;ll broadcast when it&#x27;s time to switch.</pre></li><li>Seven students: a trainer takes the odd one out, or ask first who wants a turn.</li></ul></aside>
+  </section>
+
+  <!-- 11 · Agenda: Relay -->
+  <section class="mid agenda" data-step="3">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:19 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Hand over for Relay.</li></ul></aside>
+  </section>
+
+  <!-- 12 · Relay -->
+  <section class="mid">
+    <h2 class="sk-title big" style="font-size:3.4em"><span class="sk-hl">Relay: a working factory</span></h2>
+    <div class="sk-bubble question" style="margin:.4em auto 0">“What would you take from this into your factory?”</div>
+    <div class="demo-qa">
+      <div class="sk-panel sk-teal"><img src="kit/icons/gear.svg" alt="A gear" style="height:110px"><p>demo</p></div>
+      <div class="sk-panel sk-mustard"><img src="kit/icons/puzzle.svg" alt="A puzzle piece" style="height:110px"><p>your questions</p></div>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 10:19–10:29 · 10 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Show one moment from a real run, not the whole loop.</li><li>Answer Marek's ask: a few things that worked, a few we had to change, and why.</li><li>A 5-minute demo, then 5 minutes of questions. On Tuesday each demo planned as 3 minutes of talk took about 7, and the questions suffered.</li><li>Jeremy built Relay and could touch on human in the loop here, one of the topics students voted for.</li><li><span class="todo">Open:</span> the recorded fallback.</li></ul></aside>
+  </section>
+
+  <!-- 13 · Agenda: Memba -->
+  <section class="mid agenda" data-step="4">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:29 · a few seconds</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Hand over to Matt.</li></ul></aside>
+  </section>
+
+  <!-- 14 · Memba -->
+  <section class="mid">
+    <h2 class="sk-title big" style="font-size:3.4em"><span class="sk-hl">Memba</span></h2>
+    <div class="sk-bubble question" style="margin:.4em auto 0">“An experience report”</div>
+    <div class="demo-qa">
+      <div class="sk-panel sk-forest"><img src="kit/icons/sprout.svg" alt="A sprout" style="height:110px"><p>experience report</p></div>
+      <div class="sk-panel sk-mustard"><img src="kit/icons/puzzle.svg" alt="A puzzle piece" style="height:110px"><p>your questions</p></div>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 10:29–10:39 · 10 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Postponed from Tuesday. Memba: an open-source membership database and community forum for non-profit societies, to replace the WordPress sites and Google Groups many of them use.</li><li>An experience report on the factory that builds it, then questions.</li></ul></aside>
+  </section>
+
+  <!-- 15 · Agenda: Highlight reel -->
+  <section class="mid agenda" data-step="5">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 10:39 · a few seconds</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Hand over to Jeremy for the ending.</li></ul></aside>
+  </section>
+
+  <!-- 16 · Highlight reel -->
+  <section class="center reel-slide">
+    <img src="art/highlight-reel.png" alt="A timeline of the course's eight sessions, from Welcome on 29 September to Next steps today, with three highlights under each and space for stickies: what don't you want to forget?">
+    <aside class="notes"><strong class="when">⏱ 10:39–10:45 · 6 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>Jog their memory first: four weeks of fire hose. Walk the timeline quickly, session by session.</li><li>Everyone adds stickies on the Miro <strong>Highlight reel</strong> frame: what happened that you don't want to forget. Read each other's.</li><li>The same picture is on the Miro <strong>Highlight reel</strong> frame; a version for Maven is in <code>art/highlight-reel-maven.png</code>.</li></ul></aside>
+  </section>
+
+  <!-- 17 · What has changed -->
+  <section class="center">
+    <h2 class="sk-section">September to now</h2>
+    <div class="sk-bubble question">“What has changed in your thinking?”</div>
+    <img src="kit/icons/lightbulb.svg" alt="A lightbulb" class="icon" style="height:170px">
+    <p class="steps">everyone in turn · right to pass</p>
+    <aside class="notes"><strong class="when">⏱ 10:45–10:54 · 9 min</strong><br><strong class="who">🎤 Jeremy</strong><br><ul><li>The last thing they do, for a good last impression. “Where were you when the course started, and where are you now? What light bulb has this course turned on for you?”</li><li>Everyone in turn, so everyone has the mic one last time. The right to pass applies. We want this on video for us too.</li><li>A little timer for each person, about a minute, so everyone gets a turn before 10:54.</li></ul></aside>
+  </section>
+
+  <!-- 18 · Thank you -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.6em"><span class="sk-burst"><span class="sk-hl">Thank you!</span></span></h1>
+    <img src="kit/characters/waver.svg" alt="A person waving" style="height:320px;margin-top:.6em">
+    <p class="steps">reactions on · a little party</p>
+    <aside class="notes"><strong class="when">⏱ 10:54–11:00 · 6 min</strong><br><strong class="who">🎤 Jeremy and Matt</strong><br><ul><li>Jeremy and Matt lead the celebration together: ask everyone to bang the Zoom reaction buttons, and be goofy. Thank everyone.</li><li>Finish on time, 11:00, so nobody drops off halfway. Stop the recording.</li></ul></aside>
+  </section>
+
+</div></div>
+
+<template id="agenda-row">
+  <div class="sk-row">
+    <div class="sk-panel sk-coral"><div class="sk-step"><span class="sk-label">Show and tell</span></div><img src="kit/icons/kite.svg" alt=""></div>
+    <div class="sk-panel sk-blue"><div class="sk-step"><span class="sk-label">What's next?</span></div><img src="kit/icons/compass.svg" alt=""></div>
+    <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">Relay</span></div><img src="kit/icons/gear.svg" alt=""></div>
+    <div class="sk-panel sk-deep-teal"><div class="sk-step"><span class="sk-label">Memba</span></div><img src="kit/icons/sprout.svg" alt=""></div>
+    <div class="sk-panel sk-mustard"><div class="sk-step"><span class="sk-label">Highlight reel</span></div><img src="kit/icons/sticky-note.svg" alt=""></div>
+  </div>
+</template>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  // The agenda slides share one row; the current step gets the dashed outline.
+  document.querySelectorAll('section.agenda').forEach(function (s) {
+    var row = document.getElementById('agenda-row').content.cloneNode(true);
+    var step = +s.dataset.step;
+    if (step) row.querySelectorAll('.sk-panel')[step - 1].classList.add('sk-dashed');
+    s.appendChild(row);
+  });
+
+  // S or the Notes button shows the current slide's notes beside it, in the same page.
+  // ?notes=1 opens with notes showing (the storyboard's "Open with notes" link).
+  var presenterPanel, presenterBody, presenterHeading, presenterButton;
+  function updatePresenterNotes() {
+    if (!presenterPanel) return;
+    var notes = Reveal.getCurrentSlide().querySelector('aside.notes');
+    presenterHeading.textContent = 'Slide ' + (Reveal.getIndices().h + 1) + ' notes';
+    presenterBody.innerHTML = notes ? notes.innerHTML : '<p>No notes for this slide.</p>';
+  }
+  function togglePresenterNotes(forceOpen) {
+    if (!presenterPanel) return;
+    var open = typeof forceOpen === 'boolean' ? forceOpen : presenterPanel.hidden;
+    presenterPanel.hidden = !open;
+    document.body.classList.toggle('presenter-open', open);
+    presenterButton.setAttribute('aria-expanded', String(open));
+    presenterButton.textContent = open ? 'Hide notes (S)' : 'Notes (S)';
+    if (open) updatePresenterNotes();
+    Reveal.layout();
+  }
+
+  Reveal.initialize({ width: 1600, height: 900, margin: 0.04, hash: true, slideNumber: 'c/t', transition: 'fade', center: false,
+    keyboard: { 83: function () { togglePresenterNotes(); } }
+  }).then(function () {
+    // The one-slide canvas pages (split-pages.py) stay uncluttered.
+    if (document.querySelectorAll('.reveal .slides > section').length < 2) return;
+    presenterButton = document.createElement('button');
+    presenterButton.className = 'presenter-toggle';
+    presenterButton.type = 'button';
+    presenterButton.setAttribute('aria-controls', 'presenter-notes');
+    presenterButton.setAttribute('aria-expanded', 'false');
+    presenterButton.textContent = 'Notes (S)';
+    presenterButton.addEventListener('click', function () { togglePresenterNotes(); });
+    presenterPanel = document.createElement('aside');
+    presenterPanel.id = 'presenter-notes';
+    presenterPanel.className = 'presenter-panel';
+    presenterPanel.hidden = true;
+    presenterPanel.setAttribute('aria-label', 'Presenter notes');
+    presenterPanel.innerHTML = '<h2></h2><div></div>';
+    presenterHeading = presenterPanel.querySelector('h2');
+    presenterBody = presenterPanel.querySelector('div');
+    document.body.append(presenterButton, presenterPanel);
+    Reveal.on('slidechanged', updatePresenterNotes);
+    if (new URLSearchParams(location.search).has('notes')) togglePresenterNotes(true);
+  });
+
+  // Viewers on the canvas can load while hidden or tiny, and don't always fire a window resize
+  // when they grow. Re-fit the slide whenever its box changes size, and once fonts have loaded.
+  new ResizeObserver(function () { Reveal.layout(); }).observe(document.documentElement);
+  if (document.fonts) document.fonts.ready.then(function () { Reveal.layout(); });
+  document.addEventListener('visibilitychange', function () { Reveal.layout(); });
+</script>
+</body>
+</html>
