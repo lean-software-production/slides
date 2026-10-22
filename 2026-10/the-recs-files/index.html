@@ -1,0 +1,629 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The recs files: a Lightning Lesson</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="kit/sketchbook.css">
+<script src="kit/sketchbook.js" defer></script>
+<style>
+  /* The cohort 2 live-session base (Days 1-3). Slides are 1600×900. Keep these rules as they are;
+     add session-specific layout classes below the marked line. */
+  html, body, .reveal-viewport { background: var(--sk-paper); }
+  .reveal-viewport { background-image: none; }
+  .reveal { font-family: var(--sk-font-body); color: var(--sk-ink); }
+  .reveal .slides section { font-size: 26px; text-align: left; height: 100%; box-sizing: border-box; padding: 30px 10px 20px; display: flex !important; flex-direction: column; }
+  .reveal .slides section.mid { justify-content: center; }
+  .reveal .slides section.center { justify-content: center; align-items: center; text-align: center; }
+  .reveal .sk-bubble::before { border-width: 5px; }
+  .reveal .sk-bubble::after { border-right-width: 5px; border-bottom-width: 5px; }
+  .reveal .sk-panel::before { border-width: 4px; }
+  .reveal .progress { color: var(--sk-mustard); height: 5px; }
+  .reveal .controls { color: var(--sk-deep-teal); }
+  .reveal .slide-number { background: transparent; color: var(--sk-deep-teal); font-family: var(--sk-font-label); font-size: 20px; }
+  .reveal a { color: var(--sk-deep-teal); }
+
+  .lede { font-size: 1.7em; line-height: 1.3; color: var(--sk-body-text); max-width: 30em; margin: .4em 0; }
+  .center .lede { margin-left: auto; margin-right: auto; }
+  .big { font-size: 4.2em; }
+  .split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2.5em; align-items: center; flex: 1; min-height: 0; }
+  .split > img { max-height: 560px; justify-self: center; }
+  .mid .split { flex: 0 0 auto; }
+  ul.sk-list { list-style: none; padding: 0; margin: .6em 0 0; }
+  ul.sk-list li { font-size: 1.5em; line-height: 1.3; margin: .5em 0; padding-left: 1.4em; position: relative; color: var(--sk-body-text); }
+  ul.sk-list li::before { content: ""; position: absolute; left: 0; top: .45em; width: .55em; height: .55em; border-radius: 50%; background: var(--sk-accent, var(--sk-teal)); }
+  ul.sk-list li small { display: block; font-size: .75em; color: #6b665c; }
+  .sk-row { margin-top: 1em; }
+  .sk-row .sk-panel p { font-size: 1.15em; }
+  .agenda .sk-row { font-size: 1.05em; }
+  .agenda .sk-label { font-size: .8em; }
+  .agenda .sk-panel img { height: 100px; width: auto; margin: .6em auto 0; }
+  .agenda .sk-panel:not(.sk-dashed) { opacity: .45; }
+  .agenda.all .sk-panel { opacity: 1; }
+  .steps { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.5em; text-align: center; margin-top: 1em; }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4em; margin-top: 1.2em; }
+  .trio .sk-panel { text-align: center; }
+  .trio .sk-panel img { height: 150px; width: auto; display: block; margin: .3em auto; }
+  .trio .sk-panel p { font-size: 1.6em; line-height: 1.25; margin: .2em 0; }
+  .scenes { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5em; margin-top: .8em; }
+  .scene { margin: 0; text-align: center; }
+  .scene img { height: 470px; max-width: 100%; }
+  .scene figcaption { font-size: 1.35em; color: var(--sk-body-text); }
+  .scene figcaption span { display: block; font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.35em; }
+  .code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.3em; line-height: 1.4; white-space: pre; margin: 0; }
+  .todo { background: var(--sk-highlighter); font-family: var(--sk-font-label); padding: 0 .3em; }
+
+  /* In-page presenter notes: S or the Notes button. Works where speaker-view popups are blocked. */
+  .presenter-toggle { position: fixed; z-index: 100; top: 12px; right: 18px; padding: 7px 13px; border: 2px solid var(--sk-ink); border-radius: 9px; background: var(--sk-paper); color: var(--sk-deep-teal); font: 24px var(--sk-font-label); cursor: pointer; }
+  .presenter-panel { position: fixed; z-index: 90; inset: 0 0 0 60%; overflow: auto; box-sizing: border-box; padding: 58px 28px 24px; background: var(--sk-paper); border-left: 4px solid var(--sk-ink); color: var(--sk-ink); font: clamp(17px, 1.5vw, 24px)/1.35 var(--sk-font-body); }
+  .presenter-panel[hidden] { display: none; }
+  .presenter-panel h2 { margin: 0 0 .45em; font: 1.7em var(--sk-font-label); color: var(--sk-deep-teal); }
+  .presenter-panel ul { padding-left: 1.2em; }
+  .presenter-panel li { margin: .45em 0; }
+  .presenter-panel a { color: var(--sk-deep-teal); }
+  body.presenter-open .reveal { width: 60vw; }
+  @media (max-width: 850px) {
+    body.presenter-open .reveal { width: 100vw; height: 52vh; }
+    .presenter-panel { inset: 52vh 0 0; border-left: 0; border-top: 4px solid var(--sk-ink); padding-top: 50px; }
+  }
+
+  /* Session-specific layout classes go below this line. */
+
+  /* Recording banner (Lightning Lessons): a hand-drawn ribbon under the title. */
+  .recording-banner { position: relative; isolation: isolate; max-width: 1150px; margin: .9em auto 0; padding: .55em 1.2em; font-size: 1.45em; line-height: 1.3; color: var(--sk-body-text); }
+  .recording-banner::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--sk-ribbon); border: 4px solid var(--sk-ink); border-radius: .6em; filter: url(#sk-wobble-soft); }
+  /* The agent's message: a hand-drawn box with the citations in monospace. */
+  .msg { position: relative; isolation: isolate; padding: .8em 1.3em; margin-top: .4em; font-size: 1.32em; line-height: 1.32; color: var(--sk-body-text); }
+  .msg::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--sk-bubble); border: 4px solid var(--sk-ink); border-radius: 1em; filter: url(#sk-wobble); }
+  .msg p { margin: 0 0 .35em; }
+  .msg ol { list-style: none; margin: 0; padding: 0 0 0 1em; }
+  .reveal code, .msg code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .82em; background: color-mix(in srgb, var(--sk-teal) 12%, transparent); padding: 0 .2em; border-radius: .2em; }
+  /* Annotated lines of the message: the words, then the rule they follow. */
+  .annot { display: grid; grid-template-columns: 1.15fr 1fr; gap: .55em 1.4em; margin-top: .6em; align-items: center; }
+  .annot .said { font-size: 1.3em; line-height: 1.25; padding: .35em .8em; position: relative; isolation: isolate; color: var(--sk-body-text); }
+  .annot .said::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--sk-bubble); border: 3px solid var(--sk-ink); border-radius: .6em; filter: url(#sk-wobble-soft); }
+  .annot .rule { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.5em; line-height: 1.15; }
+  /* Grids of kit panels. */
+  .quad { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1em 1.6em; margin-top: .5em; }
+  .quad .sk-panel { gap: .35em; }
+  .quad .sk-panel p { font-size: 1.3em; }
+  .quad .sk-panel p.eg { font-size: 1.15em; color: #6b665c; }
+  .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1.6em; margin-top: .6em; }
+  .duo .sk-panel p { font-size: 1.45em; line-height: 1.25; }
+  .duo .sk-panel p.small { font-size: 1.15em; color: #6b665c; }
+  .flow { margin-top: 1em; }
+  .flow .sk-panel { text-align: center; }
+  .flow .sk-panel img { height: 110px; width: auto; }
+  .flow .sk-panel p { font-size: 1.15em; }
+  ol.sentences { margin: .5em 0 0; padding-left: 1.4em; }
+  ol.sentences li { font-size: 1.55em; line-height: 1.3; margin: .55em 0; color: var(--sk-body-text); }
+  ol.sentences li b { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-weight: 400; }
+  .prompt { position: relative; isolation: isolate; padding: .7em 1.1em; font-size: 1.4em; line-height: 1.35; color: var(--sk-body-text); }
+  .prompt::before { content: ""; position: absolute; inset: 0; z-index: -1; border: 4px solid var(--sk-ink); border-radius: .8em; filter: url(#sk-wobble-soft); }
+  .prompt .code { font-size: .78em; }
+  .note-line { font-size: 1.3em; color: var(--sk-body-text); margin: .7em 0 0; }
+  .center .note-line { text-align: center; }
+  .verdicts { width: auto; border-collapse: collapse; margin-top: .4em; font-size: 1.25em; }
+  .verdicts td { padding: .3em .5em; border-bottom: 2px dashed color-mix(in srgb, var(--sk-ink) 30%, transparent); color: var(--sk-body-text); }
+  .verdicts td:last-child { padding-left: 2em; font-family: var(--sk-font-label); color: var(--sk-deep-teal); white-space: nowrap; }
+  ol.home { margin: .4em 0 0; padding-left: 1.3em; }
+  ol.home li { font-size: 1.5em; line-height: 1.3; margin: .55em 0; color: var(--sk-body-text); }
+  ol.home li small { display: block; font-size: .75em; color: #6b665c; }
+  /* The record map, after therecsfiles.dev: hand-drawn boxes joined by lines. */
+  .recmap { position: relative; height: 680px; margin-top: .2em; }
+  .recmap-lines { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .recmap-lines line { stroke: var(--sk-ink); stroke-width: 3; vector-effect: non-scaling-stroke; }
+  .recmap-lines line.named { stroke: var(--sk-teal); stroke-width: 4; }
+  .recnode { position: absolute; transform: translate(-50%, -50%); isolation: isolate; box-sizing: border-box; width: 380px; padding: .5em .8em .6em; font-size: 1.15em; line-height: 1.25; color: var(--sk-body-text); text-align: center; }
+  .recnode::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--sk-paper); border: 3px solid var(--sk-ink); border-radius: .6em; filter: url(#sk-wobble-soft); }
+  .recnode .k { display: block; font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: .95em; text-transform: uppercase; }
+  .recnode b { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .85em; color: var(--sk-deep-teal); }
+  .recnode.uw { width: 340px; font-size: 1.4em; }
+  .recnode.uw::before { background: var(--sk-highlighter); border-width: 4px; }
+  .reveal mark { background: var(--sk-highlighter); color: inherit; padding: 0 .15em; }
+  /* Elixir highlighting in kit colours; the citation comments stand out most. */
+  .hl-c { background: var(--sk-highlighter); color: var(--sk-deep-teal); font-weight: 700; padding: 0 .15em; }
+  .hl-k { color: var(--sk-rust); font-weight: 700; }
+  .hl-f { color: var(--sk-blue); }
+  .hl-a { color: var(--sk-forest); }
+  .trio .sk-panel p.small { font-size: 1.25em; line-height: 1.25; color: var(--sk-body-text); }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+  <!-- 1 · Welcome -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.4em"><span class="sk-burst"><span class="sk-hl">The recs files</span></span></h1>
+    <p class="recording-banner">This is recorded and will be posted publicly. Keep your camera off, or use chat, if you'd rather not appear.</p>
+    <p class="lede">Lightning Lesson · Friday 23 October</p>
+    <img src="kit/characters/explainer.svg" alt="A person explaining, one hand raised" style="height:250px;margin-top:.3em">
+    <aside class="notes"><strong class="when">⏱ 12:00–12:03 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><a class="lesson-checklists" href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/checklists/live-lesson-checklists.md">Lesson checklists</a> · <a class="go-live-checklist" href="https://github.com/lean-software-production/workshops/blob/main/teaching-materials/checklists/live-lesson-checklists.md#-go-live--before-admitting-students">Go live</a><br><a class="storyboard-link" href="https://lean-software-production.github.io/slides/2026-10/the-recs-files/storyboard.html">Storyboard</a><br><ul>
+      <li>Once recording has started, read the banner aloud, word for word.</li>
+      <li>“Thirty minutes from me, one message from an agent, one toy project and one live run; then fifteen minutes for your questions. The talk explains that message.”</li>
+      <li>Paste in chat: <a href="https://github.com/Trevoke/the-recs-files">github.com/Trevoke/the-recs-files</a></li>
+      <li>Before going live, set up the live track in a fresh repository, so no other AGENTS.md loads:
+        <pre class="code" style="font-size:.7em">git clone https://github.com/lean-software-production/workshops
+cp -r workshops/lightning-lessons/the-recs-files/live-fixture /tmp/plots
+cd /tmp/plots &amp;&amp; git init -q &amp;&amp; git add -A &amp;&amp; git commit -qm start</pre></li>
+      <li>A terminal ready in <code>/tmp/plots</code>, with the recs-files plugin installed and superpowers off for the session. <span class="todo">Open:</span> confirm in the dry run that no other skill loads.</li>
+      <li>Whiteboard: one frame per project, with its records in full. <span class="todo">Open:</span> start time; 12:00 here is a placeholder.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 2 · An agent asks you a question -->
+  <section class="mid">
+    <h2 class="sk-section">An agent asks you a question</h2>
+    <div class="msg">
+      <p>We are working on <code>UW-2: Give up a plot</code>, at step 2: Coordinator records the plot given up.</p>
+      <p><code>F-2 §1: A gardener can give up a plot</code> gives the plot to the first gardener on the waiting list. The success guarantee of <code>UW-2: Give up a plot</code> says the gardener who gave it up holds no plot.</p>
+      <p><code>UL-2: Gardener</code> defines a gardener as a member of the garden who holds a plot, or waits for one.</p>
+      <p>So once step 2 is done, they are no longer a gardener. Yet next spring they are the actor of <code>UW-1: Request a plot</code>.</p>
+      <p>Example: Ana gives up plot 7 in July, and Ben takes it. From July to spring, the records have no word for Ana.</p>
+      <p>Which do you want?</p>
+      <ol>
+        <li>(a) <code>UL-2: Gardener</code> means any member of the garden, holding a plot or not.</li>
+        <li>(b) It stands as written: Ana is a member, not a gardener, until she asks again.</li>
+        <li>(c) Something else.</li>
+      </ol>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 12:03–12:06 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>Put it up with no introduction. Give the room a minute to read it in silence.</li>
+      <li>Built from the “Framing a question” template in <code>skills/recs-kickstart/agents-seed.md</code>, against the plot register's real records. Say so: “I built this one from the template; every citation in it is real.”</li>
+      <li><span class="todo">Open:</span> if the dry run captures a real message, swap it in here, on its copy before “Where each line came from”, and on that slide.</li>
+      <li>Full wording and the plot register's records are on the whiteboard.</li>
+      <li>Leave the message on screen and ask the room to answer in chat:
+        <ul><li>“What did you need to know to answer it?”</li><li>“What didn't you need to know?”</li></ul></li>
+      <li>Read out a few answers. Draw out four things:
+        <ul><li>no file, function, loop or field is named;</li><li>every claim points at a record you could open;</li><li>it starts from what the gardener is trying to do;</li><li>it ends on a question for a person, not a fix.</li></ul></li>
+      <li>“The rest of the session explains each of those.”</li>
+    </ul></aside>
+  </section>
+
+  <!-- 3 · Agenda (all) -->
+  <section class="mid agenda all" data-step="0">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 12:06–12:07 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>“By the end, you'll know where every line of that message came from, and how to get one from your own agent.”</li>
+      <li>Read the four steps in the words on the cards.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 4 · Agenda: Records and what the agent reads -->
+  <section class="mid agenda" data-step="1">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 12:07 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
+  </section>
+
+  <!-- 5 · How the records connect -->
+  <section class="mid">
+    <h2 class="sk-section">How the records connect</h2>
+    <div class="recmap" role="img" aria-label="The vision links to the ubiquitous language, which links to the user workflow UW-2 Give up a plot. UW-2 names the features F-2 and F-3 and the messages MSG-1 and MSG-2.">
+      <svg class="recmap-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+        <line x1="50" y1="7" x2="50" y2="29"/>
+        <line x1="50" y1="29" x2="50" y2="64"/>
+        <line class="named" x1="50" y1="64" x2="17" y2="48"/>
+        <line class="named" x1="50" y1="64" x2="83" y2="48"/>
+        <line class="named" x1="50" y1="64" x2="17" y2="87"/>
+        <line class="named" x1="50" y1="64" x2="83" y2="87"/>
+      </svg>
+      <div class="recnode" style="left:50%;top:7%"><span class="k">Vision</span>The plot register</div>
+      <div class="recnode" style="left:50%;top:29%"><span class="k">Ubiquitous language</span><b>UL-2</b> Gardener<br><b>UL-3</b> Waiting list</div>
+      <div class="recnode uw" style="left:50%;top:64%"><span class="k">User workflow</span><b>UW-2</b> Give up a plot</div>
+      <div class="recnode" style="left:17%;top:48%"><span class="k">Feature</span><b>F-2</b> A gardener can give up a plot</div>
+      <div class="recnode" style="left:83%;top:48%"><span class="k">Message</span><b>MSG-1</b> Only the plot&#39;s holder can give it up</div>
+      <div class="recnode" style="left:17%;top:87%"><span class="k">Feature</span><b>F-3</b> The next gardener is told a plot is theirs</div>
+      <div class="recnode" style="left:83%;top:87%"><span class="k">Message</span><b>MSG-2</b> The season is over; there is no plot to give up</div>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 12:07–12:09 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>The diagram from the top of <a href="https://therecsfiles.dev">therecsfiles.dev</a> (which uses a library example), redrawn for the plot register.</li>
+      <li>Real records in the plot register: the vision, <code>UL-2: Gardener</code>, <code>UL-3: Waiting list</code>, <code>UW-2: Give up a plot</code> and <code>F-2: A gardener can give up a plot</code>. Extrapolated for the example, not in the fixture: <code>F-3</code>, <code>MSG-1</code> and <code>MSG-2</code>. Say so if someone opens the whiteboard frame looking for them.</li>
+      <li>Read it from the middle: the user workflow is what a person is trying to do, so it's where you orient. It names the features it reaches, the messages it can end in, and the words it uses. The vision sits above everything.</li>
+      <li>What each kind holds: ubiquitous language, what a word means and nothing about behaviour (Evans); user workflow, what a person is trying to do, step by step (Cockburn); feature, what the system does, one rule to a sentence (Mavin's EARS); message, the exact text of a refusal or failure.</li>
+      <li>Not drawn: architectural decisions (ADR), a pattern the code follows and why (Nygard). An ADR names words and other ADRs, like <code>ADR-2: A plot is identified by its bed number</code>.</li>
+      <li>Every record is short, numbered, one thing each, in a file of its own, and always cited by number and title. A record's title is a headline.</li>
+      <li>Placement test, if asked: if a word would survive a rewrite of the code, it's ubiquitous language; if the rewrite would retire it (“SQLite”), it belongs in a decision.</li>
+      <li>One more rule, for code: a comment is a citation of a record and nothing else, like <code># F-1 §2: A gardener can be allocated a free plot</code>.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 6 · Live: record a decision -->
+  <section class="mid">
+    <h2 class="sk-section">Live: record a decision</h2>
+    <div class="sk-bubble" style="font-size:1.6em">“Record a decision for me: the register runs as a web app, so the coordinator can use it from a phone out at the plots. Walking back to the shed for every allocation takes too long.”</div>
+    <div class="trio" style="margin-top:.4em">
+      <div class="sk-panel sk-teal"><p>Which number does it get?</p></div>
+      <div class="sk-panel sk-coral"><p>Which sentence becomes untrue?</p></div>
+      <div class="sk-panel sk-mustard"><p>What does it leave alone?</p></div>
+    </div>
+    <p class="steps">guess in chat while it works · its records are on the whiteboard</p>
+    <aside class="notes"><strong class="when">⏱ 12:09–12:12 · 3 min</strong><br><strong class="who">🎤 Aldric, driving the agent</strong><br><ul>
+      <li>Same plot register, now with its architectural decisions: two accepted, and <code>ADR-3: Keep the register in a shared spreadsheet</code>, rejected.</li>
+      <li>Read the keeper's request out as written (it's <code>prompt.md</code> in the fixture). Then run it in <code>/tmp/plots</code>.</li>
+      <li>While it reads the records, point at the plot register frame on the whiteboard and ask for guesses in chat.</li>
+      <li>A good run writes one new file, <code>adr-4-…</code>, with status Proposed, listed under <code>* Proposed</code> in <code>docs/architectural-decisions.org</code>, with the same title in both places, nothing else written, and at most one commit. Then it shows you the draft and the vision sentence with its replacement, and asks you to agree.</li>
+      <li>Don't agree yet; that's on “Live: agree to it”.</li>
+      <li>Fallback: the next slide has the answers.</li>
+      <li>Our fixture, not one of the repo's evals: the plot register plus three decisions and one vision sentence (<code>live-fixture/README.md</code>). The good-run checks above are the ones the repo's eval uses for the same kind of request. <span class="todo">Open:</span> dry-run it.</li>
+      <li>Placed here, straight after the diagram: the room watches a record being made before seeing the index it lands in.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 7 · What it found -->
+  <section class="mid">
+    <h2 class="sk-section">What it found</h2>
+    <div class="trio">
+      <div class="sk-panel sk-teal"><span class="sk-label">ADR-4, not 3</span><p class="small">ADR-3 was rejected. It's missing from the index, but its number stays taken.</p></div>
+      <div class="sk-panel sk-coral"><span class="sk-label">One sentence</span><p class="small">Vision: the coordinator allocates plots “on the computer in the garden shed” becomes “from the register's web app”.</p></div>
+      <div class="sk-panel sk-mustard"><span class="sk-label">Left alone</span><p class="small">ADR-3, because a rejected record is never falsified. ADR-1 stands: a web app can keep one SQLite file.</p></div>
+    </div>
+    <p class="note-line">A search for “web” or “phone” doesn't find the vision sentence. Searching “comput” and “shed” does.</p>
+    <aside class="notes"><strong class="when">⏱ 12:12–12:13 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>The next number is read from the record files, not from the index.</li>
+      <li>The search rule: search each word's stem and every synonym, never a phrase. <code>approv</code> finds approve, approved and approval; “at approval” finds only what you already expected. Count the hits and give every one a verdict.</li>
+      <li>Before showing a change, the agent finds every sentence it makes untrue, with the wording that replaces it. It leaves withdrawn records, rejected records and plans alone: they are history, not claims.</li>
+      <li>The vision splits “computer in the / garden shed” across two lines, so even the exact phrase misses it; a stem search on one word doesn't.</li>
+      <li>If the agent asks whether <code>ADR-1: The register is stored in one SQLite file</code> still holds, that's a good sign: it assessed a record that sounds near. It stands.</li>
+      <li>Building the web app is a follow-up for the development flow, not part of the record change.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 8 · Live: agree to it -->
+  <section class="mid">
+    <h2 class="sk-section">Live: agree to it</h2>
+    <div class="sk-row flow" style="align-items:center">
+      <div class="sk-panel sk-blue"><span class="sk-label">Commit 1</span><p>ADR-4 is proposed. Nothing stands on it yet.</p></div>
+      <svg class="sk-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H34" stroke="var(--sk-ink)" stroke-width="3" fill="none" marker-end="url(#sk-head)" filter="url(#sk-wobble-line)"/></svg>
+      <div class="sk-panel sk-mustard"><span class="sk-label">You agree</span><p>“Agreed.”</p></div>
+      <svg class="sk-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H34" stroke="var(--sk-ink)" stroke-width="3" fill="none" marker-end="url(#sk-head)" filter="url(#sk-wobble-line)"/></svg>
+      <div class="sk-panel sk-forest"><span class="sk-label">Commit 2</span><p>ADR-4 is accepted, and the vision sentence is replaced.</p></div>
+    </div>
+    <p class="note-line" style="text-align:center">You reword it: it redrafts and asks again. You decline: it's marked Rejected, and the number stays taken.</p>
+    <aside class="notes"><strong class="when">⏱ 12:13–12:15 · 2 min</strong><br><strong class="who">🎤 Aldric, driving the agent</strong><br><ul>
+      <li>Say “agreed” to the agent in <code>/tmp/plots</code>. Show <code>git log --oneline</code>: the proposal, then the acceptance.</li>
+      <li>The recs files' own rules: a record change is agreed before it stands, and it is one commit of its own. The proposal is committed on its own, before the commit that accepts it.</li>
+      <li>A declined proposal is how the plot register came to have a rejected ADR-3.</li>
+      <li>Plans keep the citations they were written with; a sweep never touches them.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 9 · Projections -->
+  <section class="mid">
+    <h2 class="sk-section">The plot register's projections</h2>
+    <div class="duo">
+      <div class="sk-panel sk-teal"><span class="sk-label">ubiquitous-language.org</span><pre class="code">#+TITLE: Ubiquitous language
+* Allocation
+- UL-1 :: Plot
+- UL-2 :: Gardener
+- UL-3 :: Waiting list</pre></div>
+      <div class="sk-panel sk-mustard"><span class="sk-label">architectural-decisions.org</span><pre class="code">#+TITLE: Architectural decisions
+- ADR-1 :: The register is stored
+           in one SQLite file
+- ADR-2 :: A plot is identified
+           by its bed number
+- ADR-4 :: (the one you just
+           agreed to)</pre></div>
+    </div>
+    <p class="note-line">Every standing or proposed record, by number and title. ADR-3 was rejected, so it isn't listed.</p>
+    <aside class="notes"><strong class="when">⏱ 12:15–12:16 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>Definition, if asked: “the listing of every standing or proposed record in one category, in number order, named after the category.”</li>
+      <li>Each line links to the record's file; the links are left out here. Each record lives in a file of its own, and the file, its heading and its line in the projection carry the same title.</li>
+      <li>A proposed record's line goes under a <code>* Proposed</code> heading at the end, so nobody bases a decision on it.</li>
+      <li>This is the plot register the live run just used. Its architectural decisions are ours, added to the repo's fixture for the lesson. <code>ADR-3: Keep the register in a shared spreadsheet</code> was rejected: its file stays and its number stays taken, which is why the new record is ADR-4.</li>
+      <li>Because the title is a headline, reading the projection tells you what each record decides without opening it.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 10 · What the agent reads -->
+  <section class="mid">
+    <h2 class="sk-section">What the agent puts in its context</h2>
+    <div class="sk-row flow" style="align-items:center">
+      <div class="sk-panel sk-teal"><img src="kit/icons/books.svg" alt="A stack of books"><p>The projections: every title, and no bodies</p></div>
+      <svg class="sk-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H34" stroke="var(--sk-ink)" stroke-width="3" fill="none" marker-end="url(#sk-head)" filter="url(#sk-wobble-line)"/></svg>
+      <div class="sk-panel sk-coral"><img src="kit/icons/magnifier.svg" alt="A magnifier"><p>The records that bear on the task, opened from disk</p></div>
+      <svg class="sk-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H34" stroke="var(--sk-ink)" stroke-width="3" fill="none" marker-end="url(#sk-head)" filter="url(#sk-wobble-line)"/></svg>
+      <div class="sk-panel sk-blue"><img src="kit/icons/robot.svg" alt="A robot"><p>A subagent gets the records its task cites</p></div>
+    </div>
+    <p class="lede" style="text-align:center;margin:.8em auto 0">A title tells the agent which records to open. Only the file on disk is evidence.</p>
+    <aside class="notes"><strong class="when">⏱ 12:16–12:18 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>From the “Records are read from disk” section of the AGENTS.md that recs-kickstart writes: open a record's file before citing it, measuring code against it, or framing a question with it. Open each record that bears, and no others.</li>
+      <li>A record bears if the task names it, a record you opened names it, or the code you're changing cites it. A title that only sounds near the work is opened to find out.</li>
+      <li>Whatever AGENTS.md itself copies in, the session and every subagent carry for the whole session, and that copy is stale the moment a record changes. So the agent cites what the file on disk says.</li>
+      <li>Small files keep this cheap: one record per file, and one term per file. Opening a word costs one short file, not the whole glossary.</li>
+      <li>recs-subagent-driven-development: the controller hands each subagent its task with the records the task cites, so the subagent starts with what it needs and nothing else.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 11 · The question again -->
+  <section class="mid">
+    <h2 class="sk-section">The agent's question, again</h2>
+    <div class="msg">
+      <p>We are working on <code>UW-2: Give up a plot</code>, at step 2: Coordinator records the plot given up.</p>
+      <p><code>F-2 §1: A gardener can give up a plot</code> gives the plot to the first gardener on the waiting list. The success guarantee of <code>UW-2: Give up a plot</code> says the gardener who gave it up holds no plot.</p>
+      <p><code>UL-2: Gardener</code> defines a gardener as a member of the garden who holds a plot, or waits for one.</p>
+      <p>So once step 2 is done, they are no longer a gardener. Yet next spring they are the actor of <code>UW-1: Request a plot</code>.</p>
+      <p>Example: Ana gives up plot 7 in July, and Ben takes it. From July to spring, the records have no word for Ana.</p>
+      <p>Which do you want?</p>
+      <ol>
+        <li>(a) <code>UL-2: Gardener</code> means any member of the garden, holding a plot or not.</li>
+        <li>(b) It stands as written: Ana is a member, not a gardener, until she asks again.</li>
+        <li>(c) Something else.</li>
+      </ol>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 12:18–12:19 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>Put the message back up: “This is what we're about to take apart, line by line.”</li>
+      <li>Give the room a few seconds to reread it, then move on.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 12 · Where each line came from -->
+  <section class="mid">
+    <h2 class="sk-section">Where each line came from</h2>
+    <div class="annot">
+      <div class="said">“We are working on <code>UW-2: Give up a plot</code>, at step 2”</div><div class="rule">Start from what the person is trying to do</div>
+      <div class="said"><code>F-2 §1: A gardener can give up a plot</code> · <code>UL-2: Gardener</code></div><div class="rule">Bring in each record that bears, by number and title</div>
+      <div class="said">“they are no longer a gardener”</div><div class="rule">Name the situation in the records' own words</div>
+      <div class="said">“Ana gives up plot 7 in July”</div><div class="rule">Give an example from the domain</div>
+      <div class="said">(a), (b) or (c)</div><div class="rule">A person decides; the agent asks</div>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 12:19–12:21 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>These are the rules in the “Framing a question” section of the project's AGENTS.md, which recs-kickstart drafts for you.</li>
+      <li>The agent never writes a new word into any file before the record keeper agrees to it. It proposes candidates and waits.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 13 · Agenda: When records disagree -->
+  <section class="mid agenda" data-step="2">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 12:21 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
+  </section>
+
+  <!-- 14 · Assess: two records disagree -->
+  <section class="mid">
+    <h2 class="sk-section">Two records disagree</h2>
+    <p class="note-line" style="margin-top:0;text-align:center">Writing the plan for <code>UW-2: Give up a plot</code>, step 2: Coordinator records the plot given up</p>
+    <div class="duo">
+      <div class="sk-panel sk-blue"><span class="sk-label">F-2 §1: A gardener can give up a plot</span><p>“…the plot register shall record the first gardener on the waiting list as the plot's holder <mark>for the rest of the season</mark>.”</p></div>
+      <div class="sk-panel sk-teal"><span class="sk-label">UL-1: Plot</span><p>“A numbered bed of the garden, allocated to <mark>one gardener for a season</mark>.”</p></div>
+    </div>
+    <p class="lede" style="text-align:center;margin:.7em auto 0">Ana holds plot 7 until July, then Ben holds it. That's two gardeners in one season.</p>
+    <p class="steps">the plan stops here</p>
+    <aside class="notes"><strong class="when">⏱ 12:21–12:22 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>Both records are real, word for word from the plot register.</li>
+      <li>How the agent got here: it read the projections, opened the records the workflow step names (<code>F-2: A gardener can give up a plot</code>), then the words those records use (<code>UL-1: Plot</code>), and checked each sentence against the step it was planning.</li>
+      <li>The rule it follows: where the plan and a record disagree, the record wins. The plan stops at the disagreement, and the agent never plans around a record or edits one to fit.</li>
+      <li>Every skill in the development flow does the same check at its own stage: brainstorming, writing a plan, executing it, code review, debugging. A plan can also meet code that disagrees with a record; that goes to the record keeper first too.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 15 · Report: the question it asks -->
+  <section class="mid">
+    <h2 class="sk-section">So it asks you</h2>
+    <div class="msg">
+      <p>We are working on <code>UW-2: Give up a plot</code>, at step 2: Coordinator records the plot given up.</p>
+      <p><code>F-2 §1: A gardener can give up a plot</code> makes the first gardener on the waiting list the plot's holder for the rest of the season.</p>
+      <p><code>UL-1: Plot</code> defines a plot as a numbered bed of the garden, allocated to one gardener for a season.</p>
+      <p>So once step 2 is done, the plot has had two gardeners this season. Example: Ana holds plot 7 until July, and Ben from July to the end of the season.</p>
+      <p>Which do you want?</p>
+      <ol>
+        <li>(a) A plot is allocated to one gardener at a time.</li>
+        <li>(b) A plot given up stays free for the rest of the season.</li>
+        <li>(c) Something else.</li>
+      </ol>
+    </div>
+    <aside class="notes"><strong class="when">⏱ 12:22–12:24 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>Built from the same “Framing a question” template, against the plot register's real records.</li>
+      <li>Point at the shape: the workflow and step first, then each record that bears by number and title, then the situation in the records' words, an example, and options for a person.</li>
+      <li>(a) rewords <code>UL-1: Plot</code>; (b) changes what <code>F-2: A gardener can give up a plot</code> decides. Which of those is a clarification and which a new record is the next section.</li>
+      <li>The agent doesn't pick. It reports and waits.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 16 · Agenda: Who settles it -->
+  <section class="mid agenda" data-step="3">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 12:24 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
+  </section>
+
+  <!-- 17 · Clarify or supersede? -->
+  <section class="mid">
+    <h2 class="sk-section">Clarify or supersede?</h2>
+    <div class="duo">
+      <div class="sk-panel sk-teal"><span class="sk-label">Clarify</span><p>The wording fell short. The intent is the same.</p><p class="small">Edit it in place, same number.</p></div>
+      <div class="sk-panel sk-coral"><span class="sk-label">Supersede</span><p>What the record decides has changed.</p><p class="small">A new record replaces it, and the old one points at it.</p></div>
+    </div>
+    <div class="sk-bubble" style="font-size:1.6em;margin-top:.9em">“If the intent doesn't change, then it might be the same record.”</div>
+    <aside class="notes"><strong class="when">⏱ 12:24–12:25 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>The record keeper draws the line. The agent assesses whether the intent is kept, and names each citation that would read wrong after an edit.</li>
+      <li>Tie it to the last question: (a) could be a clarification of <code>UL-1: Plot</code>, if “one gardener at a time” was always the intent. (b) changes what <code>F-2: A gardener can give up a plot</code> decides, so it would be a new record.</li>
+      <li>The other moves, if anyone asks: create a record, retire one with a reason, rename a term, redefine a term.</li>
+      <li>A change that falsifies only part of a record splits it into two successors; one that replaces several records merges them into one.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 18 · Back to Ana -->
+  <section class="center">
+    <h2 class="sk-section">Back to Ana</h2>
+    <div class="sk-bubble" style="font-size:2em">“(a) redefine Gardener, (b) it stands, or (c) something else?”</div>
+    <div class="sk-bubble sk-tail-right" style="font-size:2em">“Picked (a)? Is that a clarification of <code>UL-2: Gardener</code>, or a supersede?”</div>
+    <p class="steps">vote in chat · one voice for each side</p>
+    <aside class="notes"><strong class="when">⏱ 12:25–12:26 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>Keep it to a minute: the vote in chat, one voice for each side.</li>
+      <li>There is no answer key, and say so. The agent can argue either way; only the record keeper knows whether “holds a plot, or waits for one” was the intent or an accident of wording.</li>
+      <li>Redefining a term has its own workflow in the recs files, “Redefine a term”. Here the successor would be <code>UL-4</code>, superseding <code>UL-2: Gardener</code>. If the meaning stays and only the wording fell short, that workflow sends it to a clarification instead.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 19 · If you redefine it -->
+  <section class="mid">
+    <h2 class="sk-section">If you redefine it, the agent checks every sentence</h2>
+    <div class="sk-bubble" style="font-size:1.5em">“A sentence is false only if it needs a gardener to hold a plot or wait for one.”</div>
+    <p class="note-line" style="margin-top:0"><b>garden</b>: 49 hits in 14 files, and each gets a verdict. For example:</p>
+    <table class="verdicts">
+      <tr><td><code>UL-2: Gardener</code>: “…who holds a plot, or waits for one”</td><td>superseded</td></tr>
+      <tr><td><code>UW-1: Request a plot</code>, its trigger: “A gardener wants a plot”</td><td>stands</td></tr>
+      <tr><td><code>F-2 §1: A gardener can give up a plot</code>: “the first gardener on the waiting list”</td><td>stands</td></tr>
+    </table>
+    <aside class="notes"><strong class="when">⏱ 12:26–12:27 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>The rule comes first, before reading any hit. Then every hit gets its replacement, or “stands” with the reason.</li>
+      <li>The 49 hits are counted in the live fixture, before the live run adds ADR-4; the records extrapolated on the diagram aren't in it.</li>
+      <li>Then the record keeper agrees, rewords, or declines.</li>
+      <li><span class="todo">Open:</span> put the agent's full verdict list from the dry run on the whiteboard.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 20 · Agenda: How it becomes code -->
+  <section class="mid agenda" data-step="4">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 12:27 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
+  </section>
+
+  <!-- 21 · How it becomes code -->
+  <section class="mid">
+    <h2 class="sk-section">How it becomes code</h2>
+    <div class="sk-row flow" style="align-items:center">
+      <div class="sk-panel sk-blue"><img src="kit/icons/gear.svg" alt="A gear"><span class="sk-label">superpowers</span><p>Jesse Vincent's agentic development workflow: brainstorm, plan, build, review</p></div>
+      <svg class="sk-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H34" stroke="var(--sk-ink)" stroke-width="3" fill="none" marker-end="url(#sk-head)" filter="url(#sk-wobble-line)"/></svg>
+      <div class="sk-panel sk-mustard"><img src="kit/icons/books.svg" alt="A stack of books"><span class="sk-label">The recs files</span><p>Forked and made record-first: every step reads the records and cites them</p></div>
+    </div>
+    <p class="lede" style="text-align:center;margin:.8em auto 0">Plans cite records. Code comments cite records. A disagreement with a record stops the work.</p>
+    <aside class="notes"><strong class="when">⏱ 12:27–12:28 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>“I forked obra's superpowers workflow and adapted it so it's record-first. It has been working fantastically.”</li>
+      <li>superpowers is Jesse Vincent's (github.com/obra/superpowers), MIT, like the recs files.</li>
+      <li>The recs versions: brainstorming, writing plans, executing plans, subagent-driven development, test-driven development, systematic debugging, requesting and receiving code review, verification before completion, finishing a branch, git worktrees. Where a recs skill and a superpowers skill do the same job, the project's AGENTS.md says to use the recs one.</li>
+      <li>What changes in practice: a plan names the records each task realizes; the only comment allowed in code is a citation of a record; review and debugging treat code that disagrees with a record as a question for the record keeper first.</li>
+      <li>If asked: the README says these development-flow skills may still change before 1.0, perhaps split into a generic flow and a part for each realization modality. The record forms and record management are the stable part.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 22 · A comment is a citation -->
+  <section class="mid">
+    <h2 class="sk-section">A comment is a citation</h2>
+    <div class="prompt" style="margin-top:.4em"><span class="sk-label sk-deep-teal" style="font-size:.9em">lib/plot_register.ex</span><pre class="code" style="font-size:.9em;margin-top:.4em"><span class="hl-c"># F-2 §1: A gardener can give up a plot</span>
+<span class="hl-k">def</span> <span class="hl-f">give_up</span>(plot, [next | rest]), <span class="hl-a">do:</span> {%{plot | <span class="hl-a">holder:</span> next}, rest}
+
+<span class="hl-c"># F-2 §2: A gardener can give up a plot</span>
+<span class="hl-k">def</span> <span class="hl-f">give_up</span>(plot, []), <span class="hl-a">do:</span> {%{plot | <span class="hl-a">holder:</span> <span class="hl-k">nil</span>}, []}</pre></div>
+    <p class="lede" style="text-align:center;margin:.9em auto 0">Number, section and title, and nothing else. The rule lives in the record.</p>
+    <aside class="notes"><strong class="when">⏱ 12:28–12:29 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>The two clauses realize the two requirements of <code>F-2: A gardener can give up a plot</code>: §1, the first gardener on the waiting list becomes the holder and leaves the list; §2, with nobody waiting, the plot is free.</li>
+      <li>The rule in the project's AGENTS.md: a comment points at a record, by number and title, or at a heading of the knowledge base where the code does something whose reason it doesn't show. No third kind.</li>
+      <li>No explanation, no warning, no paraphrase of the record. A paraphrase goes stale; the citation can't. When the record is superseded, the sweep repoints the citation to its successor.</li>
+      <li>The same applies to tests: the record a check rests on is a citation above it.</li>
+      <li>Elixir here for brevity; the plot register's own code in the repo is Python, with the same comments.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 23 · Agenda: Try it Monday -->
+  <section class="mid agenda" data-step="5">
+    <h2 class="sk-section">Today</h2>
+    <aside class="notes"><strong class="when">⏱ 12:29 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
+  </section>
+
+  <!-- 24 · Try it Monday -->
+  <section class="mid">
+    <h2 class="sk-section">Try it Monday</h2>
+    <div class="split">
+      <ol class="home">
+        <li>Install it in Claude Code
+          <div class="prompt" style="font-size:.8em;margin-top:.4em"><pre class="code">claude plugin marketplace add Trevoke/the-recs-files-claude
+claude plugin install recs-files@the-recs-files</pre></div></li>
+        <li>Open a project and ask for recs-kickstart <small>it interviews you and writes a first slice of records, with your agreement</small></li>
+        <li>Watch for the moment your agent stops and asks</li>
+      </ol>
+      <img src="kit/icons/laptop.svg" alt="A laptop" style="height:280px">
+    </div>
+    <aside class="notes"><strong class="when">⏱ 12:29–12:30 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>Codex, pi and Antigravity install lines are in the README: <a href="https://github.com/Trevoke/the-recs-files">github.com/Trevoke/the-recs-files</a>. Paste it in chat again.</li>
+      <li>recs-kickstart asks first how the project is realized (code, or something else), then reads the code and writes the vision, the core workflow and the records it touches, plus the project's AGENTS.md.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 25 · Questions -->
+  <section class="center">
+    <h1 class="sk-title" style="font-size:4.2em"><span class="sk-burst"><span class="sk-hl">Questions?</span></span></h1>
+    <div class="sk-bubble" style="font-size:1.7em;margin-top:.8em">“The records are the truth for the system; the record keeper is the truth for the records.”</div>
+    <img src="kit/characters/waver.svg" alt="A person waving" style="height:240px;margin-top:.2em">
+    <aside class="notes"><strong class="when">⏱ 12:30–12:45 · 15 min</strong><br><strong class="who">🎤 Aldric and everyone</strong><br><ul>
+      <li>First, press Esc for the overview, go back to slide 2 and read the opening message once more: the room should now be able to say where every line came from. Then come back here.</li>
+      <li>The quote is the recs files' own vision (<code>docs/vision.org</code>, “The domain”).</li>
+      <li>15 min for questions. Any overrun in the talk comes out of this.</li><li>Easy questions to expect: other harnesses (README), existing projects (recs-kickstart), what “realization modality” means.</li>
+    </ul></aside>
+  </section>
+
+</div></div>
+
+<template id="agenda-row">
+  <div class="sk-row">
+    <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">Records and what the agent reads</span></div><img src="kit/icons/books.svg" alt=""></div>
+    <div class="sk-panel sk-coral"><div class="sk-step"><span class="sk-label">When records disagree</span></div><img src="kit/icons/magnifier.svg" alt=""></div>
+    <div class="sk-panel sk-blue"><div class="sk-step"><span class="sk-label">Who settles it</span></div><img src="kit/icons/chat.svg" alt=""></div>
+    <div class="sk-panel sk-mustard"><div class="sk-step"><span class="sk-label">How it becomes code</span></div><img src="kit/icons/gear.svg" alt=""></div>
+    <div class="sk-panel sk-forest"><div class="sk-step"><span class="sk-label">Try it Monday</span></div><img src="kit/icons/laptop.svg" alt=""></div>
+  </div>
+</template>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+  // The agenda slides share one row; the current step gets the dashed outline.
+  document.querySelectorAll('section.agenda').forEach(function (s) {
+    var row = document.getElementById('agenda-row').content.cloneNode(true);
+    var step = +s.dataset.step;
+    if (step) row.querySelectorAll('.sk-panel')[step - 1].classList.add('sk-dashed');
+    s.appendChild(row);
+  });
+
+  // S or the Notes button shows the current slide's notes beside it, in the same page.
+  // ?notes=1 opens with notes showing (the storyboard's "Open with notes" link).
+  var presenterPanel, presenterBody, presenterHeading, presenterButton;
+  function updatePresenterNotes() {
+    if (!presenterPanel) return;
+    var notes = Reveal.getCurrentSlide().querySelector('aside.notes');
+    presenterHeading.textContent = 'Slide ' + (Reveal.getIndices().h + 1) + ' notes';
+    presenterBody.innerHTML = notes ? notes.innerHTML : '<p>No notes for this slide.</p>';
+  }
+  function togglePresenterNotes(forceOpen) {
+    if (!presenterPanel) return;
+    var open = typeof forceOpen === 'boolean' ? forceOpen : presenterPanel.hidden;
+    presenterPanel.hidden = !open;
+    document.body.classList.toggle('presenter-open', open);
+    presenterButton.setAttribute('aria-expanded', String(open));
+    presenterButton.textContent = open ? 'Hide notes (S)' : 'Notes (S)';
+    if (open) updatePresenterNotes();
+    Reveal.layout();
+  }
+
+  Reveal.initialize({ width: 1600, height: 900, margin: 0.04, hash: true, slideNumber: 'c/t', transition: 'fade', center: false,
+    keyboard: { 83: function () { togglePresenterNotes(); } }
+  }).then(function () {
+    // The one-slide canvas pages (split-pages.py) stay uncluttered.
+    if (document.querySelectorAll('.reveal .slides > section').length < 2) return;
+    presenterButton = document.createElement('button');
+    presenterButton.className = 'presenter-toggle';
+    presenterButton.type = 'button';
+    presenterButton.setAttribute('aria-controls', 'presenter-notes');
+    presenterButton.setAttribute('aria-expanded', 'false');
+    presenterButton.textContent = 'Notes (S)';
+    presenterButton.addEventListener('click', function () { togglePresenterNotes(); });
+    presenterPanel = document.createElement('aside');
+    presenterPanel.id = 'presenter-notes';
+    presenterPanel.className = 'presenter-panel';
+    presenterPanel.hidden = true;
+    presenterPanel.setAttribute('aria-label', 'Presenter notes');
+    presenterPanel.innerHTML = '<h2></h2><div></div>';
+    presenterHeading = presenterPanel.querySelector('h2');
+    presenterBody = presenterPanel.querySelector('div');
+    document.body.append(presenterButton, presenterPanel);
+    Reveal.on('slidechanged', updatePresenterNotes);
+    if (new URLSearchParams(location.search).has('notes')) togglePresenterNotes(true);
+  });
+
+  // Viewers on the canvas can load while hidden or tiny, and don't always fire a window resize
+  // when they grow. Re-fit the slide whenever its box changes size, and once fonts have loaded.
+  new ResizeObserver(function () { Reveal.layout(); }).observe(document.documentElement);
+  if (document.fonts) document.fonts.ready.then(function () { Reveal.layout(); });
+  document.addEventListener('visibilitychange', function () { Reveal.layout(); });
+</script>
+</body>
+</html>
