@@ -85,7 +85,7 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
 <main>
 <h1>The recs files (Lightning Lesson, Fri 23 Oct)</h1>
 <div class="intro"><p>Free Maven Lightning Lesson, 45 minutes on Zoom: at most 30 minutes of talk, then about 15 for questions. Aldric presents and runs the agent live. Built from Aldric's draft of 21 October and restructured on 23 October after an external run-through, checked against <a href="https://github.com/Trevoke/the-recs-files">Trevoke/the-recs-files</a> at <code>cfe0aaa</code> (20 Oct).</p></div>
-<a class="slides-link" href="index.html?v=9a634d72f877">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=9a634d72f877">Open with notes</a>
+<a class="slides-link" href="index.html?v=b72cafefc9a7">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=b72cafefc9a7">Open with notes</a>
 
 <div class="transformation"><p>People arrive having watched a codebase degrade over months of agent sessions: duplicate code paths, drifting words, comments that invent reasons, context that won't fit. They leave seeing each of those as a decision the agent made alone, knowing what the recs files do so each one stops building up, and seeing the decision move back to the team, at planning time, before any code.</p></div>
 
@@ -94,7 +94,7 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
   <div class="bar">
 <a class='seg present' href='#welcome' style='flex:3' title='Opening · Welcome · 3 min'><span class='seg-t'>12:00</span><span class='seg-n'>Welcome</span></a>
 <a class='seg talk' href='#what-builds-up-over-months' style='flex:2' title='What · What builds up over months · 2 min'><span class='seg-t'>12:03</span><span class='seg-n'>What builds up over months</span></a>
-<a class='seg present' href='#the-records-in-one-picture' style='flex:4' title='What · The records in one picture · 4 min'><span class='seg-t'>12:05</span><span class='seg-n'>The records in one picture</span></a>
+<a class='seg present' href='#the-recs-files' style='flex:4' title='What · The recs files · 4 min'><span class='seg-t'>12:05</span><span class='seg-n'>The recs files</span></a>
 <a class='seg present' href='#two-code-paths' style='flex:4' title='So what · Two code paths · 4 min'><span class='seg-t'>12:09</span><span class='seg-n'>Two code paths</span></a>
 <a class='seg present' href='#the-words-drift' style='flex:4' title='So what · The words drift · 4 min'><span class='seg-t'>12:13</span><span class='seg-n'>The words drift</span></a>
 <a class='seg present' href='#comments-invent-reasons' style='flex:3' title='So what · Comments invent reasons · 3 min'><span class='seg-t'>12:17</span><span class='seg-n'>Comments invent reasons</span></a>
@@ -137,13 +137,13 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
   </div>
 </section>
 
-<section class="block present" id="the-records-in-one-picture">
+<section class="block present" id="the-recs-files">
   <div class="when"><div class="clock">12:05</div><div class="mins">4 min</div></div>
   <div class="what">
-    <h3>The records in one picture</h3>
-    <p class="purpose">How the records connect, and the projections the agent reads; then the agenda</p>
+    <h3>The recs files</h3>
+    <p class="purpose">Introduce the tools: each decision is a record, and the records connect; then the projections the agent reads, and the agenda</p>
     <p class="structure">Presenting</p>
-    <blockquote>Everything that follows uses this one project.</blockquote>
+    <blockquote>So what stops the agent inventing? It has somewhere to look.</blockquote>
 
   </div>
 </section>
@@ -209,7 +209,7 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
   <div class="when"><div class="clock">12:29</div><div class="mins">1 min</div></div>
   <div class="what">
     <h3>Try it Monday</h3>
-    <p class="purpose">Install, kickstart, and the superpowers fork</p>
+    <p class="purpose">Install, kickstart, brainstorm a user workflow in a new session, and the superpowers fork</p>
     <p class="structure">Presenting</p>
     <blockquote>Watch for the moment your agent stops and asks.</blockquote>
 
@@ -223,7 +223,7 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
 <div class='card'><h2>Audience</h2><ul>
 <li>Developers who already use a coding agent. Most have never seen the recs files.</li>
 <li>They have lived with the problems this lesson names, even if they've never put them into words.</li>
-<li>They take in little at a time: one idea a slide. The records themselves go on the whiteboard.</li>
+<li>They take in little at a time: one idea a slide, and no full records on screen.</li>
 </ul></div>
 <div class='card'><h2>Learning outcomes</h2><ul>
 <li>Name four problems that build up in an agent-written codebase, and trace each one to a decision nobody wrote down.</li>
@@ -239,15 +239,14 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
 <li><strong>Record keeper:</strong> the team. The agent proposes; the team agrees.</li>
 </ul></div>
 <div class='card'><h2>Format &amp; logistics</h2><ul>
-<li>Zoom, one room, no breakouts. Answers in chat. Recorded and posted publicly by Maven.</li>
+<li>Zoom, one room, no breakouts, starting 12:00. Answers in chat. Recorded and posted publicly by Maven.</li>
 <li>One toy project throughout: the <strong>plot register</strong> (a community garden), from the repo's eval fixture <code>planning-without-a-realization-modality</code>, extended in <a href="live-fixture/README.md"><code>live-fixture/</code></a> with three architectural decisions (ADR-3 rejected) and one vision sentence for the live decision to make untrue.</li>
-<li><strong>Whiteboard:</strong> one frame holding the live fixture's records in full.</li>
 <li><strong>Live track:</strong> one run at the end, in a fresh copy of <code>live-fixture/</code>: Aldric records the web-app decision from <code>live-fixture/prompt.md</code>, then agrees to it. The answers are in that slide's notes. The fixture is ours, not one of the repo's evals: dry-run it.</li>
 <li><strong>Code on the problem slides</strong> (<code>Gardener.get_plot</code>, <code>Plot.allocate_to_gardener</code>, the two comments, the Elixir clauses) is illustrative; none of it is in the fixture.</li>
 </ul></div>
 </div>
 </details>
-<footer>Generated from runbook.md · Fri 23 Oct, 13:50</footer>
+<footer>Generated from runbook.md · Fri 23 Oct, 14:10</footer>
 </main>
 </body>
 </html>

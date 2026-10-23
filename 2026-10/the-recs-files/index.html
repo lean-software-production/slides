@@ -138,7 +138,7 @@
   <section class="center">
     <h1 class="sk-title" style="font-size:4.4em"><span class="sk-burst"><span class="sk-hl">The recs files</span></span></h1>
     <p class="recording-banner">This is recorded and will be posted publicly. Keep your camera off, or use chat, if you'd rather not appear.</p>
-    <p class="lede">Four problems that stop building up when the team keeps the decisions</p>
+    <p class="lede">Not control, but constraints</p>
     <p class="steps" style="margin-top:.3em">Lightning Lesson · Friday 23 October</p>
     <img src="kit/characters/explainer.svg" alt="A person explaining, one hand raised" style="height:250px;margin-top:.3em">
     <aside class="notes"><strong class="when">⏱ 12:00–12:03 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><a class="lesson-checklists" href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/checklists/live-lesson-checklists.md">Lesson checklists</a> · <a class="go-live-checklist" href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/checklists/live-lesson-checklists.md#-go-live--before-admitting-students">Go live</a><br><a class="storyboard-link" href="https://lean-software-production.github.io/slides/2026-10/the-recs-files/storyboard.html">Storyboard</a><br><ul>
@@ -150,8 +150,6 @@
 cp -r workshops/lightning-lessons/the-recs-files/live-fixture /tmp/plots
 cd /tmp/plots &amp;&amp; git init -q &amp;&amp; git add -A &amp;&amp; git commit -qm start</pre></li>
       <li>A terminal ready in <code>/tmp/plots</code>, with the recs-files plugin installed and superpowers off for the session. <span class="todo">Open:</span> confirm in the dry run that no other skill loads.</li>
-      <li><span class="todo">Open:</span> the subtitle is a placeholder; swap in your wording.</li>
-      <li>Whiteboard: one frame for the plot register, with its records in full (the live fixture). <span class="todo">Open:</span> start time; 12:00 here is a placeholder.</li>
     </ul></aside>
   </section>
 
@@ -176,8 +174,9 @@ cd /tmp/plots &amp;&amp; git init -q &amp;&amp; git add -A &amp;&amp; git commit
 
   <!-- 3 · How the records connect -->
   <section class="mid">
-    <h2 class="sk-section">How the records connect</h2>
-    <div class="recmap" role="img" aria-label="The vision links to the ubiquitous language, which links to the user workflow UW-2 Give up a plot. UW-2 names the features F-2 and F-3 and the messages MSG-1 and MSG-2.">
+    <h2 class="sk-section">The recs files</h2>
+    <p class="note-line" style="margin:0;text-align:center">Each decision is one short, numbered record. They connect like this.</p>
+    <div class="recmap" style="height:600px;margin-top:.9em" role="img" aria-label="The vision links to the ubiquitous language, which links to the user workflow UW-2 Give up a plot. UW-2 names the features F-2 and F-3 and the messages MSG-1 and MSG-2.">
       <svg class="recmap-lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
         <line x1="50" y1="7" x2="50" y2="29"/>
         <line x1="50" y1="29" x2="50" y2="64"/>
@@ -196,12 +195,13 @@ cd /tmp/plots &amp;&amp; git init -q &amp;&amp; git add -A &amp;&amp; git commit
     </div>
     <aside class="notes"><strong class="when">⏱ 12:05–12:07 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
       <li>The diagram from the top of <a href="https://therecsfiles.dev">therecsfiles.dev</a> (which uses a library example), redrawn for the plot register.</li>
-      <li>Real records in the plot register: the vision, <code>UL-2: Gardener</code>, <code>UL-3: Waiting list</code>, <code>UW-2: Give up a plot</code> and <code>F-2: A gardener can give up a plot</code>. Extrapolated for the example, not in the fixture: <code>F-3</code>, <code>MSG-1</code> and <code>MSG-2</code>. Say so if someone opens the whiteboard frame looking for them.</li>
+      <li>Real records in the plot register: the vision, <code>UL-2: Gardener</code>, <code>UL-3: Waiting list</code>, <code>UW-2: Give up a plot</code> and <code>F-2: A gardener can give up a plot</code>. Extrapolated for the example, not in the fixture: <code>F-3</code>, <code>MSG-1</code> and <code>MSG-2</code>. Say so if someone asks.</li>
       <li>Read it from the middle: the user workflow is what a person is trying to do, so it's where you orient. It names the features it reaches, the messages it can end in, and the words it uses. The vision sits above everything.</li>
       <li>What each kind holds: ubiquitous language, what a word means and nothing about behaviour (Evans); user workflow, what a person is trying to do, step by step (Cockburn); feature, what the system does, one rule to a sentence (Mavin's EARS); message, the exact text of a refusal or failure.</li>
       <li>Not drawn: architectural decisions (ADR), a pattern the code follows and why (Nygard). An ADR names words and other ADRs, like <code>ADR-2: A plot is identified by its bed number</code>.</li>
       <li>Every record is short, numbered, one thing each, in a file of its own, and always cited by number and title. A record's title is a headline.</li>
-      <li>“Everything that follows uses this one project, the plot register: a community garden that allocates plots and keeps a waiting list.”</li>
+      <li>Transition from the problems: “So what stops the agent inventing? It has somewhere to look. The recs files are skills that have the agent keep each decision as a record, and work from those records.”</li>
+      <li>“Everything that follows uses one project, the plot register: a community garden that allocates plots and keeps a waiting list.”</li>
       <li>Placement test, if asked: if a word would survive a rewrite of the code, it's ubiquitous language; if the rewrite would retire it (“SQLite”), it belongs in a decision.</li>
       <li>One more rule, for code: a comment is a citation of a record and nothing else, like <code># F-1 §2: A gardener can be allocated a free plot</code>.</li>
     </ul></aside>
@@ -303,7 +303,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
       <li>A rename changes a word's spelling: every occurrence is replaced. A redefinition keeps the spelling and changes the meaning, so nothing announces which sentences went wrong; each hit has to be judged.</li>
       <li>The agent writes the rule that tells a false sentence from a true one first, before reading any hit. Then it searches the stem, not a phrase, counts the hits, and gives every one a verdict: its replacement, or “stands” with the reason.</li>
       <li>Then the team agrees, rewords, or declines. Nothing changes before that.</li>
-      <li>The 49 hits are counted in the live fixture; the records extrapolated on the diagram aren't in it. <span class="todo">Open:</span> put the agent's full verdict list from the dry run on the whiteboard.</li>
+      <li>The 49 hits are counted in the live fixture; the records extrapolated on the diagram aren't in it.</li>
     </ul></aside>
   </section>
 
@@ -333,17 +333,18 @@ tenant</pre><p class="small">Three names for one person, picked by three session
   <!-- 13 · A comment is a citation -->
   <section class="mid">
     <h2 class="sk-section">A comment is a citation</h2>
-    <div class="prompt" style="margin-top:.4em"><span class="sk-label sk-deep-teal" style="font-size:.9em">lib/plot_register.ex</span><pre class="code" style="font-size:.9em;margin-top:.4em"><span class="hl-c"># F-2 §1: A gardener can give up a plot</span>
-<span class="hl-k">def</span> <span class="hl-f">give_up</span>(plot, [next | rest]), <span class="hl-a">do:</span> {%{plot | <span class="hl-a">holder:</span> next}, rest}
+    <div class="prompt" style="margin-top:.4em"><span class="sk-label sk-deep-teal" style="font-size:.9em">Once the team has decided</span><pre class="code" style="font-size:.95em;margin-top:.4em"><span class="hl-c"># F-4 §1: A returning gardener skips the waiting list</span>
+<span class="hl-k">def</span> <span class="hl-f">register_gardener</span>(attrs)
 
-<span class="hl-c"># F-2 §2: A gardener can give up a plot</span>
-<span class="hl-k">def</span> <span class="hl-f">give_up</span>(plot, []), <span class="hl-a">do:</span> {%{plot | <span class="hl-a">holder:</span> <span class="hl-k">nil</span>}, []}</pre></div>
-    <p class="lede" style="text-align:center;margin:.9em auto 0">Number, section and title, and nothing else. The rule lives in the record.</p>
+<span class="hl-c"># F-4 §1: A returning gardener skips the waiting list</span>
+<span class="hl-k">def</span> <span class="hl-f">handle_event</span>(<span class="hl-a">"join_waiting_list"</span>, params, socket)</pre></div>
+    <p class="lede" style="text-align:center;margin:.9em auto 0">One record, cited in both places. Number, section and title, and nothing else.</p>
     <aside class="notes"><strong class="when">⏱ 12:19–12:20 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
-      <li>What the code looks like once the team has decided: each clause realizes one requirement of <code>F-2: A gardener can give up a plot</code>. §1: the first gardener on the waiting list becomes the holder and leaves the list. §2: with nobody waiting, the plot is free.</li>
+      <li>The same two functions, once the team has answered the question: say they decided returning gardeners skip the list. That decision is now a record, and both places cite it, so the next session reads one rule, not two. The team could just as well have decided the opposite; the point is that someone decided.</li>
+      <li><code>F-4</code> is extrapolated for the example, like the records on the diagram. The team would also agree on the words “returning gardener” first.</li>
       <li>Two kinds of comment are allowed: a citation of a record by number and title, or a pointer to a heading of the project's knowledge base where the code does something whose reason it doesn't show. No third kind.</li>
       <li>No explanation, no warning, no paraphrase of the record. A paraphrase goes stale; the citation can't. When the record is superseded, the sweep repoints the citation. Tests follow the same rule.</li>
-      <li>Elixir here for brevity; the plot register's own code in the repo is Python, with the same comments.</li>
+      <li>Elixir here for brevity.</li>
     </ul></aside>
   </section>
 
@@ -357,9 +358,9 @@ tenant</pre><p class="small">Three names for one person, picked by three session
   <section class="mid">
     <h2 class="sk-section">What the agent puts in its context</h2>
     <div class="sk-row flow" style="align-items:center">
-      <div class="sk-panel sk-teal"><img src="kit/icons/books.svg" alt="A stack of books"><p>The projections: every title, and no bodies</p></div>
+      <div class="sk-panel sk-teal"><img src="kit/icons/books.svg" alt="A stack of books"><p>The projections: only the record identifiers and titles</p></div>
       <svg class="sk-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H34" stroke="var(--sk-ink)" stroke-width="3" fill="none" marker-end="url(#sk-head)" filter="url(#sk-wobble-line)"/></svg>
-      <div class="sk-panel sk-coral"><img src="kit/icons/magnifier.svg" alt="A magnifier"><p>The records that bear on the task, opened from disk</p></div>
+      <div class="sk-panel sk-coral"><img src="kit/icons/magnifier.svg" alt="A magnifier"><p>The records that bear on the task, retrieved</p></div>
       <svg class="sk-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H34" stroke="var(--sk-ink)" stroke-width="3" fill="none" marker-end="url(#sk-head)" filter="url(#sk-wobble-line)"/></svg>
       <div class="sk-panel sk-blue"><img src="kit/icons/robot.svg" alt="A robot"><p>A subagent gets the records its task cites</p></div>
     </div>
@@ -429,11 +430,11 @@ tenant</pre><p class="small">Three names for one person, picked by three session
       <div class="sk-panel sk-coral"><p>Which sentence becomes untrue?</p></div>
       <div class="sk-panel sk-mustard"><p>What does it leave alone?</p></div>
     </div>
-    <p class="steps">guess in chat while it works · its records are on the whiteboard</p>
+    <p class="steps">guess in chat while it works</p>
     <aside class="notes"><strong class="when">⏱ 12:25–12:28 · 3 min</strong><br><strong class="who">🎤 Aldric, driving the agent</strong><br><ul>
       <li>Same plot register, now with its architectural decisions: two accepted, and <code>ADR-3: Keep the register in a shared spreadsheet</code>, rejected.</li>
       <li>Read the keeper's request out as written (it's <code>prompt.md</code> in the fixture). Then run it in <code>/tmp/plots</code>.</li>
-      <li>While it reads the records, point at the plot register frame on the whiteboard and ask for guesses in chat.</li>
+      <li>While it reads the records, ask for guesses in chat. Don't show the records themselves: the agent's reply shows the one sentence that matters.</li>
       <li>A good run writes one new file, <code>adr-4-…</code>, with status Proposed, listed under <code>* Proposed</code> in <code>docs/architectural-decisions.org</code>, with the same title in both places, nothing else written, and at most one commit. Then it shows you the draft and the vision sentence with its replacement, and asks you to agree.</li>
       <li>Don't agree yet; that's the next slide.</li>
       <li>Answers, if the run stalls: <b>ADR-4, not 3</b>: ADR-3 was rejected, so it's missing from the projection, but its number stays taken; the next number is read from the files. <b>One sentence</b>: the vision says the coordinator allocates plots “on the computer in the garden shed”; the replacement says “from the register's web app”. A search for “web” or “phone” misses it; searching “comput” and “shed” finds it. <b>Left alone</b>: ADR-3, because a rejected record is never falsified; ADR-1 stands, since a web app can keep one SQLite file.</li>
@@ -475,6 +476,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
           <div class="prompt" style="font-size:.8em;margin-top:.4em"><pre class="code">claude plugin marketplace add Trevoke/the-recs-files-claude
 claude plugin install recs-files@the-recs-files</pre></div></li>
         <li>Open a project and ask for recs-kickstart <small>it interviews you and writes a first slice of records, with your agreement</small></li>
+        <li>Make a new session, and ask for recs-brainstorming on your user workflow</li>
         <li>Watch for the moment your agent stops and asks</li>
       </ol>
       <img src="kit/icons/laptop.svg" alt="A laptop" style="height:280px">
@@ -483,6 +485,7 @@ claude plugin install recs-files@the-recs-files</pre></div></li>
     <aside class="notes"><strong class="when">⏱ 12:29–12:30 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
       <li>“I forked obra's superpowers workflow and adapted it so it's record-first. It has been working fantastically.” superpowers is github.com/obra/superpowers, MIT, like the recs files.</li>
       <li>Codex, pi and Antigravity install lines are in the README: <a href="https://github.com/Trevoke/the-recs-files">github.com/Trevoke/the-recs-files</a>. Paste it in chat again.</li>
+      <li>Step 3: a fresh session starts from the records kickstart wrote, not from the kickstart conversation. recs-brainstorming reads them first and asks which records the idea touches, extends or contradicts.</li>
       <li>recs-kickstart asks first how the project is realized (code, or something else), then reads the code and writes the vision, the core workflow and the records it touches, plus the project's AGENTS.md.</li>
     </ul></aside>
   </section>
