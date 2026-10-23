@@ -375,11 +375,11 @@ tenant</pre><p class="small">Three names for one person, picked by three session
       <svg class="sk-arrow" viewBox="0 0 40 20" aria-hidden="true"><path d="M2 10 H34" stroke="var(--sk-ink)" stroke-width="3" fill="none" marker-end="url(#sk-head)" filter="url(#sk-wobble-line)"/></svg>
       <div class="sk-panel sk-blue"><img src="kit/icons/robot.svg" alt="A robot"><p>A subagent gets the records its task cites</p></div>
     </div>
-    <p class="lede" style="text-align:center;margin:.8em auto 0">A title tells the agent which records to open. Only the file on disk is evidence.</p>
+    <p class="lede" style="text-align:center;margin:.8em auto 0">A title tells the agent which records to open.</p>
     <aside class="notes"><strong class="when">⏱ 12:19–12:22 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
       <li>From the “Records are read from disk” section of the AGENTS.md that recs-kickstart writes: open a record's file before citing it, measuring code against it, or framing a question with it. Open each record that bears, and no others.</li>
       <li>A record bears if the task names it, a record you opened names it, or the code you're changing cites it. A title that only sounds near the work is opened to find out.</li>
-      <li>Whatever AGENTS.md itself copies in, the session and every subagent carry for the whole session, and that copy is stale the moment a record changes. So the agent cites what the file on disk says.</li>
+      <li>Whatever AGENTS.md itself copies in, the session and every subagent carry for the whole session, and that copy is stale the moment a record changes. So the agent reads the record itself each time, not a copy it remembers.</li>
       <li>Small files keep this cheap: one record per file, and one term per file. Opening a word costs one short file, not the whole glossary.</li>
       <li>recs-subagent-driven-development: the controller hands each subagent its task with the records the task cites, so the subagent starts with what it needs and nothing else.</li>
     </ul></aside>
