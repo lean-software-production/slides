@@ -170,7 +170,7 @@ cd /tmp/plots &amp;&amp; git init -q &amp;&amp; git add -A &amp;&amp; git commit
       <div class="problems-row">
         <div class="sk-panel sk-mustard"><img src="kit/icons/sticky-note.svg" alt="A sticky note"><p>Comments invent reasons</p></div>
         <div class="sk-panel sk-teal"><img src="kit/icons/books.svg" alt="A stack of books"><p>Context grows too big</p></div>
-        <div class="sk-panel sk-forest"><img src="kit/icons/compass.svg" alt="A compass"><p>Questions you can't answer</p></div>
+        <div class="sk-panel sk-forest"><img src="kit/icons/compass.svg" alt="A compass"><p>Questions that don't make sense</p></div>
       </div>
     </div>
     <p class="lede" style="text-align:center;margin:.8em auto 0">If the agent doesn't know the decision, it'll invent.</p>
@@ -179,7 +179,7 @@ cd /tmp/plots &amp;&amp; git init -q &amp;&amp; git add -A &amp;&amp; git commit
       <li>Read the five panels, then: “Which of these have you seen? Type the ones you recognise in chat.”</li>
       <li>Read out a few answers.</li>
       <li>“Each of these is a decision the agent made on its own, in code, that nobody wrote down. Next time, another session makes a different one.”</li>
-      <li>“Questions you can't answer: the agent asks from deep inside the code, or from the end of a reasoning path you never saw.” Then: “The rest of this session takes them one at a time: what the recs files do so each one stops.”</li>
+      <li>“Questions that don't make sense: the agent asks from deep inside the code, or from the end of a reasoning path you never saw.” Then: “The rest of this session takes them one at a time: what the recs files do so each one stops.”</li>
     </ul></aside>
   </section>
 
@@ -391,11 +391,11 @@ tenant</pre><p class="small">Three names for one person, picked by three session
     <aside class="notes"><strong class="when">⏱ 12:22 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
   </section>
 
-  <!-- 17 · Questions you can't answer -->
+  <!-- 17 · Questions that don't make sense -->
   <section class="mid">
-    <h2 class="sk-section">Questions you can't answer</h2>
+    <h2 class="sk-section">Questions that don't make sense</h2>
     <div class="sk-bubble" style="font-size:1.55em">“In <code>Plot.allocate/2</code>, <code>holder_id</code> is already set for this <code>season_id</code>. Should <code>give_up/1</code> overwrite it, or insert a second <code>allocations</code> row? The unique index on <code>(plot_id, season_id)</code> will reject the insert.”</div>
-    <p class="lede" style="text-align:center;margin:.6em auto 0">It asks from inside the code. You have to rebuild where it is before you can answer.</p>
+    <p class="lede" style="text-align:center;margin:.6em auto 0">It asks from inside the code. It only makes sense if you're in there with it.</p>
     <aside class="notes"><strong class="when">⏱ 12:22–12:23 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
       <li>“Here's the kind of question you get today.” Let the room read it.</li>
       <li>“What's it actually asking? Which gardener holds plot 7 after July. But you have to work that out from a function, a column and an index.”</li>
@@ -437,7 +437,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
       </ol>
     </div>
     <aside class="notes"><strong class="when">⏱ 12:24–12:25 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
-      <li>Contrast it with the question two slides back: same decision, but this one you can answer without opening the code. Built from the “Framing a question” template, against the plot register's real records.</li>
+      <li>Contrast it with the question two slides back: same decision, but this one makes sense without opening the code. Built from the “Framing a question” template, against the plot register's real records.</li>
       <li>Point at the shape: the workflow and step first, then each record that bears by number and title, then the situation in the records' words, an example, and options for a person.</li>
       <li>(a) could be a clarification of <code>UL-1: Plot</code>, if “one gardener at a time” was always the intent; (b) changes what <code>F-2: A gardener can give up a plot</code> decides, so it would be a new record. Either way, the team decides; the agent assesses and doesn't choose.</li>
       <li>The agent doesn't pick. It reports and waits. “This is the decision moving back to you: at planning time, before any code, instead of in a code review three weeks later.”</li>
