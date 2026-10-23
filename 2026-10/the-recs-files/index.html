@@ -129,6 +129,12 @@
   .hl-k { color: var(--sk-rust); font-weight: 700; }
   .hl-f { color: var(--sk-blue); }
   .hl-a { color: var(--sk-forest); }
+  /* Slide 2: five problems, two rows of equal panels. */
+  .problems { display: flex; flex-direction: column; gap: .9em; margin-top: .4em; }
+  .problems-row { display: flex; justify-content: center; gap: 1.2em; }
+  .problems-row .sk-panel { width: 30%; text-align: center; gap: .3em; padding: .7em 1em .8em; }
+  .problems-row .sk-panel img { height: 80px; width: auto; }
+  .problems-row .sk-panel p { font-size: 1.3em; }
   .trio .sk-panel p.small { font-size: 1.25em; line-height: 1.25; color: var(--sk-body-text); }
 </style>
 </head>
@@ -153,22 +159,27 @@ cd /tmp/plots &amp;&amp; git init -q &amp;&amp; git add -A &amp;&amp; git commit
     </ul></aside>
   </section>
 
-  <!-- 2 · What builds up over months -->
+  <!-- 2 · How agentic development gets worse -->
   <section class="mid">
-    <h2 class="sk-section">What builds up over months</h2>
-    <div class="sk-row flow">
-      <div class="sk-panel sk-coral"><img src="kit/icons/puzzle.svg" alt="A puzzle piece"><p>Two code paths for one purpose</p></div>
-      <div class="sk-panel sk-blue"><img src="kit/icons/chat.svg" alt="Two speech bubbles"><p>The code's words drift from the team's</p></div>
-      <div class="sk-panel sk-mustard"><img src="kit/icons/sticky-note.svg" alt="A sticky note"><p>Comments invent reasons</p></div>
-      <div class="sk-panel sk-teal"><img src="kit/icons/books.svg" alt="A stack of books"><p>Context grows too big</p></div>
+    <h2 class="sk-section">How agentic development gets worse</h2>
+    <div class="problems">
+      <div class="problems-row">
+        <div class="sk-panel sk-coral"><img src="kit/icons/puzzle.svg" alt="A puzzle piece"><p>Two code paths for one purpose</p></div>
+        <div class="sk-panel sk-blue"><img src="kit/icons/chat.svg" alt="Two speech bubbles"><p>The code's words drift from the team's</p></div>
+      </div>
+      <div class="problems-row">
+        <div class="sk-panel sk-mustard"><img src="kit/icons/sticky-note.svg" alt="A sticky note"><p>Comments invent reasons</p></div>
+        <div class="sk-panel sk-teal"><img src="kit/icons/books.svg" alt="A stack of books"><p>Context grows too big</p></div>
+        <div class="sk-panel sk-forest"><img src="kit/icons/compass.svg" alt="A compass"><p>Questions you can't answer</p></div>
+      </div>
     </div>
     <p class="lede" style="text-align:center;margin:.8em auto 0">If the agent doesn't know the decision, it'll invent.</p>
     <p class="steps">which have you seen? · answer in chat</p>
     <aside class="notes"><strong class="when">⏱ 12:03–12:05 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
-      <li>Read the four panels, then: “Which of these have you seen in your own codebase? Type the ones you recognise in chat.”</li>
+      <li>Read the five panels, then: “Which of these have you seen? Type the ones you recognise in chat.”</li>
       <li>Read out a few answers.</li>
       <li>“Each of these is a decision the agent made on its own, in code, that nobody wrote down. Next time, another session makes a different one.”</li>
-      <li>“The rest of this session takes them one at a time: what the recs files do so each one stops building up.”</li>
+      <li>“Questions you can't answer: the agent asks from deep inside the code, or from the end of a reasoning path you never saw.” Then: “The rest of this session takes them one at a time: what the recs files do so each one stops.”</li>
     </ul></aside>
   </section>
 
@@ -299,7 +310,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
       <tr><td><code>UW-1: Request a plot</code>, its trigger: “A gardener wants a plot”</td><td>stands</td></tr>
       <tr><td><code>F-2 §1: A gardener can give up a plot</code>: “the first gardener on the waiting list”</td><td>stands</td></tr>
     </table>
-    <aside class="notes"><strong class="when">⏱ 12:15–12:17 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+    <aside class="notes"><strong class="when">⏱ 12:15–12:16 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
       <li>A rename changes a word's spelling: every occurrence is replaced. A redefinition keeps the spelling and changes the meaning, so nothing announces which sentences went wrong; each hit has to be judged.</li>
       <li>The agent writes the rule that tells a false sentence from a true one first, before reading any hit. Then it searches the stem, not a phrase, counts the hits, and gives every one a verdict: its replacement, or “stands” with the reason.</li>
       <li>Then the team agrees, rewords, or declines. Nothing changes before that.</li>
@@ -310,7 +321,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
   <!-- 11 · Agenda: Comments invent reasons -->
   <section class="mid agenda" data-step="3">
     <h2 class="sk-section">Today</h2>
-    <aside class="notes"><strong class="when">⏱ 12:17 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
+    <aside class="notes"><strong class="when">⏱ 12:16 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
   </section>
 
   <!-- 12 · Comments invent reasons -->
@@ -321,7 +332,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
     <div class="prompt" style="margin-top:.7em"><span class="sk-label sk-deep-teal" style="font-size:.9em">The “Join waiting list” button</span><pre class="code" style="font-size:.95em;margin-top:.3em"><span class="hl-bad"># returning gardeners go into the queue</span>
 <span class="hl-k">def</span> <span class="hl-f">handle_event</span>(<span class="hl-a">"join_waiting_list"</span>, params, socket)</pre></div>
     <p class="lede" style="text-align:center;margin:.7em auto 0">Two rules, no record. The agent builds on whichever it reads first.</p>
-    <aside class="notes"><strong class="when">⏱ 12:17–12:19 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+    <aside class="notes"><strong class="when">⏱ 12:16–12:18 · 2 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
       <li>“Two sessions each wrote down a reason. Neither asked anyone. The next session reads one of them and treats it as the rule.”</li>
       <li>In the recs files, any comment that isn't a citation is assumed wrong. The agent looks for a record it can point to; if there is one, the comment becomes the citation, and if not, the comment goes.</li>
       <li>Here no record decides what happens to a returning gardener. So the agent can't pick a comment: it raises the question with the team, and the answer becomes a record.</li>
@@ -339,7 +350,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
 <span class="hl-c"># F-4 §1: A returning gardener skips the waiting list</span>
 <span class="hl-k">def</span> <span class="hl-f">handle_event</span>(<span class="hl-a">"join_waiting_list"</span>, params, socket)</pre></div>
     <p class="lede" style="text-align:center;margin:.9em auto 0">One record, cited in both places. Number, section and title, and nothing else.</p>
-    <aside class="notes"><strong class="when">⏱ 12:19–12:20 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+    <aside class="notes"><strong class="when">⏱ 12:18–12:19 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
       <li>The same two functions, once the team has answered the question: say they decided returning gardeners skip the list. That decision is now a record, and both places cite it, so the next session reads one rule, not two. The team could just as well have decided the opposite; the point is that someone decided.</li>
       <li><code>F-4</code> is extrapolated for the example, like the records on the diagram. The team would also agree on the words “returning gardener” first.</li>
       <li>Two kinds of comment are allowed: a citation of a record by number and title, or a pointer to a heading of the project's knowledge base where the code does something whose reason it doesn't show. No third kind.</li>
@@ -351,7 +362,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
   <!-- 14 · Agenda: Context grows -->
   <section class="mid agenda" data-step="4">
     <h2 class="sk-section">Today</h2>
-    <aside class="notes"><strong class="when">⏱ 12:20 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
+    <aside class="notes"><strong class="when">⏱ 12:19 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
   </section>
 
   <!-- 15 · What the agent reads -->
@@ -365,7 +376,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
       <div class="sk-panel sk-blue"><img src="kit/icons/robot.svg" alt="A robot"><p>A subagent gets the records its task cites</p></div>
     </div>
     <p class="lede" style="text-align:center;margin:.8em auto 0">A title tells the agent which records to open. Only the file on disk is evidence.</p>
-    <aside class="notes"><strong class="when">⏱ 12:20–12:23 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+    <aside class="notes"><strong class="when">⏱ 12:19–12:22 · 3 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
       <li>From the “Records are read from disk” section of the AGENTS.md that recs-kickstart writes: open a record's file before citing it, measuring code against it, or framing a question with it. Open each record that bears, and no others.</li>
       <li>A record bears if the task names it, a record you opened names it, or the code you're changing cites it. A title that only sounds near the work is opened to find out.</li>
       <li>Whatever AGENTS.md itself copies in, the session and every subagent carry for the whole session, and that copy is stale the moment a record changes. So the agent cites what the file on disk says.</li>
@@ -377,10 +388,22 @@ tenant</pre><p class="small">Three names for one person, picked by three session
   <!-- 16 · Agenda: Decisions go back to the team -->
   <section class="mid agenda" data-step="5">
     <h2 class="sk-section">Today</h2>
-    <aside class="notes"><strong class="when">⏱ 12:23 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
+    <aside class="notes"><strong class="when">⏱ 12:22 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
   </section>
 
-  <!-- 17 · Assess: two records disagree -->
+  <!-- 17 · Questions you can't answer -->
+  <section class="mid">
+    <h2 class="sk-section">Questions you can't answer</h2>
+    <div class="sk-bubble" style="font-size:1.55em">“In <code>Plot.allocate/2</code>, <code>holder_id</code> is already set for this <code>season_id</code>. Should <code>give_up/1</code> overwrite it, or insert a second <code>allocations</code> row? The unique index on <code>(plot_id, season_id)</code> will reject the insert.”</div>
+    <p class="lede" style="text-align:center;margin:.6em auto 0">It asks from inside the code. You have to rebuild where it is before you can answer.</p>
+    <aside class="notes"><strong class="when">⏱ 12:22–12:23 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
+      <li>“Here's the kind of question you get today.” Let the room read it.</li>
+      <li>“What's it actually asking? Which gardener holds plot 7 after July. But you have to work that out from a function, a column and an index.”</li>
+      <li>The agent isn't wrong to ask; it has nowhere to frame the question from. The next two slides are the same situation, asked from the records.</li>
+    </ul></aside>
+  </section>
+
+  <!-- 18 · Assess: two records disagree -->
   <section class="mid">
     <h2 class="sk-section">Two records disagree</h2>
     <p class="note-line" style="margin-top:0;text-align:center">Writing the plan for <code>UW-2: Give up a plot</code>, step 2: Coordinator records the plot given up</p>
@@ -391,14 +414,14 @@ tenant</pre><p class="small">Three names for one person, picked by three session
     <p class="lede" style="text-align:center;margin:.7em auto 0">Ana holds plot 7 until July, then Ben holds it. That's two gardeners in one season.</p>
     <p class="steps">the plan stops here</p>
     <aside class="notes"><strong class="when">⏱ 12:23–12:24 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
-      <li>Both records are real, word for word from the plot register.</li>
+      <li>“Same situation as the last slide. This time the agent starts from the records.” Both records are real, word for word from the plot register.</li>
       <li>How the agent got here: it read the projections, opened the records the workflow step names (<code>F-2: A gardener can give up a plot</code>), then the words those records use (<code>UL-1: Plot</code>), and checked each sentence against the step it was planning.</li>
       <li>The rule it follows: where the plan and a record disagree, the record wins. The plan stops at the disagreement, and the agent never plans around a record or edits one to fit.</li>
       <li>Every skill in the development flow does the same check at its own stage: brainstorming, writing a plan, executing it, code review, debugging. A plan can also meet code that disagrees with a record; that goes to the record keeper first too.</li>
     </ul></aside>
   </section>
 
-  <!-- 18 · Report: the question it asks -->
+  <!-- 19 · Report: the question it asks -->
   <section class="mid">
     <h2 class="sk-section">So it asks you</h2>
     <div class="msg">
@@ -414,14 +437,14 @@ tenant</pre><p class="small">Three names for one person, picked by three session
       </ol>
     </div>
     <aside class="notes"><strong class="when">⏱ 12:24–12:25 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul>
-      <li>Built from the same “Framing a question” template, against the plot register's real records.</li>
+      <li>Contrast it with the question two slides back: same decision, but this one you can answer without opening the code. Built from the “Framing a question” template, against the plot register's real records.</li>
       <li>Point at the shape: the workflow and step first, then each record that bears by number and title, then the situation in the records' words, an example, and options for a person.</li>
       <li>(a) could be a clarification of <code>UL-1: Plot</code>, if “one gardener at a time” was always the intent; (b) changes what <code>F-2: A gardener can give up a plot</code> decides, so it would be a new record. Either way, the team decides; the agent assesses and doesn't choose.</li>
       <li>The agent doesn't pick. It reports and waits. “This is the decision moving back to you: at planning time, before any code, instead of in a code review three weeks later.”</li>
     </ul></aside>
   </section>
 
-  <!-- 19 · Live: record a decision -->
+  <!-- 20 · Live: record a decision -->
   <section class="mid">
     <h2 class="sk-section">Live: record a decision</h2>
     <div class="sk-bubble" style="font-size:1.6em">“Record a decision for me: the register runs as a web app, so the coordinator can use it from a phone out at the plots. Walking back to the shed for every allocation takes too long.”</div>
@@ -442,7 +465,7 @@ tenant</pre><p class="small">Three names for one person, picked by three session
       </ul></aside>
   </section>
 
-  <!-- 20 · Live: agree to it -->
+  <!-- 21 · Live: agree to it -->
   <section class="mid">
     <h2 class="sk-section">Live: agree to it</h2>
     <div class="sk-row flow" style="align-items:center">
@@ -461,13 +484,13 @@ tenant</pre><p class="small">Three names for one person, picked by three session
     </ul></aside>
   </section>
 
-  <!-- 21 · Agenda: Try it Monday -->
+  <!-- 22 · Agenda: Try it Monday -->
   <section class="mid agenda" data-step="6">
     <h2 class="sk-section">Today</h2>
     <aside class="notes"><strong class="when">⏱ 12:29 · a few seconds</strong><br><strong class="who">🎤 Aldric</strong><br></aside>
   </section>
 
-  <!-- 22 · Try it Monday -->
+  <!-- 23 · Try it Monday -->
   <section class="mid">
     <h2 class="sk-section">Try it Monday</h2>
     <div class="split">
@@ -490,13 +513,13 @@ claude plugin install recs-files@the-recs-files</pre></div></li>
     </ul></aside>
   </section>
 
-  <!-- 23 · Questions -->
+  <!-- 24 · Questions -->
   <section class="center">
     <h1 class="sk-title" style="font-size:4.2em"><span class="sk-burst"><span class="sk-hl">Questions?</span></span></h1>
     <div class="sk-bubble" style="font-size:1.7em;margin-top:.8em">“The records are the truth for the system; the record keeper is the truth for the records.”</div>
     <img src="kit/characters/waver.svg" alt="A person waving" style="height:240px;margin-top:.2em">
     <aside class="notes"><strong class="when">⏱ 12:30–12:45 · 15 min</strong><br><strong class="who">🎤 Aldric and everyone</strong><br><ul>
-      <li>Go back to “What builds up over months” (Esc for the overview, slide 2) and point at each panel: the room should now be able to say what makes each one stop. Then come back here.</li>
+      <li>Go back to “How agentic development gets worse” (Esc for the overview, slide 2) and point at each panel: the room should now be able to say what makes each one stop. Then come back here.</li>
       <li>The quote is the recs files' own vision (<code>docs/vision.org</code>, “The domain”).</li>
       <li>15 min for questions. Any overrun in the talk comes out of this.</li><li>Easy questions to expect: other harnesses (README), existing projects (recs-kickstart), what “realization modality” means.</li>
     </ul></aside>
