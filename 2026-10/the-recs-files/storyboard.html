@@ -84,20 +84,22 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
 <body>
 <main>
 <h1>The recs files (Lightning Lesson, Fri 23 Oct)</h1>
-<div class="intro"><p>Free Maven Lightning Lesson, 45 minutes on Zoom: at most 30 minutes of talk, then about 15 for questions. Aldric presents and runs the agent live. Built from Aldric's draft of 21 October, checked against <a href="https://github.com/Trevoke/the-recs-files">Trevoke/the-recs-files</a> at <code>cfe0aaa</code> (20 Oct).</p></div>
-<a class="slides-link" href="index.html?v=b698422c2127">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=b698422c2127">Open with notes</a>
+<div class="intro"><p>Free Maven Lightning Lesson, 45 minutes on Zoom: at most 30 minutes of talk, then about 15 for questions. Aldric presents and runs the agent live. Built from Aldric's draft of 21 October and restructured on 23 October after an external run-through, checked against <a href="https://github.com/Trevoke/the-recs-files">Trevoke/the-recs-files</a> at <code>cfe0aaa</code> (20 Oct).</p></div>
+<a class="slides-link" href="index.html?v=9a634d72f877">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=9a634d72f877">Open with notes</a>
 
-<div class="transformation"><p>People arrive used to agents that answer every question with a fix, or with a wall of code. They leave able to read a question an agent asks from its records, knowing where it came from, and knowing how to install the recs files and start a project's records on Monday.</p></div>
+<div class="transformation"><p>People arrive having watched a codebase degrade over months of agent sessions: duplicate code paths, drifting words, comments that invent reasons, context that won't fit. They leave seeing each of those as a decision the agent made alone, knowing what the recs files do so each one stops building up, and seeing the decision move back to the team, at planning time, before any code.</p></div>
 
 <div class="timeline">
-  <div class="phase-bar"><a href="#phase-opening" style="flex:7">Opening · 7 min</a><a href="#phase-what" style="flex:14">What · 14 min</a><a href="#phase-so-what" style="flex:6">So what · 6 min</a><a href="#phase-now-what" style="flex:3">Now what · 3 min</a></div>
+  <div class="phase-bar"><a href="#phase-opening" style="flex:3">Opening · 3 min</a><a href="#phase-what" style="flex:6">What · 6 min</a><a href="#phase-so-what" style="flex:14">So what · 14 min</a><a href="#phase-now-what" style="flex:7">Now what · 7 min</a></div>
   <div class="bar">
 <a class='seg present' href='#welcome' style='flex:3' title='Opening · Welcome · 3 min'><span class='seg-t'>12:00</span><span class='seg-n'>Welcome</span></a>
-<a class='seg present' href='#an-agent-asks-you-a-question' style='flex:4' title='Opening · An agent asks you a question · 4 min'><span class='seg-t'>12:03</span><span class='seg-n'>An agent asks you a question</span></a>
-<a class='seg present' href='#records-and-what-the-agent-reads' style='flex:14' title='What · Records and what the agent reads · 14 min'><span class='seg-t'>12:07</span><span class='seg-n'>Records and what the agent reads</span></a>
-<a class='seg present' href='#when-records-disagree' style='flex:3' title='So what · When records disagree · 3 min'><span class='seg-t'>12:21</span><span class='seg-n'>When records disagree</span></a>
-<a class='seg talk' href='#who-settles-it' style='flex:3' title='So what · Who settles it · 3 min'><span class='seg-t'>12:24</span><span class='seg-n'>Who settles it</span></a>
-<a class='seg present' href='#how-it-becomes-code' style='flex:2' title='Now what · How it becomes code · 2 min'><span class='seg-t'>12:27</span><span class='seg-n'>How it becomes code</span></a>
+<a class='seg talk' href='#what-builds-up-over-months' style='flex:2' title='What · What builds up over months · 2 min'><span class='seg-t'>12:03</span><span class='seg-n'>What builds up over months</span></a>
+<a class='seg present' href='#the-records-in-one-picture' style='flex:4' title='What · The records in one picture · 4 min'><span class='seg-t'>12:05</span><span class='seg-n'>The records in one picture</span></a>
+<a class='seg present' href='#two-code-paths' style='flex:4' title='So what · Two code paths · 4 min'><span class='seg-t'>12:09</span><span class='seg-n'>Two code paths</span></a>
+<a class='seg present' href='#the-words-drift' style='flex:4' title='So what · The words drift · 4 min'><span class='seg-t'>12:13</span><span class='seg-n'>The words drift</span></a>
+<a class='seg present' href='#comments-invent-reasons' style='flex:3' title='So what · Comments invent reasons · 3 min'><span class='seg-t'>12:17</span><span class='seg-n'>Comments invent reasons</span></a>
+<a class='seg present' href='#context-grows' style='flex:3' title='So what · Context grows · 3 min'><span class='seg-t'>12:20</span><span class='seg-n'>Context grows</span></a>
+<a class='seg present' href='#decisions-go-back-to-the-team' style='flex:6' title='Now what · Decisions go back to the team · 6 min'><span class='seg-t'>12:23</span><span class='seg-n'>Decisions go back to the team</span></a>
 <a class='seg present' href='#try-it-monday' style='flex:1' title='Now what · Try it Monday · 1 min'><span class='seg-t'>12:29</span><span class='seg-n'>Try it Monday</span></a>
   </div>
   <div class="legend">
@@ -110,7 +112,7 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
   </div>
 </div>
 
-<h2 class="phase-heading" id="phase-opening">Opening <span>7 min</span></h2>
+<h2 class="phase-heading" id="phase-opening">Opening <span>3 min</span></h2>
 
 <section class="block present" id="welcome">
   <div class="when"><div class="clock">12:00</div><div class="mins">3 min</div></div>
@@ -122,61 +124,83 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
 
   </div>
 </section>
+<h2 class="phase-heading" id="phase-what">What <span>6 min</span></h2>
 
-<section class="block present" id="an-agent-asks-you-a-question">
-  <div class="when"><div class="clock">12:03</div><div class="mins">4 min</div></div>
+<section class="block talk" id="what-builds-up-over-months">
+  <div class="when"><div class="clock">12:03</div><div class="mins">2 min</div></div>
   <div class="what">
-    <h3>An agent asks you a question</h3>
-    <p class="purpose">Read a records-framed question cold</p>
-    <p class="structure">Presenting, then answers in chat</p>
-    <blockquote>What did you need to know to answer it? What didn't you need?</blockquote>
-
-  </div>
-</section>
-<h2 class="phase-heading" id="phase-what">What <span>14 min</span></h2>
-
-<section class="block present" id="records-and-what-the-agent-reads">
-  <div class="when"><div class="clock">12:07</div><div class="mins">14 min</div></div>
-  <div class="what">
-    <h3>Records and what the agent reads</h3>
-    <p class="purpose">How the records connect; a new record made live (proposed, then agreed); projections; what the agent puts in its context; the message again, and where each line came from</p>
-    <p class="structure">Presenting; one live run on the plot register, with guesses in chat</p>
-    <blockquote>Where did each line come from?</blockquote>
-
-  </div>
-</section>
-<h2 class="phase-heading" id="phase-so-what">So what <span>6 min</span></h2>
-
-<section class="block present" id="when-records-disagree">
-  <div class="when"><div class="clock">12:21</div><div class="mins">3 min</div></div>
-  <div class="what">
-    <h3>When records disagree</h3>
-    <p class="purpose">The agent assesses which records disagree, then reports with a framed question</p>
-    <p class="structure">Presenting: two records from the plot register, then the question</p>
-    <blockquote>Which do you want?</blockquote>
+    <h3>What builds up over months</h3>
+    <p class="purpose">Name four problems the room has lived with, and trace them to decisions nobody wrote down</p>
+    <p class="structure">Four panels; answers in chat</p>
+    <blockquote>Which of these have you seen?</blockquote>
 
   </div>
 </section>
 
-<section class="block talk" id="who-settles-it">
-  <div class="when"><div class="clock">12:24</div><div class="mins">3 min</div></div>
+<section class="block present" id="the-records-in-one-picture">
+  <div class="when"><div class="clock">12:05</div><div class="mins">4 min</div></div>
   <div class="what">
-    <h3>Who settles it</h3>
-    <p class="purpose">Clarify or supersede; the record keeper decides</p>
-    <p class="structure">Poll in chat, one voice for each side</p>
-    <blockquote>Ana: (a), (b) or (c)? Clarify or supersede?</blockquote>
-
-  </div>
-</section>
-<h2 class="phase-heading" id="phase-now-what">Now what <span>3 min</span></h2>
-
-<section class="block present" id="how-it-becomes-code">
-  <div class="when"><div class="clock">12:27</div><div class="mins">2 min</div></div>
-  <div class="what">
-    <h3>How it becomes code</h3>
-    <p class="purpose">The development flow is obra's superpowers, forked and made record-first; a comment in code is a citation of a record (Elixir example)</p>
+    <h3>The records in one picture</h3>
+    <p class="purpose">How the records connect, and the projections the agent reads; then the agenda</p>
     <p class="structure">Presenting</p>
-    <blockquote>Plans cite records. Code comments cite records.</blockquote>
+    <blockquote>Everything that follows uses this one project.</blockquote>
+
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-so-what">So what <span>14 min</span></h2>
+
+<section class="block present" id="two-code-paths">
+  <div class="when"><div class="clock">12:09</div><div class="mins">4 min</div></div>
+  <div class="what">
+    <h3>Two code paths</h3>
+    <p class="purpose">Plans and code cite the feature they realize, so the first path is found before a second is written</p>
+    <p class="structure">Presenting</p>
+    <blockquote>Which one is right?</blockquote>
+
+  </div>
+</section>
+
+<section class="block present" id="the-words-drift">
+  <div class="when"><div class="clock">12:13</div><div class="mins">4 min</div></div>
+  <div class="what">
+    <h3>The words drift</h3>
+    <p class="purpose">One word per record; new words proposed first; a changed word swept by stem, every hit judged</p>
+    <p class="structure">Presenting</p>
+    <blockquote>Three names for one person.</blockquote>
+
+  </div>
+</section>
+
+<section class="block present" id="comments-invent-reasons">
+  <div class="when"><div class="clock">12:17</div><div class="mins">3 min</div></div>
+  <div class="what">
+    <h3>Comments invent reasons</h3>
+    <p class="purpose">A comment is a citation; where no record decides, the agent asks</p>
+    <p class="structure">Presenting</p>
+    <blockquote>Two rules, no record.</blockquote>
+
+  </div>
+</section>
+
+<section class="block present" id="context-grows">
+  <div class="when"><div class="clock">12:20</div><div class="mins">3 min</div></div>
+  <div class="what">
+    <h3>Context grows</h3>
+    <p class="purpose">The agent reads titles, then only the records that bear; subagents get the records their task cites</p>
+    <p class="structure">Presenting</p>
+    <blockquote>What goes into the agent's context?</blockquote>
+
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-now-what">Now what <span>7 min</span></h2>
+
+<section class="block present" id="decisions-go-back-to-the-team">
+  <div class="when"><div class="clock">12:23</div><div class="mins">6 min</div></div>
+  <div class="what">
+    <h3>Decisions go back to the team</h3>
+    <p class="purpose">Two records disagree; the agent assesses and asks. Then a decision recorded live, and agreed</p>
+    <p class="structure">Presenting, then one live run with guesses in chat</p>
+    <blockquote>Which do you want?</blockquote>
 
   </div>
 </section>
@@ -185,46 +209,45 @@ footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
   <div class="when"><div class="clock">12:29</div><div class="mins">1 min</div></div>
   <div class="what">
     <h3>Try it Monday</h3>
-    <p class="purpose">Install, kickstart, and what to watch for</p>
+    <p class="purpose">Install, kickstart, and the superpowers fork</p>
     <p class="structure">Presenting</p>
-    <blockquote>Next time your agent is about to change behaviour, watch for the moment it stops and asks.</blockquote>
+    <blockquote>Watch for the moment your agent stops and asks.</blockquote>
 
   </div>
 </section>
 
-<div class="notes"><p><strong>Total: 45 minutes: 30 of talk, 15 of questions.</strong> Any overrun comes out of the questions. <em>People read an agent's question cold, then see how the records it cites connect. They watch an agent stop at a record, hunt for the sentence a new decision makes untrue, and see the record keeper accept it. They vote on Ana's case, and leave with the install command.</em> The student-facing agenda has five parts: <strong>Records and what the agent reads</strong>, <strong>When records disagree</strong>, <strong>Who settles it</strong>, <strong>How it becomes code</strong> and <strong>Try it Monday</strong>. The message comes before the agenda on purpose: the rest of the lesson explains it.</p></div>
+<div class="notes"><p><strong>Total: 45 minutes: 30 of talk, 15 of questions.</strong> Any overrun comes out of the questions. <em>People recognise four problems from their own codebases, see the records that one project keeps, then take the problems one at a time: what the recs files do so each stops building up. They close by watching the agent stop at a disagreement and ask, and a decision recorded live and agreed by the team.</em> The student-facing agenda has six parts: <strong>Two code paths</strong>, <strong>The words drift</strong>, <strong>Comments invent reasons</strong>, <strong>Context grows</strong>, <strong>Decisions go back to the team</strong> and <strong>Try it Monday</strong>. The problem slide and the record diagram come before the agenda: the first names the problems, the second gives the vocabulary for the fixes.</p></div>
 
 <details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
 <div class="framing">
 <div class='card'><h2>Audience</h2><ul>
 <li>Developers who already use a coding agent. Most have never seen the recs files.</li>
-<li>They take in little at a time: one idea a slide. The records themselves go on the</li>
-<li class='cont'>whiteboard for anyone who wants to read them in full.</li>
+<li>They have lived with the problems this lesson names, even if they've never put them into words.</li>
+<li>They take in little at a time: one idea a slide. The records themselves go on the whiteboard.</li>
 </ul></div>
 <div class='card'><h2>Learning outcomes</h2><ul>
-<li>Find their way around the records from a user workflow: the features and messages it names, the words it uses, and the decisions beside them.</li>
-<li>Explain why an agent working on records stops and asks a person when its work meets a record that disagrees with it.</li>
-<li>Find the sentences a record change makes untrue by searching for the word's stem, not a phrase.</li>
-<li>Tell a clarification from a supersede, and say who decides between them.</li>
+<li>Name four problems that build up in an agent-written codebase, and trace each one to a decision nobody wrote down.</li>
+<li>Say what the recs files do about each: plans and code cite the record they realize; one word per record, swept by stem; a comment is a citation; the agent reads titles first and opens only what bears.</li>
+<li>Explain why the agent stops and asks the team when two records, or a plan and a record, disagree.</li>
+<li>Install the recs files and start a project's records with recs-kickstart.</li>
 </ul></div>
 <div class='card'><h2>Key concepts</h2><ul>
-<li><strong>Projection:</strong> the index file for one category, listing every standing or proposed record by number and title (<code>UL-6: Projection</code>). The agent reads the projections to see which records exist.</li>
-<li><strong>Reading from disk:</strong> the agent opens only the records that bear on the task, and cites what the file says, not a copy in its context.</li>
-<li><strong>Record:</strong> a short, numbered statement of what the system does and why, one thing each, in a file of its own, cited by number and title.</li>
-<li><strong>Record keeper:</strong> the person who decides what the records say. The agent proposes; the record keeper agrees.</li>
-<li><strong>Falsified sentence:</strong> a sentence elsewhere in the records that a change makes untrue (<code>F-3: Falsified sentences are found with their replacements</code>).</li>
-<li><strong>Clarify or supersede:</strong> an in-place edit when the intent is kept (<code>UW-4: Clarify a record</code>); a new record when the decision changes (<code>UW-2: Supersede a record</code>, <code>ADR-4</code>).</li>
+<li><strong>Record:</strong> a short, numbered statement of one decision, in a file of its own, cited by number and title.</li>
+<li><strong>Projection:</strong> the index file for one category, listing every standing or proposed record by number and title. The agent reads the projections to see which records exist.</li>
+<li><strong>Ubiquitous language:</strong> one record per word, saying what it means and nothing about behaviour. The agent speaks in those words.</li>
+<li><strong>Citation:</strong> the only kind of comment in code: a record's number, section and title.</li>
+<li><strong>Record keeper:</strong> the team. The agent proposes; the team agrees.</li>
 </ul></div>
 <div class='card'><h2>Format &amp; logistics</h2><ul>
 <li>Zoom, one room, no breakouts. Answers in chat. Recorded and posted publicly by Maven.</li>
-<li>One toy project throughout: the <strong>plot register</strong> (a community garden), from the repo's eval fixture <code>planning-without-a-realization-modality</code>.</li>
-<li><strong>Whiteboard:</strong> one frame per project, holding its records in full, so the slides only carry the line people need.</li>
-<li><strong>Live track:</strong> one run, in a fresh copy of <a href="https://github.com/lean-software-production/workshops/blob/main/lightning-lessons/the-recs-files/live-fixture/README.md"><code>live-fixture/</code></a>: the plot register plus three architectural decisions (ADR-3 rejected) and one vision sentence for the new decision to make untrue. Aldric records the web-app decision from <code>live-fixture/prompt.md</code>, then agrees to it. This fixture is ours, not one of the repo's evals, so the dry run matters. Each live moment has a backup slide.</li>
-<li><strong>Dry run before Friday:</strong> run the plot register past the realization modality question, to see whether the agent raises the Gardener conflict on its own. If it does, swap the built opening message for the captured one.</li>
+<li>One toy project throughout: the <strong>plot register</strong> (a community garden), from the repo's eval fixture <code>planning-without-a-realization-modality</code>, extended in <a href="live-fixture/README.md"><code>live-fixture/</code></a> with three architectural decisions (ADR-3 rejected) and one vision sentence for the live decision to make untrue.</li>
+<li><strong>Whiteboard:</strong> one frame holding the live fixture's records in full.</li>
+<li><strong>Live track:</strong> one run at the end, in a fresh copy of <code>live-fixture/</code>: Aldric records the web-app decision from <code>live-fixture/prompt.md</code>, then agrees to it. The answers are in that slide's notes. The fixture is ours, not one of the repo's evals: dry-run it.</li>
+<li><strong>Code on the problem slides</strong> (<code>Gardener.get_plot</code>, <code>Plot.allocate_to_gardener</code>, the two comments, the Elixir clauses) is illustrative; none of it is in the fixture.</li>
 </ul></div>
 </div>
 </details>
-<footer>Generated from runbook.md · Thu 22 Oct, 22:37</footer>
+<footer>Generated from runbook.md · Fri 23 Oct, 13:50</footer>
 </main>
 </body>
 </html>
