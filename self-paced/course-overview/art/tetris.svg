@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 608" width="448" height="608">
+<defs><filter id="w" x="-5%" y="-5%" width="110%" height="110%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="3.5"/></filter></defs>
+<g filter="url(#w)"><rect x="24" y="24" width="400" height="560" rx="10" fill="#FCF9F3" stroke="#2A2724" stroke-width="5"/>
+<rect x="187" y="67" width="34" height="34" rx="5" fill="#EEA306" stroke="#2A2724" stroke-width="3"/>
+<rect x="227" y="67" width="34" height="34" rx="5" fill="#EEA306" stroke="#2A2724" stroke-width="3"/>
+<rect x="267" y="67" width="34" height="34" rx="5" fill="#EEA306" stroke="#2A2724" stroke-width="3"/>
+<rect x="227" y="107" width="34" height="34" rx="5" fill="#EEA306" stroke="#2A2724" stroke-width="3"/>
+<rect x="27" y="347" width="34" height="34" rx="5" fill="#094854" stroke="#2A2724" stroke-width="3"/>
+<rect x="27" y="387" width="34" height="34" rx="5" fill="#094854" stroke="#2A2724" stroke-width="3"/>
+<rect x="267" y="387" width="34" height="34" rx="5" fill="#D6631C" stroke="#2A2724" stroke-width="3"/>
+<rect x="307" y="387" width="34" height="34" rx="5" fill="#D6631C" stroke="#2A2724" stroke-width="3"/>
+<rect x="27" y="427" width="34" height="34" rx="5" fill="#094854" stroke="#2A2724" stroke-width="3"/>
+<rect x="187" y="427" width="34" height="34" rx="5" fill="#039695" stroke="#2A2724" stroke-width="3"/>
+<rect x="227" y="427" width="34" height="34" rx="5" fill="#039695" stroke="#2A2724" stroke-width="3"/>
+<rect x="267" y="427" width="34" height="34" rx="5" fill="#D6631C" stroke="#2A2724" stroke-width="3"/>
+<rect x="307" y="427" width="34" height="34" rx="5" fill="#D6631C" stroke="#2A2724" stroke-width="3"/>
+<rect x="387" y="427" width="34" height="34" rx="5" fill="#1F78A8" stroke="#2A2724" stroke-width="3"/>
+<rect x="27" y="467" width="34" height="34" rx="5" fill="#094854" stroke="#2A2724" stroke-width="3"/>
+<rect x="67" y="467" width="34" height="34" rx="5" fill="#4A7D4B" stroke="#2A2724" stroke-width="3"/>
+<rect x="147" y="467" width="34" height="34" rx="5" fill="#039695" stroke="#2A2724" stroke-width="3"/>
+<rect x="187" y="467" width="34" height="34" rx="5" fill="#039695" stroke="#2A2724" stroke-width="3"/>
+<rect x="227" y="467" width="34" height="34" rx="5" fill="#F76C37" stroke="#2A2724" stroke-width="3"/>
+<rect x="267" y="467" width="34" height="34" rx="5" fill="#F76C37" stroke="#2A2724" stroke-width="3"/>
+<rect x="387" y="467" width="34" height="34" rx="5" fill="#1F78A8" stroke="#2A2724" stroke-width="3"/>
+<rect x="27" y="507" width="34" height="34" rx="5" fill="#094854" stroke="#2A2724" stroke-width="3"/>
+<rect x="67" y="507" width="34" height="34" rx="5" fill="#4A7D4B" stroke="#2A2724" stroke-width="3"/>
+<rect x="107" y="507" width="34" height="34" rx="5" fill="#4A7D4B" stroke="#2A2724" stroke-width="3"/>
+<rect x="147" y="507" width="34" height="34" rx="5" fill="#4A7D4B" stroke="#2A2724" stroke-width="3"/>
+<rect x="227" y="507" width="34" height="34" rx="5" fill="#EEA306" stroke="#2A2724" stroke-width="3"/>
+<rect x="267" y="507" width="34" height="34" rx="5" fill="#F76C37" stroke="#2A2724" stroke-width="3"/>
+<rect x="307" y="507" width="34" height="34" rx="5" fill="#F76C37" stroke="#2A2724" stroke-width="3"/>
+<rect x="347" y="507" width="34" height="34" rx="5" fill="#1F78A8" stroke="#2A2724" stroke-width="3"/>
+<rect x="387" y="507" width="34" height="34" rx="5" fill="#1F78A8" stroke="#2A2724" stroke-width="3"/>
+<rect x="27" y="547" width="34" height="34" rx="5" fill="#1F78A8" stroke="#2A2724" stroke-width="3"/>
+<rect x="67" y="547" width="34" height="34" rx="5" fill="#1F78A8" stroke="#2A2724" stroke-width="3"/>
+<rect x="107" y="547" width="34" height="34" rx="5" fill="#1F78A8" stroke="#2A2724" stroke-width="3"/>
+<rect x="147" y="547" width="34" height="34" rx="5" fill="#EEA306" stroke="#2A2724" stroke-width="3"/>
+<rect x="187" y="547" width="34" height="34" rx="5" fill="#EEA306" stroke="#2A2724" stroke-width="3"/>
+<rect x="227" y="547" width="34" height="34" rx="5" fill="#EEA306" stroke="#2A2724" stroke-width="3"/>
+<rect x="267" y="547" width="34" height="34" rx="5" fill="#D6631C" stroke="#2A2724" stroke-width="3"/>
+<rect x="307" y="547" width="34" height="34" rx="5" fill="#D6631C" stroke="#2A2724" stroke-width="3"/>
+<rect x="347" y="547" width="34" height="34" rx="5" fill="#094854" stroke="#2A2724" stroke-width="3"/>
+<rect x="387" y="547" width="34" height="34" rx="5" fill="#094854" stroke="#2A2724" stroke-width="3"/>
+</g></svg>

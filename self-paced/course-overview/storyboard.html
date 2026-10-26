@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Session Storyboard</title>
+<style>
+:root {
+  --bg: #f6f5f1; --paper: #ffffff; --ink: #1d1d1b; --muted: #6b6a64; --line: #e3e1da;
+  --present: #4f6d8f; --pairs: #c0673a; --demo: #3f8a5c; --talk: #8a6fb0; --buffer: #b9b6ac;
+  --quote-bg: #f1efe8;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #161614; --paper: #1f1f1c; --ink: #ecebe6; --muted: #a09e96; --line: #33322e;
+    --present: #7fa0c4; --pairs: #e08a5c; --demo: #6cbf8a; --talk: #b39ad6; --buffer: #5d5b55;
+    --quote-bg: #2a2925;
+  }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+  font: 15px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif; }
+main { max-width: 980px; margin: 0 auto; padding: 28px 16px 60px; }
+h1 { font: 600 30px/1.2 Georgia, "Times New Roman", serif; margin: 0 0 6px; }
+.intro p { margin: 2px 0; color: var(--muted); }
+.slides-link { display: inline-block; margin-top: 10px; padding: 7px 12px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 6px;
+  color: var(--ink); font-weight: 600; text-decoration: none; }
+.slides-link:hover, .slides-link:focus-visible { text-decoration: underline; }
+h2 { font-size: 13px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); margin: 0 0 6px; }
+.transformation { margin: 16px 0 0; padding: 12px 16px; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; font-size: 16px; }
+.transformation p { margin: 0; }
+.framing-wrap { margin-top: 24px; }
+.framing { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin: 22px 0; }
+.card { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; }
+.card ul { margin: 0; padding-left: 18px; }
+.card p { margin: 0; }
+.timeline { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: 10px 0; margin: 12px 0 8px; }
+.bar { display: flex; gap: 2px; height: 58px; }
+.phase-bar { display: flex; gap: 2px; margin-bottom: 4px; }
+.phase-bar a { min-width: 0; padding: 3px 6px; color: var(--ink); background: var(--paper);
+  border: 1px solid var(--line); border-radius: 5px; font-size: 12px; font-weight: 700;
+  text-decoration: none; overflow: hidden; white-space: nowrap; }
+.phase-heading { margin: 22px 0 8px; padding: 8px 4px 4px; border-bottom: 2px solid var(--ink);
+  color: var(--ink); font: 600 22px/1.2 Georgia, serif; text-transform: none; letter-spacing: 0;
+  scroll-margin-top: 115px; }
+.phase-heading span { float: right; color: var(--muted); font: 12px/2 Helvetica, Arial, sans-serif; }
+.seg { min-width: 0; border-radius: 5px; padding: 4px 6px; color: #fff; text-decoration: none;
+  display: flex; flex-direction: column; overflow: hidden; font-size: 11px; line-height: 1.2; }
+.seg-t { opacity: .85; font-variant-numeric: tabular-nums; }
+.seg-n { font-weight: 600; overflow: hidden; }
+.seg.present { background: var(--present); } .seg.pairs { background: var(--pairs); }
+.seg.demo { background: var(--demo); } .seg.talk { background: var(--talk); }
+.seg.buffer { background: var(--buffer); }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-top: 6px; }
+.legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+.sum { font-size: 13px; color: var(--muted); }
+.warn { color: #c0392b; font-weight: 600; margin-left: 8px; }
+.block { display: grid; grid-template-columns: 76px 1fr; gap: 14px; background: var(--paper);
+  border: 1px solid var(--line); border-left: 5px solid var(--present); border-radius: 10px;
+  padding: 14px 16px; margin: 10px 0; scroll-margin-top: 110px; }
+.block.pairs { border-left-color: var(--pairs); } .block.demo { border-left-color: var(--demo); }
+.block.talk { border-left-color: var(--talk); } .block.buffer { border-left-color: var(--buffer); }
+.clock { font: 600 20px/1 Georgia, serif; font-variant-numeric: tabular-nums; }
+.mins { font-size: 12px; color: var(--muted); margin-top: 4px; }
+.what h3 { margin: 0 0 4px; font-size: 18px; }
+.purpose { margin: 0 0 4px; font-weight: 500; }
+ul.purpose { padding-left: 20px; }
+.structure { margin: 0; color: var(--muted); }
+blockquote { margin: 10px 0 0; padding: 8px 12px; background: var(--quote-bg); border-radius: 6px; font-style: italic; }
+details { margin-top: 10px; }
+summary { cursor: pointer; font-size: 12px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+details ul { margin: 6px 0 0; padding-left: 18px; }
+details ol { margin: 2px 0 4px; }
+li.cont { list-style: none; }
+.notes { margin-top: 22px; color: var(--muted); }
+footer { margin-top: 30px; font-size: 12px; color: var(--muted); }
+@media (max-width: 640px) {
+  .seg-n { display: none; }
+  .block { grid-template-columns: 1fr; gap: 4px; }
+}
+</style>
+</head>
+<body>
+<main>
+<h1>Course overview video (self-paced)</h1>
+<div class="intro"><p>A recorded video of about 10 to 11 minutes, the first item a self-paced student sees in 👋 Start here, in the module "Welcome &amp; what you'll learn in this course". It replaces the live cohort's "Course Overview" (10:50), which opened September's session 1 and talked about live sessions, weekends and four weeks. Presenters: Matt, Aldric and David, on camera. Matt opens with his "felt like I'd been to the moon" story and how the course is built to give students that experience, then the three of them say who they are. Aldric tells where it started, the Ralph loop. David shows the factory students will build, and the words the course uses for it, and closes with the next step. Aldric introduces the student clips and how we help, and Matt covers the real factories and the five units. The design is in <a href="https://github.com/lean-software-production/workshops/blob/main/docs/adrs/0038-self-paced-course-enrolment-support-capstone-and-first-14-days.md">ADR-0038</a>, decision 4, and the notes in <a href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/self-paced/start-here.md">start-here.md</a>.</p><p>This is a draft for instructors. Students see the video in Maven, with the "How the course works" text under it.</p></div>
+<a class="slides-link" href="index.html?v=9a848039f989">Open slides</a> <a class="slides-link" href="index.html?notes=1&amp;v=9a848039f989">Open with notes</a>
+
+<div class="transformation"><p>Students arrive with a receipt and a question: was this worth it?</p><p>They leave having seen a factory build working software while nobody wrote code, seen what people like them built with their own factories, and knowing how the course gets them there, who will help, and what to do next.</p></div>
+
+<div class="timeline">
+  <div class="phase-bar"><a href="#phase-welcome" style="flex:2">Welcome · 2 min</a><a href="#phase-people" style="flex:1">People · 1 min</a><a href="#phase-hook" style="flex:4">Hook · 4 min</a><a href="#phase-proof" style="flex:3">Proof · 3 min</a><a href="#phase-path" style="flex:1">Path · 1 min</a></div>
+  <div class="bar">
+<a class='seg present' href='#it-felt-like-i-d-been-to-the-moon' style='flex:2' title='Welcome · It felt like I&#x27;d been to the moon · 2 min'><span class='seg-t'>00:00</span><span class='seg-n'>It felt like I'd been to the moon</span></a>
+<a class='seg talk' href='#who-we-are' style='flex:0' title='People · Who we are · 0 min'><span class='seg-t'>00:02</span><span class='seg-n'>Who we are</span></a>
+<a class='seg present' href='#where-it-started-the-ralph-loop' style='flex:1' title='Hook · Where it started: the Ralph loop · 1 min'><span class='seg-t'>00:02</span><span class='seg-n'>Where it started: the Ralph loop</span></a>
+<a class='seg talk' href='#the-factory-you-ll-build' style='flex:3' title='Hook · The factory you&#x27;ll build · 3 min'><span class='seg-t'>00:03</span><span class='seg-n'>The factory you'll build</span></a>
+<a class='seg talk' href='#what-students-built' style='flex:2' title='Proof · What students built · 2 min'><span class='seg-t'>00:06</span><span class='seg-n'>What students built</span></a>
+<a class='seg talk' href='#real-factories' style='flex:1' title='Proof · Real factories · 1 min'><span class='seg-t'>00:08</span><span class='seg-n'>Real factories</span></a>
+<a class='seg present' href='#five-units' style='flex:1' title='Path · Five units · 1 min'><span class='seg-t'>00:09</span><span class='seg-n'>Five units</span></a>
+<a class='seg present' href='#how-we-help-and-your-next-step' style='flex:1' title='People · How we help, and your next step · 1 min'><span class='seg-t'>00:10</span><span class='seg-n'>How we help, and your next step</span></a>
+  </div>
+  <div class="legend">
+    <span><i style="background:var(--present)"></i>presenting</span>
+    <span><i style="background:var(--talk)"></i>whole group</span>
+    <span><i style="background:var(--pairs)"></i>breakouts</span>
+    <span><i style="background:var(--demo)"></i>factory demo</span>
+    <span><i style="background:var(--buffer)"></i>buffer</span>
+    <span class="sum">00:00 to 00:11 · 11 min</span>
+  </div>
+</div>
+
+<h2 class="phase-heading" id="phase-welcome">Welcome <span>2 min</span></h2>
+
+<section class="block present" id="it-felt-like-i-d-been-to-the-moon">
+  <div class="when"><div class="clock">00:00</div><div class="mins">2 min</div></div>
+  <div class="what">
+    <h3>It felt like I'd been to the moon</h3>
+    <p class="purpose">Show why the course exists, through Matt's own experience, and how it's built to give students the same</p>
+    <p class="structure">Matt, presenting: his "felt like I'd been to the moon" story, then build your factory and use it on your capstone, coached by your own coding agent</p>
+    <blockquote>This course is built to give you that experience.</blockquote>
+
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-people">People <span>1 min</span></h2>
+
+<section class="block talk" id="who-we-are">
+  <div class="when"><div class="clock">00:02</div><div class="mins">0 min</div></div>
+  <div class="what">
+    <h3>Who we are</h3>
+    <p class="purpose">Put names and faces to the three people the student is about to hear from</p>
+    <p class="structure">Matt, Aldric and David, a sentence each</p>
+    <blockquote>Before we show you how, here's who we are.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Straight after Matt's story, because three people take turns on camera and the student should know their names before the second one speaks. One sentence each, about 20 seconds in all.</li>
+<li>Instructor headshots are drawn in <code>cohorts/003-sept-2026/week-1/tuesday/instructors/</code>.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-hook">Hook <span>4 min</span></h2>
+
+<section class="block present" id="where-it-started-the-ralph-loop">
+  <div class="when"><div class="clock">00:02</div><div class="mins">1 min</div></div>
+  <div class="what">
+    <h3>Where it started: the Ralph loop</h3>
+    <p class="purpose">Show the small idea the course grows from</p>
+    <p class="structure">Aldric, presenting: Geoffrey Huntley's Ralph loop, the story Matt told in September's session 1</p>
+    <blockquote>A Ralph loop is the smallest software factory there is.</blockquote>
+
+  </div>
+</section>
+
+<section class="block talk" id="the-factory-you-ll-build">
+  <div class="when"><div class="clock">00:03</div><div class="mins">3 min</div></div>
+  <div class="what">
+    <h3>The factory you'll build</h3>
+    <p class="purpose">Show the factory they'll build working, and give them the words the course uses for it</p>
+    <p class="structure">David: a new recording of the reference factory running <code>implement-with-ralph-loop</code> on <code>tetris-000</code>, with the <code>watch</code> status bar, then the Tetris it built; then factory, assembly line and machine</p>
+    <blockquote>In your first hour, you run this yourself.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Decided on 2026-10-26: a new recording, not the September Fabro clip. It shows the reference factory, the finished version of the factory students build in the tutorial, running <code>implement-with-ralph-loop</code> on <code>tetris-000</code>, with the <code>watch</code> status bar showing <code>start ▸ planner ▸ ralph ↺ planner</code>. Cut the 20-minute run to about 2 minutes, then play the Tetris it built. It's the same run the student does in their first hour, in Run a Ralph Loop (or two).</li>
+<li>Then the three words, as the course lexicon defines them: a factory holds one or more assembly lines and runs them; an assembly line is machines in an order fixed by whoever designed it; a machine is an agent that's handed its inputs and runs to completion with nobody in the conversation.</li>
+<li><strong>Open:</strong> record it once the reference factory release is published. Until then, the September "Demo: Fabro factory" clip (session 1, 01:07:17.5 to 01:10:51) can stand in for the edit.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-proof">Proof <span>3 min</span></h2>
+
+<section class="block talk" id="what-students-built">
+  <div class="when"><div class="clock">00:06</div><div class="mins">2 min</div></div>
+  <div class="what">
+    <h3>What students built</h3>
+    <p class="purpose">Show that people like them built real things with their own factories</p>
+    <p class="structure">Short clips from the September show and tells and closing round, with each student's permission</p>
+    <blockquote>What did you build, and what did you learn?</blockquote>
+
+  </div>
+</section>
+
+<section class="block talk" id="real-factories">
+  <div class="when"><div class="clock">00:08</div><div class="mins">1 min</div></div>
+  <div class="what">
+    <h3>Real factories</h3>
+    <p class="purpose">Show where it goes: factories used on real projects</p>
+    <p class="structure">Relay and Memba, about 30 seconds each, from session 8</p>
+    <blockquote>This is a factory we use every day.</blockquote>
+    <details open><summary>Notes</summary><ul>
+<li>Relay: session 8 clip "Relay: a Kanban board on top of a software factory" (7:20); use one moment.</li>
+<li>Memba: session 8 clip "Memba: what the cost of each factory iteration showed" (4:04); use one moment.</li>
+</ul></details>
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-path">Path <span>1 min</span></h2>
+
+<section class="block present" id="five-units">
+  <div class="when"><div class="clock">00:09</div><div class="mins">1 min</div></div>
+  <div class="what">
+    <h3>Five units</h3>
+    <p class="purpose">Show the route through the course, in the same words as the syllabus</p>
+    <p class="structure">Matt, presenting: the five units in two columns, build your factory and use your factory, with one row per unit and Start here across the top</p>
+    <blockquote>Each unit, you build the next part, then use it.</blockquote>
+
+  </div>
+</section>
+<h2 class="phase-heading" id="phase-people">People <span>1 min</span></h2>
+
+<section class="block present" id="how-we-help-and-your-next-step">
+  <div class="when"><div class="clock">00:10</div><div class="mins">1 min</div></div>
+  <div class="what">
+    <h3>How we help, and your next step</h3>
+    <p class="purpose">Show that people are there, and turn attention into action</p>
+    <p class="structure">Aldric, presenting: Slack, Lean Coffee and feedback on the vision and first plan; then David: accept the Slack invitation and meet your AI tutor</p>
+    <blockquote>You won't be doing this alone.</blockquote>
+
+  </div>
+</section>
+
+<div class="notes"><p><strong>Total: 11 minutes.</strong> To get back to 10, use two student clips rather than three. <em>Matt tells the story of the first time a factory made him feel like he'd been to the moon, and how the course is built to give students that experience. The three instructors say who they are. Aldric tells how it started, with a Ralph loop, and then the factory students will build turns that loop into an assembly line and builds Tetris. Then students who did the course show what they built, and the trainers show factories they use on real projects. Then the video explains how the course gets a student there, how the instructors will help, and what to do next.</em></p></div>
+
+<details class="framing-wrap"><summary>Framing: audience, outcomes, concepts, logistics</summary>
+<div class="framing">
+<div class='card'><h2>Audience</h2><ul>
+<li>Experienced engineers who have just paid $1,950 and enrolled on their own, on any day. Nobody else starts with them.</li>
+<li>They already use a coding agent. Most have read the landing page; few have seen a factory run.</li>
+<li>They can ask for a full refund within 14 days if they have completed less than 25% of the course, so this video is the strongest reason they have to keep going.</li>
+<li>July's students who left early said they couldn't see where the course was going until a factory was shown in session 6. In September, the most convincing moments (capstone show and tells, Relay, Memba, the closing round) were all in the last two sessions.</li>
+</ul></div>
+<div class='card'><h2>Learning outcomes</h2><ul>
+<li>Say what a software factory does, from having watched one build Tetris.</li>
+<li>Name one thing an earlier student built, or learned, with their factory.</li>
+<li>Say how the course works: build part of the factory, then use it on your capstone, coached by your own coding agent.</li>
+<li>Know where to get help (Slack and the weekly Lean Coffee) and what to do next.</li>
+</ul></div>
+<div class='card'><h2>Key concepts</h2></div>
+<div class='card'><h2>Format &amp; logistics</h2><ul>
+<li>Slides for the presenters to talk over, with clips cut in during editing. The slides mark where each clip goes.</li>
+<li>Clips come from the video library. Student clips can only be used once each student has agreed: see <a href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/cohorts/003-sept-2026/testimonial-candidates.md">testimonial-candidates.md</a>. We decided on 2026-10-25 to ask September students for permission. David asks each student once the clips are chosen.</li>
+<li>Jeremy presents Relay in the session 8 clip but isn't on camera here; name him, and check he's happy for it to be used.</li>
+<li>Slides: <a href="index.html">the deck</a>, 10 slides; the speaker for each is in <a href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/self-paced/course-overview/schedule.tsv">schedule.tsv</a>. Times are whole minutes from the start of the video, so short slides (the opening line, who we are, the next step) show as a few seconds.</li>
+<li>No dates, days of the week, "this cohort" or "next session" anywhere. A student may watch it a year from now.</li>
+</ul></div>
+</div>
+</details>
+<footer>Generated from runbook.md · Mon 26 Oct, 15:49</footer>
+</main>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # Lean Software Production slides
 
-Browse the [slides site](https://lean-software-production.github.io/slides/) for lightning lessons and live sessions. Each live session includes its instructor storyboard.
+Browse the [slides site](https://lean-software-production.github.io/slides/) for lightning lessons, live sessions and self-paced course videos. Each live session and video includes its instructor storyboard.
 
 ## Lightning lessons
 
@@ -8,6 +8,12 @@ Browse the [slides site](https://lean-software-production.github.io/slides/) for
 | --- | --- |
 | What is a software factory? · September 2026 | [Open slides](https://lean-software-production.github.io/slides/what-is-a-software-factory/) |
 | The recs files · October 2026 | [Open slides](https://lean-software-production.github.io/slides/2026-10/the-recs-files/) |
+
+## Self-paced course
+
+| Video | Slides | Storyboard |
+| --- | --- | --- |
+| Build a Software Factory · Course overview | [Open slides](https://lean-software-production.github.io/slides/self-paced/course-overview/) | [Open storyboard](https://lean-software-production.github.io/slides/self-paced/course-overview/storyboard.html) |
 
 ## Live sessions
 
