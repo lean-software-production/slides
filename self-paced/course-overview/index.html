@@ -78,8 +78,13 @@
   .ralph { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2em; align-items: center; margin-top: 1.4em; }
   .ralph .code { font-size: 2em; }
   .ralph img { height: 320px; justify-self: center; }
-  .words .sk-panel p { font-size: 1.35em; }
-  .words .sk-panel .code { font-size: 1.2em; margin-top: .3em; }
+  .demo { display: grid; grid-template-columns: 1.9fr 1fr; gap: 1.4em; margin-top: .8em; align-items: start; }
+  .demo figure { margin: 0; padding: .7em .7em .8em; gap: .5em; }
+  .reveal .demo img { width: 100%; height: auto; border-radius: 8px; }
+  .demo figcaption { font-size: 1.05em; color: var(--sk-body-text); }
+  .words { display: flex; flex-direction: column; gap: 1em; }
+  .words .sk-panel { padding: .7em .9em .8em; gap: .4em; }
+  .words .sk-panel p { font-size: 1.3em; }
   .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6em; margin-top: 1.2em; }
   .people .sk-panel p { font-size: 1.25em; }
   .people img.face { height: 230px; width: auto; margin: .3em auto .2em; display: block; }
@@ -159,13 +164,15 @@ done</p>
   <!-- 5 · The factory you'll build -->
   <section class="mid">
     <h2 class="sk-section">The factory you’ll build</h2>
-    <div class="clip">Clip: the reference factory builds Tetris · new recording · about 2 min</div>
-    <div class="trio words">
-      <div class="sk-panel sk-mustard"><div class="sk-step"><span class="sk-label">Factory</span></div><p>Software that runs your assembly lines</p></div>
-      <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">Assembly line</span></div><p>Machines in an order you design</p><p class="code">planner ▸ ralph ↺</p></div>
-      <div class="sk-panel sk-coral"><div class="sk-step"><span class="sk-label">Machine</span></div><p>A coding agent that works with nobody in the chat</p></div>
+    <div class="demo">
+      <figure class="sk-panel sk-blue"><img src="art/reference-factory-demo.png" alt="The reference factory's assembly line drawn as a graph while it runs: seed, plan gate, plan author, two reviewers, synthesiser, doer, validator, planner and finish, with the planner highlighted as working"><figcaption>From the demo: the reference factory at work, with the planner working</figcaption></figure>
+      <div class="words">
+        <div class="sk-panel sk-mustard"><div class="sk-step"><span class="sk-label">Factory</span></div><p>Software that runs your assembly lines</p></div>
+        <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">Assembly line</span></div><p>Machines in an order you design</p></div>
+        <div class="sk-panel sk-coral"><div class="sk-step"><span class="sk-label">Machine</span></div><p>A coding agent that works with nobody in the chat</p></div>
+      </div>
     </div>
-    <aside class="notes"><strong class="when">⏱ 00:03–00:06 · 3 min</strong><br><strong class="who">🎤 David (clip)</strong><br><ul><li>The clip plays full screen in the edit. David runs the reference factory, the finished version of the factory students build in the tutorial, on <code>tetris-000</code>. The <code>watch</code> status bar shows <code>start ▸ planner ▸ ralph ↺ planner</code> with the working machine highlighted. Cut the 20-minute run to about 2 minutes, then play the Tetris it built.</li><li>“This is the same Ralph loop, now as an assembly line in a factory: a planner writes and updates the plan, and ralph does each step.”</li><li>Then the three words, which the rest of the course uses. A factory is software that holds one or more assembly lines and runs them. An assembly line is machines in an order, fixed by whoever designed it. A machine is an agent that's handed its inputs and runs to completion, with no person in the conversation.</li><li>“In your first hour, you run this yourself, in your own copy of the starter project.”</li><li><span class="todo">Open:</span> record the clip once the reference factory release is published. Until then, the September “Demo: Fabro factory” clip (session 1, 01:07:17.5 to 01:10:51) can stand in.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 00:03–00:06 · 3 min</strong><br><strong class="who">🎤 David (clip)</strong><br><ul><li>The screenshot is a moment from David's demo: the reference factory's assembly line drawn while it runs, with the working machine highlighted. It stays on screen while David introduces the clip and comes back after it, with the three words.</li><li>The clip plays full screen in the edit. David runs the reference factory, the finished version of the factory students build in the tutorial, on <code>tetris-000</code>. The <code>watch</code> status bar shows <code>start ▸ planner ▸ ralph ↺ planner</code> with the working machine highlighted. Cut the 20-minute run to about 2 minutes, then play the Tetris it built.</li><li>“This is the same Ralph loop, now as an assembly line in a factory: a planner writes and updates the plan, and ralph does each step.”</li><li>Then the three words, which the rest of the course uses. A factory is software that holds one or more assembly lines and runs them. An assembly line is machines in an order, fixed by whoever designed it. A machine is an agent that's handed its inputs and runs to completion, with no person in the conversation.</li><li>“In your first hour, you run this yourself, in your own copy of the starter project.”</li><li><span class="todo">Open:</span> record the clip once the reference factory release is published. Until then, the September “Demo: Fabro factory” clip (session 1, 01:07:17.5 to 01:10:51) can stand in.</li></ul></aside>
   </section>
 
   <!-- 6 · What students built -->
