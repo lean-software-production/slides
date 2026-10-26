@@ -85,7 +85,9 @@
   .demo figcaption { font-size: 1.05em; color: var(--sk-body-text); }
   .demo figcaption code { font-size: .9em; }
   .words { display: flex; flex-direction: column; gap: 1em; }
-  .words .sk-panel { padding: .7em .9em .8em; gap: .4em; }
+  .reveal .words .sk-panel { flex-direction: row; align-items: center; padding: .7em .9em .8em; gap: .9em; }
+  .reveal .words .sk-panel > img { width: 96px; height: 96px; flex: none; }
+  .words .sk-panel .sk-label { display: block; margin-bottom: .2em; }
   .words .sk-panel p { font-size: 1.3em; }
   .people { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.6em; margin-top: 1.2em; }
   .people .sk-panel p { font-size: 1.25em; }
@@ -169,12 +171,15 @@ done</p>
     <div class="demo">
       <figure class="sk-panel sk-blue"><img src="art/reference-factory-demo.png" alt="VS Code in a Codespace: the implement-with-3-big-brains assembly line drawn as a graph after a finished run, with three plan reviewers (Opus, Gemini and Astra) and a synthesiser, the factory's log in the terminal below, and the Codex chat panel on the right"></figure>
       <div class="words">
-        <div class="sk-panel sk-mustard"><div class="sk-step"><span class="sk-label">Factory</span></div><p>Software that runs your assembly lines</p></div>
-        <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">Assembly line</span></div><p>Machines in an order you design</p></div>
-        <div class="sk-panel sk-coral"><div class="sk-step"><span class="sk-label">Machine</span></div><p>A coding agent that works with nobody in the chat</p></div>
+        <div class="sk-panel sk-mustard"><img src="kit/icons/books.svg" alt=""><div><span class="sk-label">Videos and articles</span><p>The ideas, and the words for them</p></div>
+        </div>
+        <div class="sk-panel sk-teal"><img src="kit/icons/robot.svg" alt=""><div><span class="sk-label">An AI tutor</span><p>Coaches you as you build your factory</p></div>
+        </div>
+        <div class="sk-panel sk-coral"><img src="kit/icons/kite.svg" alt=""><div><span class="sk-label">A capstone</span><p>Your factory builds a project of your own</p></div>
+        </div>
       </div>
     </div>
-    <aside class="notes"><strong class="when">⏱ 00:03–00:06 · 3 min</strong><br><strong class="who">🎤 David (clip)</strong><br><ul><li>David's demo, cut in during the edit, in three parts:<ol><li><b>The AI tutor.</b> In the Codex panel, David says “coach me”, and his coding agent walks him through the homework.</li><li><b>A Ralph loop.</b> “One of the first things you do is run a Ralph loop: the reference factory builds a Tetris for you, in your own copy of the starter project.”</li><li><b>Skip ahead.</b> A replay of a full run of <code>implement-with-3-big-brains</code>: a plan gate and a plan author, three plan reviewers on different models and a synthesiser that merges their reviews, then a doer, a validator and a planner. The recorded run took 36 minutes 41 seconds, about 614k tokens and 51 hand-offs, and the validator sent work back to the doer twice. “By the end of the course, you'll be building lines like this.”</li></ol></li><li>The screenshot is from the end of that run, with the line at finish and the Codex chat panel beside it. It stays on screen while David introduces the demo and comes back after it, with the three words.</li><li>Then the three words, which the rest of the course uses. A factory is software that holds one or more assembly lines and runs them. An assembly line is machines in an order, fixed by whoever designed it. A machine is an agent that's handed its inputs and runs to completion, with no person in the conversation.</li><li><span class="todo">Open:</span> record the demo. The replay uses the hidden <code>factory visualise-run</code> command the starter thread is building around the recorded run. The line was called <code>efficient</code>; the name <code>implement-with-3-big-brains</code> is David's, from 2026-10-26.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 00:03–00:06 · 3 min</strong><br><strong class="who">🎤 David (clip)</strong><br><ul><li>David's demo, cut in during the edit, in three parts:<ol><li><b>The AI tutor.</b> In the Codex panel, David says “coach me”, and his coding agent walks him through the homework.</li><li><b>A Ralph loop.</b> “One of the first things you do is run a Ralph loop: the reference factory builds a Tetris for you, in your own copy of the starter project.”</li><li><b>Skip ahead.</b> A replay of a full run of <code>implement-with-3-big-brains</code>: a plan gate and a plan author, three plan reviewers on different models and a synthesiser that merges their reviews, then a doer, a validator and a planner. The recorded run took 36 minutes 41 seconds, about 614k tokens and 51 hand-offs, and the validator sent work back to the doer twice. “By the end of the course, you'll be building lines like this.”</li></ol></li><li>The screenshot is from the end of that run, with the line at finish and the Codex chat panel beside it. It stays on screen while David introduces the demo and comes back after it, with the three words.</li><li>Then what the course gives you, one card at a time: videos and articles that introduce the ideas and the words for them; an AI tutor, your own coding agent, that coaches you as you build your factory; and a capstone, a project of your own that your factory builds. The books and the kite are the pictures the live course used; the kite is the capstone.</li><li><span class="todo">Open:</span> record the demo. The replay uses the hidden <code>factory visualise-run</code> command the starter thread is building around the recorded run. The line was called <code>efficient</code>; the name <code>implement-with-3-big-brains</code> is David's, from 2026-10-26.</li></ul></aside>
   </section>
 
   <!-- 6 · What students built -->
