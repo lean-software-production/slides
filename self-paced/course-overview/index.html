@@ -85,16 +85,17 @@
   .people img.face { height: 230px; width: auto; margin: .3em auto .2em; display: block; }
   .duo { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; margin-top: 1.2em; }
   .duo .sk-panel p { font-size: 1.5em; line-height: 1.3; margin: .3em 0; }
-  .start-here { font-size: 1.45em; margin: .3em 0 .5em; color: var(--sk-body-text); text-align: center; }
-  .start-here b { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-weight: normal; }
+  .reveal .sk-panel.band { flex-direction: row; align-items: baseline; gap: .8em; padding: .45em .9em; margin: .35em 0; }
+  .band .sk-label { font-size: 1.35em; white-space: nowrap; }
+  .band p { font-size: 1.3em; margin: 0; color: var(--sk-body-text); }
   .halves { display: grid; grid-template-columns: 1fr 1fr; gap: 2em; }
-  .half-head { display: flex; align-items: center; gap: .6em; }
-  .half-head img { height: 90px; width: auto; }
-  .half-head .sk-label { font-size: 1.5em; }
+  .half-head { display: flex; align-items: center; gap: .6em; margin-bottom: -.2em; }
+  .half-head img { height: 64px; width: auto; }
+  .half-head .sk-label { font-size: 1.35em; }
   .trio .sk-panel p.times { font-size: 1.25em; color: var(--sk-deep-teal); font-family: var(--sk-font-label); }
   .units { list-style: none; padding: 0; margin: .3em 0 0; }
-  .units li { font-family: var(--sk-font-label); font-size: 1.5em; line-height: 1.25; margin: .3em 0; color: var(--sk-deep-teal); }
-  .half-foot { font-size: 1.2em; color: var(--sk-body-text); margin: .5em 0 0; }
+  .units li { font-family: var(--sk-font-label); font-size: 1.3em; line-height: 1.2; margin: .18em 0; color: var(--sk-deep-teal); }
+  .half-foot { font-size: 1.1em; color: var(--sk-body-text); margin: .3em 0 0; }
 </style>
 </head>
 <body>
@@ -184,10 +185,10 @@ done</p>
     <aside class="notes"><strong class="when">⏱ 00:08–00:09 · 1 min</strong><br><strong class="who">🎤 Matt (clips)</strong><br><ul><li>One moment from each, not the whole demo.</li><li>Relay: session 8 clip “Relay: a Kanban board on top of a software factory” (7:20). Jeremy presents it; he isn't on camera in this video, so name him: “Jeremy, one of our instructors, built Relay.” <span class="todo">Open:</span> Jeremy's OK to use it.</li><li>Memba: session 8 clip “Memba: what the cost of each factory iteration showed” (4:04).</li><li>Matt: “These are factories we use on real work. By the end of the course, you'll have built one of your own.”</li></ul></aside>
   </section>
 
-  <!-- 8 · Five units -->
+  <!-- 8 · High level course overview -->
   <section class="mid">
-    <h2 class="sk-section">Five units</h2>
-    <p class="start-here">👋 <b>Start here</b> · set up, and watch a finished factory build Tetris</p>
+    <h2 class="sk-section">High level course overview</h2>
+    <div class="sk-panel sk-blue band"><span class="sk-label">👋 Start here</span><p>set up, and watch a finished factory build Tetris</p></div>
     <div class="halves">
       <div class="sk-panel sk-teal">
         <div class="half-head"><img src="art/bike-build.svg" alt=""><span class="sk-label">Build your factory</span></div>
@@ -210,7 +211,8 @@ done</p>
         <p class="half-foot">on your capstone, a project of your own</p>
       </div>
     </div>
-    <aside class="notes"><strong class="when">⏱ 00:09–00:10 · 1 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Each row is one unit: in each unit you build the next part of your factory on the left, then use it on your capstone on the right. Same bikes as the opening slide. The names are the two halves of each unit's name in Maven, so the video and the syllabus agree.</li><li>Start here sits across the top because it's both: set up, then watch the finished factory build Tetris.</li><li>“There's no deadline. Your own coding agent coaches you through each part of the tutorial: you say ‘coach me’, and it walks you through it.”</li><li>Until unit 3, everyone builds the same Tetris games, so students can compare factories in Slack. Say it if there's time.</li></ul></aside>
+    <div class="sk-panel sk-mustard band"><span class="sk-label">🔭 Next steps</span><p>continuous improvement · two backlogs · the foreman pattern · Relay · more over time</p></div>
+    <aside class="notes"><strong class="when">⏱ 00:09–00:10 · 1 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Each row is one unit: in each unit you build the next part of your factory on the left, then use it on your capstone on the right. Same bikes as the opening slide. The names are the two halves of each unit's name in Maven, so the video and the syllabus agree.</li><li>Start here sits in a box across the top because it's both: set up, then watch the finished factory build Tetris.</li><li>Next steps, across the bottom, is where follow-on lessons go as we add them: continuous improvement, keeping two backlogs, the foreman pattern, Relay, and the other topics from the live cohort's sessions 7 and 8. <span class="todo">Open:</span> whether Next steps becomes its own unit in Maven, or stays inside unit 5.</li><li>“There's no deadline. Your own coding agent coaches you through each part of the tutorial: you say ‘coach me’, and it walks you through it.”</li><li>Until unit 3, everyone builds the same Tetris games, so students can compare factories in Slack. Say it if there's time.</li></ul></aside>
   </section>
 
   <!-- 9 · How we help -->
