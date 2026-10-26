@@ -93,6 +93,13 @@
   .half-head img { height: 64px; width: auto; }
   .half-head .sk-label { font-size: 1.35em; }
   .trio .sk-panel p.times { font-size: 1.25em; color: var(--sk-deep-teal); font-family: var(--sk-font-label); }
+  .shots { display: grid; grid-template-columns: 1fr 1.2fr 1fr; gap: 1.2em; margin-top: .6em; align-items: start; }
+  .shots figure { margin: 0; padding: .7em .7em .8em; gap: .5em; }
+  .reveal .shots img { width: 100%; height: 230px; object-fit: contain; background: #1e1e1e; border-radius: 8px; }
+  .shots figcaption { font-size: 1em; line-height: 1.2; color: var(--sk-body-text); }
+  .quotes { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 1.4em; margin-top: 1em; align-items: start; }
+  .quotes .sk-bubble { font-size: 1.15em; line-height: 1.25; padding: .7em .9em; }
+  .quotes img { height: 230px; width: auto; align-self: end; }
   .units { list-style: none; padding: 0; margin: .3em 0 0; }
   .units li { font-family: var(--sk-font-label); font-size: 1.3em; line-height: 1.2; margin: .18em 0; color: var(--sk-deep-teal); }
   .half-foot { font-size: 1.1em; color: var(--sk-body-text); margin: .3em 0 0; }
@@ -163,29 +170,22 @@ done</p>
 
   <!-- 6 · What students built -->
   <section class="mid">
-    <h2 class="sk-section">What students built</h2>
-    <div class="sk-bubble" style="font-size:1.9em;align-self:flex-start">“What did you build, and what did you learn?”</div>
-    <div class="trio">
-      <div class="sk-panel sk-coral"><div class="clip">Clip 1</div><p>Student <span class="todo">Open: choose clip</span></p></div>
-      <div class="sk-panel sk-blue"><div class="clip">Clip 2</div><p>Student <span class="todo">Open: choose clip</span></p></div>
-      <div class="sk-panel sk-forest"><div class="clip">Clip 3</div><p>Student <span class="todo">Open: choose clip</span></p></div>
+    <h2 class="sk-section">What past students built and learned</h2>
+    <div class="shots">
+      <figure class="sk-panel sk-coral"><img src="art/student-factory-watch.png" alt="A dark dashboard watching a run: a plan with five tasks, tokens used by each machine, the assembly line drawn as a graph with three checks running side by side, and a live log"><figcaption>A dashboard for watching a run, with three checks side by side</figcaption></figure>
+      <figure class="sk-panel sk-blue"><img src="art/student-factory-line.png" alt="A large assembly line diagram: an iteration split into tasks, a coder, three reviewers in parallel, a gate, a rework loop and a budget gate"><figcaption>An assembly line with three reviewers, a rework loop and a budget</figcaption></figure>
+      <figure class="sk-panel sk-forest"><img src="art/student-factory-dot.png" alt="An editor showing an assembly line written as a Graphviz file beside its diagram: planner, plan reviewer, doer and reviewer"><figcaption>An assembly line written as a Graphviz file, with a plan reviewer</figcaption></figure>
     </div>
-    <aside class="notes"><strong class="when">⏱ 00:06–00:08 · 2 min</strong><br><strong class="who">🎤 Aldric (student clips)</strong><br><ul><li>Two or three students, about 40 seconds each: one line about what they built, one about what they learned. Cut in during the edit.</li><li><span class="todo">Open:</span> which students. Candidates from September's show and tells (sessions 7 and 8, from 00:05) and the closing round (session 8, 01:17:08 to 01:22:41) are listed in <a href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/cohorts/003-sept-2026/testimonial-candidates.md">testimonial-candidates.md</a>. This deck is public, so students' names stay out of it until they've agreed.</li><li>Use a clip only once that student has agreed to this use, on the exact excerpt.</li></ul></aside>
+    <div class="quotes">
+      <div class="sk-bubble sk-tail-right">“Having a machine that is writing some code, it probably isn't going to be very good at reviewing that same code for you.”</div>
+      <div class="sk-bubble sk-tail-right">“Foreman is sort of a savior for me, because I was spending way too much time on babysitting my factory.”</div>
+      <div class="sk-bubble sk-tail-right">“More complex factory doesn't mean a better outcome.”</div>
+      <img src="kit/characters/learner.svg" alt="A student, smiling">
+    </div>
+    <aside class="notes"><strong class="when">⏱ 00:06–00:08 · 2 min</strong><br><strong class="who">🎤 Aldric (student clips)</strong><br><ul><li>Aldric introduces the slide over the three screenshots: factories that September students built and changed for themselves, each one different.</li><li>The three quotes, said by the kit's student character, are from what September students named as their biggest aha in the session 8 closing round (01:17:08 to 01:22:41): keeping the machine that writes code apart from the one that reviews it, the foreman ending the babysitting, and a more complex factory not meaning a better outcome. Each has a clip in the video library, about a minute long, so the 2 minutes here fit two clips at most; the quotes on screen stand in for the rest. Who said which, the clip for each, and the full excerpts are in <a href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/cohorts/003-sept-2026/testimonial-candidates.md">testimonial-candidates.md</a>.</li><li>Ed, Rob and Marek have given their permission for these testimonials (David, 2026-10-26). The slide doesn't name them, because the student character says the quotes.</li><li>The students whose factories these are have agreed to them being in the public video and deck (David, 2026-10-26). A computer username in the first screenshot's log is pixelated.</li><li><span class="todo">Open:</span> which students. Candidates from September's show and tells (sessions 7 and 8, from 00:05) and the closing round (session 8, 01:17:08 to 01:22:41) are listed in <a href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/cohorts/003-sept-2026/testimonial-candidates.md">testimonial-candidates.md</a>. This deck is public, so students' names stay out of it until they've agreed.</li><li>Use a clip only once that student has agreed to this use, on the exact excerpt.</li></ul></aside>
   </section>
 
-  <!-- 7 · Real factories -->
-  <section class="mid">
-    <h2 class="sk-section">Factories on real projects</h2>
-    <div class="duo">
-      <div class="sk-panel sk-teal"><div class="sk-step"><span class="sk-label">Relay</span></div><p>A Kanban board on top of a software factory. Each stage is done by a person or a machine.</p><div class="clip">Clip: session 8, about 30 s</div>
-      </div>
-      <div class="sk-panel sk-mustard"><div class="sk-step"><span class="sk-label">Memba</span></div><p>A real project built with a factory, and what each iteration cost.</p><div class="clip">Clip: session 8, about 30 s</div>
-      </div>
-    </div>
-    <aside class="notes"><strong class="when">⏱ 00:08–00:09 · 1 min</strong><br><strong class="who">🎤 Matt (clips)</strong><br><ul><li>One moment from each, not the whole demo.</li><li>Relay: session 8 clip “Relay: a Kanban board on top of a software factory” (7:20). Jeremy presents it; he isn't on camera in this video, so name him: “Jeremy, one of our instructors, built Relay.” <span class="todo">Open:</span> Jeremy's OK to use it.</li><li>Memba: session 8 clip “Memba: what the cost of each factory iteration showed” (4:04).</li><li>Matt: “These are factories we use on real work. By the end of the course, you'll have built one of your own.”</li></ul></aside>
-  </section>
-
-  <!-- 8 · High level course overview -->
+  <!-- 7 · High level course overview -->
   <section class="mid">
     <h2 class="sk-section">High level course overview</h2>
     <div class="sk-panel sk-blue band"><span class="sk-label">👋 Start here</span><p>set up, and get hands on with a factory like the one you will be building</p></div>
@@ -211,11 +211,11 @@ done</p>
         <p class="half-foot">on your capstone, a project of your own</p>
       </div>
     </div>
-    <div class="sk-panel sk-mustard band"><span class="sk-label">🔭 Next steps</span><p>continuous improvement · two backlogs · the foreman pattern · Relay · more over time</p></div>
-    <aside class="notes"><strong class="when">⏱ 00:09–00:10 · 1 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Each row is one unit: in each unit you build the next part of your factory on the left, then use it on your capstone on the right. Same bikes as the opening slide. The names are the two halves of each unit's name in Maven, so the video and the syllabus agree.</li><li>Start here sits in a box across the top because it's both: set up, then get hands on with a factory like the one you will be building.</li><li>Next steps, across the bottom, is where follow-on lessons go as we add them: continuous improvement, keeping two backlogs, the foreman pattern, Relay, and the other topics from the live cohort's sessions 7 and 8. <span class="todo">Open:</span> whether Next steps becomes its own unit in Maven, or stays inside unit 5.</li><li>“There's no deadline. Your own coding agent coaches you through each part of the tutorial: you say ‘coach me’, and it walks you through it.”</li><li>Until unit 3, everyone builds the same Tetris games, so students can compare factories in Slack. Say it if there's time.</li></ul></aside>
+    <div class="sk-panel sk-mustard band"><span class="sk-label">🔭 Next steps</span><p>continuous improvement · two backlogs · the foreman pattern · factories in the real world</p></div>
+    <aside class="notes"><strong class="when">⏱ 00:08–00:09 · 1 min</strong><br><strong class="who">🎤 Matt</strong><br><ul><li>Each row is one unit: in each unit you build the next part of your factory on the left, then use it on your capstone on the right. Same bikes as the opening slide. The names are the two halves of each unit's name in Maven, so the video and the syllabus agree.</li><li>Start here sits in a box across the top because it's both: set up, then get hands on with a factory like the one you will be building.</li><li>Next steps, across the bottom, is where follow-on lessons go as we add them: continuous improvement, keeping two backlogs, the foreman pattern, factories in the real world such as Relay and Memba, and the other topics from the live cohort's sessions 7 and 8. <span class="todo">Open:</span> whether Next steps becomes its own unit in Maven, or stays inside unit 5.</li><li>“There's no deadline. Your own coding agent coaches you through each part of the tutorial: you say ‘coach me’, and it walks you through it.”</li><li>Until unit 3, everyone builds the same Tetris games, so students can compare factories in Slack. Say it if there's time.</li></ul></aside>
   </section>
 
-  <!-- 9 · How we help -->
+  <!-- 8 · How we help -->
   <section class="mid">
     <h2 class="sk-section">You won’t be doing this alone</h2>
     <div class="trio">
@@ -223,10 +223,10 @@ done</p>
       <div class="sk-panel sk-mustard"><img src="kit/icons/mug.svg" alt="A mug of coffee"><p>Lean Coffee every Wednesday</p><p class="times">09:30 Pacific<br>12:30 Eastern<br>17:30 UK</p></div>
       <div class="sk-panel sk-coral"><img src="kit/icons/page-pencil.svg" alt="A page and a pencil"><p>Feedback on your capstone vision and first plan</p></div>
     </div>
-    <aside class="notes"><strong class="when">⏱ 00:10–00:11 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Slack: #cohort-build-a-software-factory-self-paced. “Ask whenever you're stuck. An instructor replies within 1 business day, and other students and alumni often answer sooner.”</li><li>The times follow the Zoom meeting, which is set in Pacific time. Eastern is always 3 hours later. The UK is 8 hours later, except for about a week in late October and two or three weeks in March, when the US and UK change their clocks on different dates and it's 16:30 UK. That's why the slide says UK rather than BST or GMT.</li><li>Lean Coffee: a 60-minute call; everyone posts questions on the meeting's Zoom Whiteboard, votes, and we discuss the most popular. If you can't come live, post your question in Slack first and we'll put it on the board. Questions that aren't discussed still get an answer in Slack.</li><li>Feedback: an instructor replies to your three capstone ideas within 2 working days, then gives feedback on your vision and your first iteration plan, in Slack.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 00:09–00:10 · 1 min</strong><br><strong class="who">🎤 Aldric</strong><br><ul><li>Slack: #cohort-build-a-software-factory-self-paced. “Ask whenever you're stuck. An instructor replies within 1 business day, and other students and alumni often answer sooner.”</li><li>The times follow the Zoom meeting, which is set in Pacific time. Eastern is always 3 hours later. The UK is 8 hours later, except for about a week in late October and two or three weeks in March, when the US and UK change their clocks on different dates and it's 16:30 UK. That's why the slide says UK rather than BST or GMT.</li><li>Lean Coffee: a 60-minute call; everyone posts questions on the meeting's Zoom Whiteboard, votes, and we discuss the most popular. If you can't come live, post your question in Slack first and we'll put it on the board. Questions that aren't discussed still get an answer in Slack.</li><li>Feedback: an instructor replies to your three capstone ideas within 2 working days, then gives feedback on your vision and your first iteration plan, in Slack.</li></ul></aside>
   </section>
 
-  <!-- 10 · Your next step -->
+  <!-- 9 · Your next step -->
   <section class="center">
     <h1 class="sk-title" style="font-size:4em"><span class="sk-burst"><span class="sk-hl">Your next step</span></span></h1>
     <ul class="sk-list" style="--sk-accent:var(--sk-teal);text-align:left">
@@ -234,7 +234,7 @@ done</p>
       <li>Then meet your AI tutor, and get hands on with a factory like the one you will be building</li>
     </ul>
     <img src="kit/characters/waver.svg" alt="A person waving" style="height:250px;margin-top:.4em">
-    <aside class="notes"><strong class="when">⏱ 00:11 · a few seconds</strong><br><strong class="who">🎤 David</strong><br><ul><li>Both are the next items in Maven, in this order.</li><li>“Your Slack invitation comes by email. Accept it and say hello. Then meet your AI tutor, and get hands on with a factory like the one you will be building, in your own Codespace.”</li><li>Hold the slide for a few seconds at the end.</li></ul></aside>
+    <aside class="notes"><strong class="when">⏱ 00:10 · a few seconds</strong><br><strong class="who">🎤 David</strong><br><ul><li>Both are the next items in Maven, in this order.</li><li>“Your Slack invitation comes by email. Accept it and say hello. Then meet your AI tutor, and get hands on with a factory like the one you will be building, in your own Codespace.”</li><li>Hold the slide for a few seconds at the end.</li></ul></aside>
   </section>
 
 </div></div>
