@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic Coding Clinic: what's next</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+<link rel="stylesheet" href="kit/sketchbook.css">
+<script src="kit/sketchbook.js" defer></script>
+<style>
+  /* The cohort 2 live-session base (Days 1-3). Slides are 1600×900. Keep these rules as they are;
+     add session-specific layout classes below the marked line. */
+  html, body, .reveal-viewport { background: var(--sk-paper); }
+  .reveal-viewport { background-image: none; }
+  .reveal { font-family: var(--sk-font-body); color: var(--sk-ink); }
+  .reveal .slides section { font-size: 26px; text-align: left; height: 100%; box-sizing: border-box; padding: 30px 10px 20px; display: flex !important; flex-direction: column; }
+  .reveal .slides section.mid { justify-content: center; }
+  .reveal .slides section.center { justify-content: center; align-items: center; text-align: center; }
+  .reveal .sk-bubble::before { border-width: 5px; }
+  .reveal .sk-bubble::after { border-right-width: 5px; border-bottom-width: 5px; }
+  .reveal .sk-panel::before { border-width: 4px; }
+  .reveal .progress { color: var(--sk-mustard); height: 5px; }
+  .reveal .controls { color: var(--sk-deep-teal); }
+  .reveal .slide-number { background: transparent; color: var(--sk-deep-teal); font-family: var(--sk-font-label); font-size: 20px; }
+  .reveal a { color: var(--sk-deep-teal); }
+
+  .lede { font-size: 1.7em; line-height: 1.3; color: var(--sk-body-text); max-width: 30em; margin: .4em 0; }
+  .center .lede { margin-left: auto; margin-right: auto; }
+  .big { font-size: 4.2em; }
+  .split { display: grid; grid-template-columns: 1.3fr 1fr; gap: 2.5em; align-items: center; flex: 1; min-height: 0; }
+  .split > img { max-height: 560px; justify-self: center; }
+  .mid .split { flex: 0 0 auto; }
+  ul.sk-list { list-style: none; padding: 0; margin: .6em 0 0; }
+  ul.sk-list li { font-size: 1.5em; line-height: 1.3; margin: .5em 0; padding-left: 1.4em; position: relative; color: var(--sk-body-text); }
+  ul.sk-list li::before { content: ""; position: absolute; left: 0; top: .45em; width: .55em; height: .55em; border-radius: 50%; background: var(--sk-accent, var(--sk-teal)); }
+  ul.sk-list li small { display: block; font-size: .75em; color: #6b665c; }
+  .sk-row { margin-top: 1em; }
+  .sk-row .sk-panel p { font-size: 1.15em; }
+  .agenda .sk-row { font-size: 1.05em; }
+  .agenda .sk-label { font-size: .8em; }
+  .agenda .sk-panel img { height: 100px; width: auto; margin: .6em auto 0; }
+  .agenda .sk-panel:not(.sk-dashed) { opacity: .45; }
+  .agenda.all .sk-panel { opacity: 1; }
+  .steps { font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.5em; text-align: center; margin-top: 1em; }
+  .trio { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.4em; margin-top: 1.2em; }
+  .trio .sk-panel { text-align: center; }
+  .trio .sk-panel img { height: 150px; width: auto; display: block; margin: .3em auto; }
+  .trio .sk-panel p { font-size: 1.6em; line-height: 1.25; margin: .2em 0; }
+  .scenes { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5em; margin-top: .8em; }
+  .scene { margin: 0; text-align: center; }
+  .scene img { height: 470px; max-width: 100%; }
+  .scene figcaption { font-size: 1.35em; color: var(--sk-body-text); }
+  .scene figcaption span { display: block; font-family: var(--sk-font-label); color: var(--sk-deep-teal); font-size: 1.35em; }
+  .code { font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: 1.3em; line-height: 1.4; white-space: pre; margin: 0; }
+  .todo { background: var(--sk-highlighter); font-family: var(--sk-font-label); padding: 0 .3em; }
+
+  /* In-page presenter notes: S or the Notes button. Works where speaker-view popups are blocked. */
+  .presenter-toggle { position: fixed; z-index: 100; top: 12px; right: 18px; padding: 7px 13px; border: 2px solid var(--sk-ink); border-radius: 9px; background: var(--sk-paper); color: var(--sk-deep-teal); font: 24px var(--sk-font-label); cursor: pointer; }
+  .presenter-panel { position: fixed; z-index: 90; inset: 0 0 0 60%; overflow: auto; box-sizing: border-box; padding: 58px 28px 24px; background: var(--sk-paper); border-left: 4px solid var(--sk-ink); color: var(--sk-ink); font: clamp(17px, 1.5vw, 24px)/1.35 var(--sk-font-body); }
+  .presenter-panel[hidden] { display: none; }
+  .presenter-panel h2 { margin: 0 0 .45em; font: 1.7em var(--sk-font-label); color: var(--sk-deep-teal); }
+  .presenter-panel ul { padding-left: 1.2em; }
+  .presenter-panel li { margin: .45em 0; }
+  .presenter-panel a { color: var(--sk-deep-teal); }
+  body.presenter-open .reveal { width: 60vw; }
+  @media (max-width: 850px) {
+    body.presenter-open .reveal { width: 100vw; height: 52vh; }
+    .presenter-panel { inset: 52vh 0 0; border-left: 0; border-top: 4px solid var(--sk-ink); padding-top: 50px; }
+  }
+
+  /* Session-specific layout classes go below this line. */
+  .timeline { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.1em; margin-top: 1.6em; }
+  .timeline::before { content: ""; position: absolute; left: 0; right: 0; top: 22px; border-top: var(--sk-line-chunky) solid var(--sk-ink); filter: url(#sk-wobble); }
+  .stop { position: relative; padding-top: 64px; display: flex; flex-direction: column; }
+  .stop::before { content: ""; position: absolute; top: 4px; left: 50%; transform: translateX(-50%); width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--sk-ink); background: var(--sk-accent); filter: url(#sk-wobble); }
+  .stop .sk-panel { flex: 1; text-align: center; padding: .7em .6em; }
+  .stop .kind { font-family: var(--sk-font-label); color: var(--sk-accent); font-size: .95em; }
+  .stop .date { font-family: var(--sk-font-label); font-size: 1.5em; color: var(--sk-ink-title); }
+  .stop img { height: 110px; width: auto; display: block; margin: .3em auto; }
+  .stop .what { font-size: 1.3em; line-height: 1.2; margin: .2em 0 0; color: var(--sk-body-text); }
+  .stop.main .sk-panel::before { border-width: 7px; }
+  .stop.main .what { font-size: 1.5em; }
+  .legend { display: flex; justify-content: center; gap: 2.2em; font-family: var(--sk-font-label); font-size: 1.3em; color: var(--sk-deep-teal); margin-top: 1.4em; }
+  .legend span::before { content: ""; display: inline-block; width: .7em; height: .7em; border-radius: 50%; border: 3px solid var(--sk-ink); background: var(--sk-accent); margin-right: .35em; vertical-align: -.05em; }
+</style>
+</head>
+<body>
+<div class="reveal"><div class="slides">
+  <!-- 1 · What's next -->
+  <section class="mid">
+    <h2 class="sk-section">What's next</h2>
+    <div class="timeline">
+      <div class="stop sk-teal">
+        <div class="sk-panel sk-teal"><div class="kind">Lightning lesson</div><div class="date">Wed 11 Nov</div><img src="kit/icons/lightbulb.svg" alt="A lightbulb"><p class="what">Three Big Brains: Claude, GPT and Gemini together</p></div>
+      </div>
+      <div class="stop sk-mustard">
+        <div class="sk-panel sk-mustard"><div class="kind">Workshop</div><div class="date">Wed 2 Dec</div><img src="kit/icons/robot.svg" alt="A robot"><p class="what">Build Your Own Coding Agent</p></div>
+      </div>
+      <div class="stop sk-teal">
+        <div class="sk-panel sk-teal"><div class="kind">Lightning lesson</div><div class="date">Thu 3 Dec</div><img src="kit/icons/chat.svg" alt="Two speech bubbles"><p class="what">Agentic Coding Clinic</p></div>
+      </div>
+      <div class="stop sk-teal">
+        <div class="sk-panel sk-teal"><div class="kind">Lightning lesson</div><div class="date">Thu 7 Jan</div><img src="kit/icons/chat.svg" alt="Two speech bubbles"><p class="what">Agentic Coding Clinic</p></div>
+      </div>
+      <div class="stop main sk-coral">
+        <div class="sk-panel sk-coral"><div class="kind">Cohort course</div><div class="date">Tue 12 Jan</div><img src="kit/icons/gear.svg" alt="A gear"><p class="what">Build a Software Factory</p></div>
+      </div>
+    </div>
+    <div class="legend"><span class="sk-teal">Free</span><span class="sk-mustard">Workshop</span><span class="sk-coral">Course</span></div>
+    <p class="steps">Sign up on Maven · links in chat</p>
+    <aside class="notes"><strong class="when">⏱ 12:55–13:00 · 5 min</strong><br><strong class="who">🎤 Matt</strong><br><a class="lesson-checklists" href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/checklists/live-lesson-checklists.md">Lesson checklists</a> · <a class="go-live-checklist" href="https://github.com/lean-software-production/workshops/blob/main/courses/build-a-software-factory/checklists/live-lesson-checklists.md#-go-live--before-admitting-students">Go live</a><br><a class="storyboard-link" href="https://lean-software-production.github.io/slides/2026-11/agentic-coding-clinic/storyboard.html">Storyboard</a><br><ul>
+      <li>Show at the close: “Here is what is coming up next.” Post the Maven links in chat.</li>
+    </ul></aside>
+  </section>
+
+</div></div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+
+  // S or the Notes button shows the current slide's notes beside it, in the same page.
+  // ?notes=1 opens with notes showing (the storyboard's "Open with notes" link).
+  var presenterPanel, presenterBody, presenterHeading, presenterButton;
+  function updatePresenterNotes() {
+    if (!presenterPanel) return;
+    var notes = Reveal.getCurrentSlide().querySelector('aside.notes');
+    presenterHeading.textContent = 'Slide ' + (Reveal.getIndices().h + 1) + ' notes';
+    presenterBody.innerHTML = notes ? notes.innerHTML : '<p>No notes for this slide.</p>';
+  }
+  function togglePresenterNotes(forceOpen) {
+    if (!presenterPanel) return;
+    var open = typeof forceOpen === 'boolean' ? forceOpen : presenterPanel.hidden;
+    presenterPanel.hidden = !open;
+    document.body.classList.toggle('presenter-open', open);
+    presenterButton.setAttribute('aria-expanded', String(open));
+    presenterButton.textContent = open ? 'Hide notes (S)' : 'Notes (S)';
+    if (open) updatePresenterNotes();
+    Reveal.layout();
+  }
+
+  Reveal.initialize({ width: 1600, height: 900, margin: 0.04, hash: true, slideNumber: 'c/t', transition: 'fade', center: false,
+    keyboard: { 83: function () { togglePresenterNotes(); } }
+  }).then(function () {
+    // The one-slide canvas pages (split-pages.py) stay uncluttered.
+    if (document.querySelectorAll('.reveal .slides > section').length < 2) return;
+    presenterButton = document.createElement('button');
+    presenterButton.className = 'presenter-toggle';
+    presenterButton.type = 'button';
+    presenterButton.setAttribute('aria-controls', 'presenter-notes');
+    presenterButton.setAttribute('aria-expanded', 'false');
+    presenterButton.textContent = 'Notes (S)';
+    presenterButton.addEventListener('click', function () { togglePresenterNotes(); });
+    presenterPanel = document.createElement('aside');
+    presenterPanel.id = 'presenter-notes';
+    presenterPanel.className = 'presenter-panel';
+    presenterPanel.hidden = true;
+    presenterPanel.setAttribute('aria-label', 'Presenter notes');
+    presenterPanel.innerHTML = '<h2></h2><div></div>';
+    presenterHeading = presenterPanel.querySelector('h2');
+    presenterBody = presenterPanel.querySelector('div');
+    document.body.append(presenterButton, presenterPanel);
+    Reveal.on('slidechanged', updatePresenterNotes);
+    if (new URLSearchParams(location.search).has('notes')) togglePresenterNotes(true);
+  });
+
+  // Viewers on the canvas can load while hidden or tiny, and don't always fire a window resize
+  // when they grow. Re-fit the slide whenever its box changes size, and once fonts have loaded.
+  new ResizeObserver(function () { Reveal.layout(); }).observe(document.documentElement);
+  if (document.fonts) document.fonts.ready.then(function () { Reveal.layout(); });
+  document.addEventListener('visibilitychange', function () { Reveal.layout(); });
+</script>
+</body>
+</html>

@@ -8,6 +8,7 @@ Browse the [slides site](https://lean-software-production.github.io/slides/) for
 | --- | --- |
 | What is a software factory? · September 2026 | [Open slides](https://lean-software-production.github.io/slides/what-is-a-software-factory/) |
 | The recs files · October 2026 | [Open slides](https://lean-software-production.github.io/slides/2026-10/the-recs-files/) |
+| Agentic Coding Clinic: what's next · November 2026 | [Open slides](https://lean-software-production.github.io/slides/2026-11/agentic-coding-clinic/) |
 
 ## Self-paced course
 
