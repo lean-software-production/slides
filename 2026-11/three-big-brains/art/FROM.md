@@ -1,0 +1,1 @@
+`brain-jars.png` was generated on 10 November 2026 for this lesson from a prompt for three whimsical, linked brains in jars in the Sketchbook palette. The provider logos in `logos/` were copied from `lightning-lessons/what-is-a-software-factory/assets/logos/`; the local Codex copy has a paper-coloured underlay so it reads over coloured diagram boxes.

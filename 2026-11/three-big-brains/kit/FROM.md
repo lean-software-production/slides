@@ -1,0 +1,1 @@
+Copied from `lightning-lessons/the-recs-files/kit` for this lesson. The clock icon was added from the published Sketchbook kit after brand commit `b39d115f482d9831659c2efb94b70326b0086d5d` (10 November 2026). Change shared assets in the brand repository, then copy them here.
